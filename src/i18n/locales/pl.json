@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "ClickDrop",
+    "subtitle": "Starter frontendu z React, TypeScript, Tailwind i i18n.",
+    "cta": "Zacznij"
+  },
+  "language": {
+    "label": "Język",
+    "en": "Angielski",
+    "pl": "Polski"
+  }
+}

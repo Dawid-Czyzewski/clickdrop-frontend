@@ -1,8 +1,16 @@
 # ClickDrop Frontend
 
-Frontend gry ClickDrop.
+React + TypeScript + Vite + Tailwind CSS + i18next.
 
-Technologie:
-- React
-- TypeScript
-- TailwindCSS
+## Scripts
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+## i18n
+
+Translations live in `src/i18n/locales/` (`en.json`, `pl.json`).
+Language is detected from `localStorage` / browser and can be switched in the UI.
