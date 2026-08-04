@@ -4,9 +4,31 @@
     "subtitle": "Starter frontendu z React, TypeScript, Tailwind i i18n.",
     "cta": "Zacznij"
   },
+  "seo": {
+    "home": {
+      "title": "ClickDrop — Otwieraj skrzynki. Łap rzadkie skiny.",
+      "description": "ClickDrop to gamingowe otwieranie skrzynek. Zaloguj się, otwieraj case’y i poluj na rzadkie dropy."
+    },
+    "login": {
+      "title": "Logowanie | ClickDrop",
+      "description": "Zaloguj się do konta ClickDrop, aby otwierać skrzynki i zarządzać ekwipunkiem."
+    }
+  },
   "language": {
     "label": "Język",
     "en": "Angielski",
     "pl": "Polski"
+  },
+  "login": {
+    "title": "Zaloguj się do konta",
+    "email": "Email",
+    "emailPlaceholder": "ty@przyklad.pl",
+    "password": "Hasło",
+    "passwordPlaceholder": "••••••••",
+    "submit": "Zaloguj",
+    "submitting": "Logowanie…",
+    "registerPrompt": "Nie masz konta?",
+    "registerLink": "Zarejestruj się",
+    "error": "Logowanie nie powiodło się. Spróbuj ponownie."
   }
 }

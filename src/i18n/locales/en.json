@@ -4,9 +4,31 @@
     "subtitle": "Frontend starter with React, TypeScript, Tailwind and i18n.",
     "cta": "Get started"
   },
+  "seo": {
+    "home": {
+      "title": "ClickDrop — Open cases. Drop rare skins.",
+      "description": "ClickDrop is a gaming case-opening experience. Sign in to open cases and chase rare drops."
+    },
+    "login": {
+      "title": "Login | ClickDrop",
+      "description": "Sign in to your ClickDrop account to open cases and manage your inventory."
+    }
+  },
   "language": {
     "label": "Language",
     "en": "English",
     "pl": "Polish"
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "submit": "Login",
+    "submitting": "Signing in…",
+    "registerPrompt": "Don't have an account?",
+    "registerLink": "Register",
+    "error": "Login failed. Please try again."
   }
 }
