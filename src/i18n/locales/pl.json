@@ -12,6 +12,10 @@
     "login": {
       "title": "Logowanie | ClickDrop",
       "description": "Zaloguj się do konta ClickDrop, aby otwierać skrzynki i zarządzać ekwipunkiem."
+    },
+    "dashboard": {
+      "title": "Panel | ClickDrop",
+      "description": "Twój panel ClickDrop."
     }
   },
   "language": {
@@ -29,6 +33,16 @@
     "submitting": "Logowanie…",
     "registerPrompt": "Nie masz konta?",
     "registerLink": "Zarejestruj się",
-    "error": "Logowanie nie powiodło się. Spróbuj ponownie."
+    "error": "Logowanie nie powiodło się. Spróbuj ponownie.",
+    "invalidCredentials": "Nieprawidłowy email lub hasło.",
+    "validationError": "Sprawdź email i hasło.",
+    "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Jesteś zalogowany.",
+    "email": "Email",
+    "role": "Rola",
+    "logout": "Wyloguj"
   }
 }

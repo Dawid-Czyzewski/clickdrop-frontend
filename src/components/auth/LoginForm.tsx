@@ -1,12 +1,16 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { authApi } from '../../api/authApi'
+import { ApiError } from '../../api/client'
+import { setAuthUser } from '../../auth/session'
 
 const inputClassName =
   'w-full rounded-md border border-cd-border bg-cd-bg-elevated px-3.5 py-3 text-base text-cd-text outline-none transition placeholder:text-cd-muted focus:border-cd-accent focus:ring-1 focus:ring-cd-accent'
 
 export function LoginForm() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -18,9 +22,21 @@ export function LoginForm() {
     setIsSubmitting(true)
 
     try {
-      await Promise.resolve({ email, password })
-    } catch {
-      setError(t('login.error'))
+      const user = await authApi.login({ email, password })
+      setAuthUser(user)
+      navigate('/dashboard', { replace: true })
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 401) {
+          setError(t('login.invalidCredentials'))
+        } else if (err.status === 400) {
+          setError(t('login.validationError'))
+        } else {
+          setError(t('login.error'))
+        }
+      } else {
+        setError(t('login.networkError'))
+      }
     } finally {
       setIsSubmitting(false)
     }

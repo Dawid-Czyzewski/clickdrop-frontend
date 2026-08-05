@@ -1,0 +1,34 @@
+import { describe, expect, it, vi } from 'vitest'
+import { authApi } from '../../src/api/authApi'
+
+describe('authApi', () => {
+  it('posts credentials to /api/auth/login', async () => {
+    const response = { id: 42, email: 'player@clickdrop.test', role: 'USER' }
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => response,
+      }),
+    )
+
+    const result = await authApi.login({
+      email: 'player@clickdrop.test',
+      password: 'secret123',
+    })
+
+    expect(result).toEqual(response)
+    expect(fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/api/auth/login',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'player@clickdrop.test',
+          password: 'secret123',
+        }),
+      }),
+    )
+  })
+})

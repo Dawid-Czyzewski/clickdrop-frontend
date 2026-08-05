@@ -12,6 +12,10 @@
     "login": {
       "title": "Login | ClickDrop",
       "description": "Sign in to your ClickDrop account to open cases and manage your inventory."
+    },
+    "dashboard": {
+      "title": "Dashboard | ClickDrop",
+      "description": "Your ClickDrop dashboard."
     }
   },
   "language": {
@@ -29,6 +33,16 @@
     "submitting": "Signing in…",
     "registerPrompt": "Don't have an account?",
     "registerLink": "Register",
-    "error": "Login failed. Please try again."
+    "error": "Login failed. Please try again.",
+    "invalidCredentials": "Invalid email or password.",
+    "validationError": "Please check your email and password.",
+    "networkError": "Could not reach the server. Please try again."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "You are signed in.",
+    "email": "Email",
+    "role": "Role",
+    "logout": "Log out"
   }
 }
