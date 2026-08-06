@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { ApiError } from '../../api/client'
-import { setAuthUser } from '../../auth/session'
+import { setSession } from '../../auth/session'
 
 const inputClassName =
   'w-full rounded-md border border-cd-border bg-cd-bg-elevated px-3.5 py-3 text-base text-cd-text outline-none transition placeholder:text-cd-muted focus:border-cd-accent focus:ring-1 focus:ring-cd-accent'
@@ -23,7 +23,7 @@ export function LoginForm() {
 
     try {
       const user = await authApi.login({ email, password })
-      setAuthUser(user)
+      setSession(user)
       navigate('/dashboard', { replace: true })
     } catch (err) {
       if (err instanceof ApiError) {

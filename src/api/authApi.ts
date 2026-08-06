@@ -8,6 +8,7 @@ export type LoginRequest = {
 }
 
 export type LoginResponse = {
+  token: string
   id: number
   email: string
   role: Role
@@ -18,6 +19,7 @@ export const authApi = {
     return apiRequest<LoginResponse>('/api/auth/login', {
       method: 'POST',
       body: payload,
+      auth: false,
     })
   },
 }

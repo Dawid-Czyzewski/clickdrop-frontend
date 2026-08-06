@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { Route, Routes } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { ProtectedRoute } from '../../src/auth/ProtectedRoute'
-import { setAuthUser } from '../../src/auth/session'
+import { setSession } from '../../src/auth/session'
 import { renderWithProviders } from '../utils/render'
 
 function renderProtected() {
@@ -24,7 +24,8 @@ describe('ProtectedRoute', () => {
   })
 
   it('renders protected content for authenticated users', () => {
-    setAuthUser({
+    setSession({
+      token: 'jwt-protected',
       id: 1,
       email: 'user@clickdrop.test',
       role: 'USER',

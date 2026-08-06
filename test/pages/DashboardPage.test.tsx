@@ -2,13 +2,14 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { DashboardPage } from '../../src/pages/DashboardPage'
-import { setAuthUser, getAuthUser } from '../../src/auth/session'
+import { setSession, getAuthUser } from '../../src/auth/session'
 import { renderWithProviders } from '../utils/render'
 import { Route, Routes } from 'react-router-dom'
 
 describe('DashboardPage', () => {
   it('shows signed-in user details', () => {
-    setAuthUser({
+    setSession({
+      token: 'jwt-dash',
       id: 3,
       email: 'dash@clickdrop.test',
       role: 'ADMIN',
@@ -22,7 +23,8 @@ describe('DashboardPage', () => {
 
   it('logs out and navigates to login', async () => {
     const user = userEvent.setup()
-    setAuthUser({
+    setSession({
+      token: 'jwt-dash',
       id: 3,
       email: 'dash@clickdrop.test',
       role: 'USER',

@@ -3,7 +3,12 @@ import { authApi } from '../../src/api/authApi'
 
 describe('authApi', () => {
   it('posts credentials to /api/auth/login', async () => {
-    const response = { id: 42, email: 'player@clickdrop.test', role: 'USER' }
+    const response = {
+      token: 'jwt-login-token',
+      id: 42,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    }
 
     vi.stubGlobal(
       'fetch',
