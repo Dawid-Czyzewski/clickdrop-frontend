@@ -4,9 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { ApiError } from '../../api/client'
 import { setSession } from '../../auth/session'
-
-const inputClassName =
-  'w-full rounded-md border border-cd-border bg-cd-bg-elevated px-3.5 py-3 text-base text-cd-text outline-none transition placeholder:text-cd-muted focus:border-cd-accent focus:ring-1 focus:ring-cd-accent'
+import { authInputClassName, authSubmitClassName } from './authStyles'
 
 export function LoginForm() {
   const { t } = useTranslation()
@@ -56,7 +54,7 @@ export function LoginForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={inputClassName}
+          className={authInputClassName}
           placeholder={t('login.emailPlaceholder')}
         />
       </div>
@@ -73,7 +71,7 @@ export function LoginForm() {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={inputClassName}
+          className={authInputClassName}
           placeholder={t('login.passwordPlaceholder')}
         />
       </div>
@@ -84,11 +82,7 @@ export function LoginForm() {
         </p>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="mt-1 w-full cursor-pointer rounded-md bg-cd-accent px-5 py-3 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:cursor-not-allowed disabled:opacity-60"
-      >
+      <button type="submit" disabled={isSubmitting} className={authSubmitClassName}>
         {isSubmitting ? t('login.submitting') : t('login.submit')}
       </button>
 

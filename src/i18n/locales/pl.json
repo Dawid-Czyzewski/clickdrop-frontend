@@ -13,6 +13,10 @@
       "title": "Logowanie | ClickDrop",
       "description": "Zaloguj się do konta ClickDrop, aby otwierać skrzynki i zarządzać ekwipunkiem."
     },
+    "register": {
+      "title": "Rejestracja | ClickDrop",
+      "description": "Utwórz konto ClickDrop, aby otwierać skrzynki i łapać rzadkie dropy."
+    },
     "dashboard": {
       "title": "Panel | ClickDrop",
       "description": "Twój panel ClickDrop."
@@ -37,6 +41,23 @@
     "invalidCredentials": "Nieprawidłowy email lub hasło.",
     "validationError": "Sprawdź email i hasło.",
     "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+  },
+  "register": {
+    "title": "Utwórz konto",
+    "username": "Nazwa użytkownika",
+    "usernamePlaceholder": "twojanazwa",
+    "email": "Email",
+    "emailPlaceholder": "ty@przyklad.pl",
+    "password": "Hasło",
+    "passwordPlaceholder": "••••••••",
+    "confirmPassword": "Powtórz hasło",
+    "confirmPasswordPlaceholder": "••••••••",
+    "submit": "Utwórz konto",
+    "submitting": "Tworzenie konta…",
+    "loginPrompt": "Masz już konto?",
+    "loginLink": "Zaloguj się",
+    "passwordMismatch": "Hasła nie są takie same.",
+    "error": "Rejestracja nie powiodła się. Spróbuj ponownie."
   },
   "dashboard": {
     "title": "Panel",
