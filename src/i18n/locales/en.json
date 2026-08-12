@@ -57,7 +57,12 @@
     "loginPrompt": "Already have an account?",
     "loginLink": "Login",
     "passwordMismatch": "Passwords do not match.",
-    "error": "Registration failed. Please try again."
+    "error": "Registration failed. Please try again.",
+    "emailTaken": "This email is already in use.",
+    "usernameTaken": "This username is already taken.",
+    "conflict": "Account details are already in use.",
+    "validationError": "Please check your registration details.",
+    "networkError": "Could not reach the server. Please try again."
   },
   "dashboard": {
     "title": "Dashboard",

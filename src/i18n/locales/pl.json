@@ -57,7 +57,12 @@
     "loginPrompt": "Masz już konto?",
     "loginLink": "Zaloguj się",
     "passwordMismatch": "Hasła nie są takie same.",
-    "error": "Rejestracja nie powiodła się. Spróbuj ponownie."
+    "error": "Rejestracja nie powiodła się. Spróbuj ponownie.",
+    "emailTaken": "Ten email jest już zajęty.",
+    "usernameTaken": "Ta nazwa użytkownika jest już zajęta.",
+    "conflict": "Dane konta są już zajęte.",
+    "validationError": "Sprawdź dane rejestracji.",
+    "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
   },
   "dashboard": {
     "title": "Panel",

@@ -1,13 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { authApi } from '../../api/authApi'
+import { ApiError } from '../../api/client'
 import { authInputClassName, authSubmitClassName } from './authStyles'
-
-export type RegisterPayload = {
-  username: string
-  email: string
-  password: string
-}
 
 export function RegisterForm() {
   const { t } = useTranslation()
@@ -31,12 +27,27 @@ export function RegisterForm() {
     setIsSubmitting(true)
 
     try {
-      const payload: RegisterPayload = { username, email, password }
-      
-      await Promise.resolve(payload)
+      await authApi.register({ email, username, password })
       navigate('/login', { replace: true })
-    } catch {
-      setError(t('register.error'))
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 409) {
+          const message = err.message.toLowerCase()
+          if (message.includes('email')) {
+            setError(t('register.emailTaken'))
+          } else if (message.includes('username')) {
+            setError(t('register.usernameTaken'))
+          } else {
+            setError(t('register.conflict'))
+          }
+        } else if (err.status === 400) {
+          setError(t('register.validationError'))
+        } else {
+          setError(t('register.error'))
+        }
+      } else {
+        setError(t('register.networkError'))
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -55,6 +66,7 @@ export function RegisterForm() {
           autoComplete="username"
           required
           minLength={3}
+          maxLength={50}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className={authInputClassName}
@@ -90,6 +102,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           required
           minLength={8}
+          maxLength={100}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={authInputClassName}
@@ -111,6 +124,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           required
           minLength={8}
+          maxLength={100}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           className={authInputClassName}
