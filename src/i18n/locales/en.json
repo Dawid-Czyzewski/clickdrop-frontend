@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "ClickDrop",
-    "subtitle": "Frontend starter with React, TypeScript, Tailwind and i18n.",
+    "subtitle": "Open cases. Drop rare skins.",
     "cta": "Get started"
   },
   "seo": {
@@ -20,6 +20,62 @@
     "dashboard": {
       "title": "Dashboard | ClickDrop",
       "description": "Your ClickDrop dashboard."
+    }
+  },
+  "home": {
+    "header": {
+      "links": "Quick links",
+      "blog": "Blog",
+      "daily": "Daily Free",
+      "shop": "War Tag Shop",
+      "online": "online",
+      "login": "Login"
+    },
+    "nav": {
+      "label": "Main sections",
+      "cases": "Cases",
+      "event": "Event",
+      "battles": "Case Battle",
+      "contracts": "Contract"
+    },
+    "stats": {
+      "cases": "cases opened",
+      "upgrades": "upgrades",
+      "battles": "battles",
+      "contracts": "contracts",
+      "players": "players"
+    },
+    "feed": {
+      "label": "Live drops",
+      "title": "Live"
+    },
+    "games": {
+      "label": "Games",
+      "cs2": "CS2",
+      "dota": "DOTA 2",
+      "rust": "RUST"
+    },
+    "hero": {
+      "eyebrow": "Limited event",
+      "title": "Forged Legends",
+      "subtitle": "Open legendary cases, chase gold drops, and climb the event leaderboard.",
+      "countdown": "Event countdown",
+      "days": "Days",
+      "hours": "Hours",
+      "mins": "Min",
+      "secs": "Sec",
+      "cta": "Event page"
+    },
+    "cases": {
+      "heading": "Featured cases",
+      "anvil": "Anvil",
+      "temper": "Temper",
+      "forgefire": "Forgefire",
+      "ember": "Ember",
+      "nova": "Nova",
+      "rift": "Rift",
+      "pulse": "Pulse",
+      "shadow": "Shadow"
     }
   },
   "language": {

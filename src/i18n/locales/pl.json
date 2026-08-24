@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "ClickDrop",
-    "subtitle": "Starter frontendu z React, TypeScript, Tailwind i i18n.",
+    "subtitle": "Otwieraj skrzynki. Łap rzadkie skiny.",
     "cta": "Zacznij"
   },
   "seo": {
@@ -20,6 +20,62 @@
     "dashboard": {
       "title": "Panel | ClickDrop",
       "description": "Twój panel ClickDrop."
+    }
+  },
+  "home": {
+    "header": {
+      "links": "Szybkie linki",
+      "blog": "Blog",
+      "daily": "Daily Free",
+      "shop": "War Tag Shop",
+      "online": "online",
+      "login": "Zaloguj"
+    },
+    "nav": {
+      "label": "Główne sekcje",
+      "cases": "Skrzynie",
+      "event": "Wydarzenie",
+      "battles": "Bitwa o skrzynie",
+      "contracts": "Kontrakt"
+    },
+    "stats": {
+      "cases": "otwartych skrzynek",
+      "upgrades": "upgrade’ów",
+      "battles": "bitew",
+      "contracts": "kontraktów",
+      "players": "graczy"
+    },
+    "feed": {
+      "label": "Live dropy",
+      "title": "Live"
+    },
+    "games": {
+      "label": "Gry",
+      "cs2": "CS2",
+      "dota": "DOTA 2",
+      "rust": "RUST"
+    },
+    "hero": {
+      "eyebrow": "Limitowane wydarzenie",
+      "title": "Forged Legends",
+      "subtitle": "Otwieraj legendarne skrzynki, łap złote dropy i wspinaj się w rankingu wydarzenia.",
+      "countdown": "Odliczanie do końca wydarzenia",
+      "days": "Dni",
+      "hours": "Godz",
+      "mins": "Min",
+      "secs": "Sek",
+      "cta": "Strona wydarzenia"
+    },
+    "cases": {
+      "heading": "Wyróżnione skrzynki",
+      "anvil": "Anvil",
+      "temper": "Temper",
+      "forgefire": "Forgefire",
+      "ember": "Ember",
+      "nova": "Nova",
+      "rift": "Rift",
+      "pulse": "Pulse",
+      "shadow": "Shadow"
     }
   },
   "language": {
