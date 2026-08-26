@@ -20,6 +20,7 @@ function renderRegisterForm() {
   return renderWithProviders(
     <Routes>
       <Route path="/register" element={<RegisterForm />} />
+      <Route path="/verify-email" element={<div>Verify email page</div>} />
       <Route path="/login" element={<div>Login page</div>} />
     </Routes>,
     { routerProps: { initialEntries: ['/register'] } },
@@ -48,7 +49,7 @@ describe('RegisterForm', () => {
     expect(registerMock).not.toHaveBeenCalled()
   })
 
-  it('registers and redirects to login', async () => {
+  it('registers and redirects to verify email', async () => {
     const user = userEvent.setup()
     registerMock.mockResolvedValue({
       id: 10,
@@ -62,7 +63,7 @@ describe('RegisterForm', () => {
     await user.click(screen.getByRole('button', { name: /create account/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Login page')).toBeInTheDocument()
+      expect(screen.getByText('Verify email page')).toBeInTheDocument()
     })
 
     expect(registerMock).toHaveBeenCalledWith({

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { ApiError } from '../../api/client'
+import { setPendingVerificationEmail } from '../../auth/pendingVerification'
 import { authInputClassName, authSubmitClassName } from './authStyles'
 
 export function RegisterForm() {
@@ -28,7 +29,8 @@ export function RegisterForm() {
 
     try {
       await authApi.register({ email, username, password })
-      navigate('/login', { replace: true })
+      setPendingVerificationEmail(email)
+      navigate('/verify-email', { replace: true, state: { email } })
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.status === 409) {

@@ -17,6 +17,10 @@
       "title": "Rejestracja | ClickDrop",
       "description": "Utwórz konto ClickDrop, aby otwierać skrzynki i łapać rzadkie dropy."
     },
+    "verifyEmail": {
+      "title": "Weryfikacja e-mail | ClickDrop",
+      "description": "Potwierdź adres e-mail konta ClickDrop, aby dokończyć rejestrację."
+    },
     "dashboard": {
       "title": "Panel | ClickDrop",
       "description": "Twój panel ClickDrop."
@@ -119,6 +123,16 @@
     "conflict": "Dane konta są już zajęte.",
     "validationError": "Sprawdź dane rejestracji.",
     "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+  },
+  "verifyEmail": {
+    "title": "Sprawdź e-mail",
+    "message": "Wysłaliśmy link aktywacyjny na adres:",
+    "resend": "Wyślij ponownie",
+    "resending": "Wysyłanie…",
+    "resent": "E-mail został wysłany ponownie.",
+    "error": "Nie udało się wysłać e-maila ponownie.",
+    "networkError": "Brak połączenia z serwerem. Spróbuj ponownie.",
+    "loginLink": "Wróć do logowania"
   },
   "dashboard": {
     "title": "Panel",

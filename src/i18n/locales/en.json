@@ -17,6 +17,10 @@
       "title": "Register | ClickDrop",
       "description": "Create a ClickDrop account to open cases and chase rare drops."
     },
+    "verifyEmail": {
+      "title": "Verify email | ClickDrop",
+      "description": "Confirm your ClickDrop account email to finish registration."
+    },
     "dashboard": {
       "title": "Dashboard | ClickDrop",
       "description": "Your ClickDrop dashboard."
@@ -119,6 +123,16 @@
     "conflict": "Account details are already in use.",
     "validationError": "Please check your registration details.",
     "networkError": "Could not reach the server. Please try again."
+  },
+  "verifyEmail": {
+    "title": "Check your email",
+    "message": "We sent an activation link to:",
+    "resend": "Resend email",
+    "resending": "Sending…",
+    "resent": "Email sent again.",
+    "error": "Could not resend the email.",
+    "networkError": "Could not reach the server. Please try again.",
+    "loginLink": "Back to login"
   },
   "dashboard": {
     "title": "Dashboard",

@@ -4,12 +4,13 @@ import { setSession } from '../../src/auth/session'
 
 describe('apiRequest', () => {
   it('returns parsed JSON on success', async () => {
+    const payload = { id: 1, email: 'a@b.c', role: 'USER', token: 'abc' }
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue({
         ok: true,
         status: 200,
-        json: async () => ({ id: 1, email: 'a@b.c', role: 'USER', token: 'abc' }),
+        text: async () => JSON.stringify(payload),
       }),
     )
 
@@ -19,7 +20,7 @@ describe('apiRequest', () => {
       auth: false,
     })
 
-    expect(data).toEqual({ id: 1, email: 'a@b.c', role: 'USER', token: 'abc' })
+    expect(data).toEqual(payload)
     expect(fetch).toHaveBeenCalledWith(
       'http://localhost:8081/api/auth/login',
       expect.objectContaining({
@@ -42,7 +43,7 @@ describe('apiRequest', () => {
       vi.fn().mockResolvedValue({
         ok: true,
         status: 200,
-        json: async () => ({ ok: true }),
+        text: async () => JSON.stringify({ ok: true }),
       }),
     )
 
@@ -56,6 +57,25 @@ describe('apiRequest', () => {
         }),
       }),
     )
+  })
+
+  it('returns undefined for empty success body', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        text: async () => '',
+      }),
+    )
+
+    await expect(
+      apiRequest<void>('/api/auth/resend-verification', {
+        method: 'POST',
+        body: { email: 'a@b.c' },
+        auth: false,
+      }),
+    ).resolves.toBeUndefined()
   })
 
   it('throws ApiError with message from response body', async () => {

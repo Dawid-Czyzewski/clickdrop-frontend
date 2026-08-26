@@ -27,6 +27,10 @@ export type RegisterResponse = {
   role: Role
 }
 
+export type ResendVerificationRequest = {
+  email: string
+}
+
 export const authApi = {
   login(payload: LoginRequest): Promise<LoginResponse> {
     return apiRequest<LoginResponse>('/api/auth/login', {
@@ -38,6 +42,14 @@ export const authApi = {
 
   register(payload: RegisterRequest): Promise<RegisterResponse> {
     return apiRequest<RegisterResponse>('/api/auth/register', {
+      method: 'POST',
+      body: payload,
+      auth: false,
+    })
+  },
+
+  resendVerification(payload: ResendVerificationRequest): Promise<void> {
+    return apiRequest<void>('/api/auth/resend-verification', {
       method: 'POST',
       body: payload,
       auth: false,
