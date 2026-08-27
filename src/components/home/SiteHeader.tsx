@@ -1,11 +1,18 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getAuthUser, isAuthenticated } from '../../auth/session'
+import { clearAuthUser, getAuthUser, isAuthenticated } from '../../auth/session'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
+  const [, setAuthTick] = useState(0)
   const loggedIn = isAuthenticated()
   const user = getAuthUser()
+
+  function handleLogout() {
+    clearAuthUser()
+    setAuthTick((value) => value + 1)
+  }
 
   return (
     <header className="border-b border-cd-border bg-cd-bg-elevated/95 backdrop-blur-sm">
@@ -68,12 +75,18 @@ export function SiteHeader() {
           </div>
 
           {loggedIn && user ? (
-            <Link
-              to="/dashboard"
-              className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover"
-            >
-              {user.email}
-            </Link>
+            <div className="flex items-center gap-2">
+              <span className="hidden max-w-[180px] truncate text-sm text-cd-text sm:inline">
+                {user.email}
+              </span>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text transition hover:bg-cd-surface-hover"
+              >
+                {t('home.header.logout')}
+              </button>
+            </div>
           ) : (
             <Link
               to="/login"

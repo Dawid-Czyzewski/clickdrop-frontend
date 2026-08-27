@@ -37,6 +37,10 @@ export function VerifyEmailPanel() {
   }
 
   async function handleResend() {
+    if (isSubmitting) {
+      return
+    }
+
     setError('')
     setResent(false)
     setIsSubmitting(true)

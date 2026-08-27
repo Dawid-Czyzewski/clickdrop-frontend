@@ -15,7 +15,7 @@ describe('authApi.register', () => {
       vi.fn().mockResolvedValue({
         ok: true,
         status: 201,
-        json: async () => response,
+        text: async () => JSON.stringify(response),
       }),
     )
 

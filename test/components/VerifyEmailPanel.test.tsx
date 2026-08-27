@@ -78,6 +78,30 @@ describe('VerifyEmailPanel', () => {
     expect(screen.getByText('stored@clickdrop.test')).toBeInTheDocument()
   })
 
+  it('disables the button while sending', async () => {
+    const user = userEvent.setup()
+    let resolveRequest: (() => void) | undefined
+    resendMock.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveRequest = () => resolve(undefined)
+        }),
+    )
+
+    renderVerifyEmailPanel()
+    const button = screen.getByRole('button', { name: /resend email/i })
+    await user.click(button)
+
+    expect(button).toBeDisabled()
+    expect(button).toHaveAttribute('aria-busy', 'true')
+    expect(button).toHaveTextContent('Sending…')
+
+    resolveRequest?.()
+    await waitFor(() => {
+      expect(button).not.toBeDisabled()
+    })
+  })
+
   it('resends email and shows success status', async () => {
     const user = userEvent.setup()
     resendMock.mockResolvedValue(undefined)

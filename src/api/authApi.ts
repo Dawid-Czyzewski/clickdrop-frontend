@@ -31,6 +31,10 @@ export type ResendVerificationRequest = {
   email: string
 }
 
+export type VerifyEmailResponse = {
+  message: string
+}
+
 export const authApi = {
   login(payload: LoginRequest): Promise<LoginResponse> {
     return apiRequest<LoginResponse>('/api/auth/login', {
@@ -52,6 +56,14 @@ export const authApi = {
     return apiRequest<void>('/api/auth/resend-verification', {
       method: 'POST',
       body: payload,
+      auth: false,
+    })
+  },
+
+  verifyEmail(token: string): Promise<VerifyEmailResponse> {
+    const query = new URLSearchParams({ token }).toString()
+    return apiRequest<VerifyEmailResponse>(`/api/auth/verify-email?${query}`, {
+      method: 'GET',
       auth: false,
     })
   },

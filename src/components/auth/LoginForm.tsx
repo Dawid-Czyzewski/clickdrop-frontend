@@ -22,7 +22,7 @@ export function LoginForm() {
     try {
       const user = await authApi.login({ email, password })
       setSession(user)
-      navigate('/dashboard', { replace: true })
+      navigate('/', { replace: true })
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.status === 401) {

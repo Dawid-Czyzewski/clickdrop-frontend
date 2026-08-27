@@ -33,7 +33,8 @@
       "daily": "Daily Free",
       "shop": "War Tag Shop",
       "online": "online",
-      "login": "Zaloguj"
+      "login": "Zaloguj",
+      "logout": "Wyloguj"
     },
     "nav": {
       "label": "Główne sekcje",
@@ -52,12 +53,6 @@
     "feed": {
       "label": "Live dropy",
       "title": "Live"
-    },
-    "games": {
-      "label": "Gry",
-      "cs2": "CS2",
-      "dota": "DOTA 2",
-      "rust": "RUST"
     },
     "hero": {
       "eyebrow": "Limitowane wydarzenie",
@@ -126,13 +121,21 @@
   },
   "verifyEmail": {
     "title": "Sprawdź e-mail",
+    "confirmTitle": "Weryfikacja e-mail",
     "message": "Wysłaliśmy link aktywacyjny na adres:",
     "resend": "Wyślij ponownie",
     "resending": "Wysyłanie…",
     "resent": "E-mail został wysłany ponownie.",
     "error": "Nie udało się wysłać e-maila ponownie.",
     "networkError": "Brak połączenia z serwerem. Spróbuj ponownie.",
-    "loginLink": "Wróć do logowania"
+    "loginLink": "Wróć do logowania",
+    "goToLogin": "Przejdź do logowania",
+    "confirming": "Potwierdzamy Twój e-mail…",
+    "success": "E-mail potwierdzony. Możesz się zalogować.",
+    "alreadyVerified": "To konto jest już zweryfikowane. Możesz się zalogować.",
+    "invalid": "Ten link weryfikacyjny jest nieprawidłowy.",
+    "expired": "Ten link weryfikacyjny wygasł.",
+    "confirmError": "Nie udało się zweryfikować e-maila. Spróbuj ponownie."
   },
   "dashboard": {
     "title": "Panel",

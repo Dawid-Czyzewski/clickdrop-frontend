@@ -33,7 +33,8 @@
       "daily": "Daily Free",
       "shop": "War Tag Shop",
       "online": "online",
-      "login": "Login"
+      "login": "Login",
+      "logout": "Log out"
     },
     "nav": {
       "label": "Main sections",
@@ -52,12 +53,6 @@
     "feed": {
       "label": "Live drops",
       "title": "Live"
-    },
-    "games": {
-      "label": "Games",
-      "cs2": "CS2",
-      "dota": "DOTA 2",
-      "rust": "RUST"
     },
     "hero": {
       "eyebrow": "Limited event",
@@ -126,13 +121,21 @@
   },
   "verifyEmail": {
     "title": "Check your email",
+    "confirmTitle": "Email verification",
     "message": "We sent an activation link to:",
     "resend": "Resend email",
     "resending": "Sending…",
     "resent": "Email sent again.",
     "error": "Could not resend the email.",
     "networkError": "Could not reach the server. Please try again.",
-    "loginLink": "Back to login"
+    "loginLink": "Back to login",
+    "goToLogin": "Go to login",
+    "confirming": "Confirming your email…",
+    "success": "Email confirmed. You can sign in now.",
+    "alreadyVerified": "This account is already verified. You can sign in.",
+    "invalid": "This verification link is invalid.",
+    "expired": "This verification link has expired.",
+    "confirmError": "Could not verify your email. Please try again."
   },
   "dashboard": {
     "title": "Dashboard",
