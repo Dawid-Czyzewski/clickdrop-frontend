@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import {
-  clearAuthUser,
+  authService,
   getAuthUser,
   getToken,
-  isAuthenticated,
+  hasActiveSession,
+  logout,
   setSession,
-} from '../src/auth/session'
+} from '../../src/auth/authService'
 
 const session = {
   token: 'jwt-test-token',
@@ -14,32 +15,43 @@ const session = {
   role: 'USER' as const,
 }
 
-describe('session', () => {
+describe('authService', () => {
   it('returns null when no session is stored', () => {
     expect(getAuthUser()).toBeNull()
     expect(getToken()).toBeNull()
-    expect(isAuthenticated()).toBe(false)
+    expect(hasActiveSession()).toBe(false)
+    expect(authService.hasActiveSession()).toBe(false)
   })
 
   it('stores token and user from login response', () => {
     setSession(session)
 
     expect(getToken()).toBe('jwt-test-token')
+    expect(authService.getToken()).toBe('jwt-test-token')
     expect(getAuthUser()).toEqual({
       id: 1,
       email: 'user@clickdrop.test',
       role: 'USER',
     })
-    expect(isAuthenticated()).toBe(true)
+    expect(hasActiveSession()).toBe(true)
   })
 
-  it('clears token and user', () => {
+  it('removes token and user on logout', () => {
     setSession(session)
-    clearAuthUser()
+    logout()
 
     expect(getToken()).toBeNull()
     expect(getAuthUser()).toBeNull()
-    expect(isAuthenticated()).toBe(false)
+    expect(hasActiveSession()).toBe(false)
+  })
+
+  it('clears session through authService.logout', () => {
+    authService.setSession(session)
+    authService.logout()
+
+    expect(authService.getToken()).toBeNull()
+    expect(authService.getAuthUser()).toBeNull()
+    expect(authService.hasActiveSession()).toBe(false)
   })
 
   it('returns null for invalid JSON in user storage', () => {
@@ -48,6 +60,6 @@ describe('session', () => {
 
     expect(getAuthUser()).toBeNull()
     expect(getToken()).toBe('jwt-test-token')
-    expect(isAuthenticated()).toBe(true)
+    expect(hasActiveSession()).toBe(true)
   })
 })

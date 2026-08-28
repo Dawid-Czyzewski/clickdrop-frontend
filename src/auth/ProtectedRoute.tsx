@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { isAuthenticated } from './session'
+import { hasActiveSession } from './authService'
 
 export function ProtectedRoute() {
-  if (!isAuthenticated()) {
+  if (!hasActiveSession()) {
     return <Navigate to="/login" replace />
   }
 

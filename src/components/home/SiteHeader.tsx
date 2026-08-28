@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { clearAuthUser, getAuthUser, isAuthenticated } from '../../auth/session'
+import { authService } from '../../auth/authService'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
   const [, setAuthTick] = useState(0)
-  const loggedIn = isAuthenticated()
-  const user = getAuthUser()
+  const loggedIn = authService.hasActiveSession()
+  const user = authService.getAuthUser()
 
   function handleLogout() {
-    clearAuthUser()
+    authService.logout()
     setAuthTick((value) => value + 1)
   }
 

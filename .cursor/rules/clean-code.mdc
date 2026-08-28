@@ -1,0 +1,13 @@
+---
+description: Clean code standards and 200-line file limit for ClickDrop frontend
+alwaysApply: true
+---
+
+# Clean code & file size
+
+- Keep each source file at **most 200 lines**. If a file approaches or exceeds that, split by responsibility (components, hooks, API helpers, styles, types).
+- Prefer small, focused modules with a single clear purpose.
+- Avoid deep nesting; extract early returns and named helpers.
+- Do not add comments that only restate the code.
+- Reuse existing patterns (`authApi`, `apiRequest`, `AuthLayout`, i18n keys) instead of duplicating logic.
+- When editing a large file, leave it smaller or no bigger than before unless the task truly requires growth — then split.

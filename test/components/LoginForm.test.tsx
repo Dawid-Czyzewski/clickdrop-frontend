@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { LoginForm } from '../../src/components/auth/LoginForm'
 import { ApiError } from '../../src/api/client'
-import { getAuthUser } from '../../src/auth/session'
+import { authService } from '../../src/auth/authService'
 import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/authApi', () => ({
@@ -22,6 +22,7 @@ function renderLoginForm() {
     <Routes>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/" element={<div>Home page</div>} />
+      <Route path="/verify-email" element={<div>Verify email page</div>} />
     </Routes>,
     { routerProps: { initialEntries: ['/login'] } },
   )
@@ -51,7 +52,7 @@ describe('LoginForm', () => {
       email: 'ok@clickdrop.test',
       password: 'secret',
     })
-    expect(getAuthUser()).toEqual({
+    expect(authService.getAuthUser()).toEqual({
       id: 7,
       email: 'ok@clickdrop.test',
       role: 'USER',
@@ -72,7 +73,27 @@ describe('LoginForm', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Invalid email or password.',
     )
-    expect(getAuthUser()).toBeNull()
+    expect(authService.getAuthUser()).toBeNull()
+  })
+
+  it('redirects unverified account to verify email', async () => {
+    const user = userEvent.setup()
+    loginMock.mockRejectedValue(
+      new ApiError(403, 'Account is not verified. Please confirm your email'),
+    )
+
+    renderLoginForm()
+
+    await user.type(screen.getByLabelText(/email/i), 'pending@clickdrop.test')
+    await user.type(screen.getByLabelText(/password/i), 'secret')
+    await user.click(screen.getByRole('button', { name: /login/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText('Verify email page')).toBeInTheDocument()
+    })
+
+    expect(authService.getAuthUser()).toBeNull()
+    expect(localStorage.getItem('clickdrop_auth_token')).toBeNull()
   })
 
   it('shows network error when request fails unexpectedly', async () => {

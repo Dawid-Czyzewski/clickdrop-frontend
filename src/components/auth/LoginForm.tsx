@@ -2,8 +2,9 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
-import { ApiError } from '../../api/client'
-import { setSession } from '../../auth/session'
+import { setPendingVerificationEmail } from '../../auth/pendingVerification'
+import { resolveLoginError } from '../../auth/resolveLoginError'
+import { authService } from '../../auth/authService'
 import { authInputClassName, authSubmitClassName } from './authStyles'
 
 export function LoginForm() {
@@ -20,21 +21,17 @@ export function LoginForm() {
     setIsSubmitting(true)
 
     try {
-      const user = await authApi.login({ email, password })
-      setSession(user)
+      const session = await authApi.login({ email, password })
+      authService.setSession(session)
       navigate('/', { replace: true })
     } catch (err) {
-      if (err instanceof ApiError) {
-        if (err.status === 401) {
-          setError(t('login.invalidCredentials'))
-        } else if (err.status === 400) {
-          setError(t('login.validationError'))
-        } else {
-          setError(t('login.error'))
-        }
-      } else {
-        setError(t('login.networkError'))
+      const result = resolveLoginError(err, t)
+      if (result.kind === 'notVerified') {
+        setPendingVerificationEmail(email)
+        navigate('/verify-email', { replace: true, state: { email } })
+        return
       }
+      setError(result.message)
     } finally {
       setIsSubmitting(false)
     }

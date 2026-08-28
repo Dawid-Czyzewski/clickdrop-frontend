@@ -29,11 +29,19 @@ export function setSession(response: LoginResponse): void {
   localStorage.setItem(AUTH_USER_KEY, JSON.stringify({ id, email, role }))
 }
 
-export function clearAuthUser(): void {
+export function logout(): void {
   localStorage.removeItem(AUTH_USER_KEY)
   localStorage.removeItem(AUTH_TOKEN_KEY)
 }
 
-export function isAuthenticated(): boolean {
+export function hasActiveSession(): boolean {
   return Boolean(getToken())
+}
+
+export const authService = {
+  getToken,
+  getAuthUser,
+  setSession,
+  logout,
+  hasActiveSession,
 }

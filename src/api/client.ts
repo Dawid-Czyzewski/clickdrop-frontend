@@ -1,6 +1,5 @@
-import { getToken } from '../auth/session'
-
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? ''
+import { isAxiosError } from 'axios'
+import { apiClient } from './axiosClient'
 
 export class ApiError extends Error {
   readonly status: number
@@ -12,45 +11,44 @@ export class ApiError extends Error {
   }
 }
 
-type RequestOptions = Omit<RequestInit, 'body'> & {
+type RequestOptions = {
+  method?: string
   body?: unknown
+  headers?: Record<string, string>
   auth?: boolean
 }
 
-export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { body, headers, auth = true, ...rest } = options
-  const token = auth ? getToken() : null
-
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...rest,
-    headers: {
-      Accept: 'application/json',
-      ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...headers,
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  })
-
-  if (!response.ok) {
-    let message = `Request failed (${response.status})`
-    try {
-      const data = (await response.json()) as { message?: string; error?: string }
-      message = data.message || data.error || message
-    } catch {
-      
-    }
-    throw new ApiError(response.status, message)
+function resolveErrorMessage(status: number, data: unknown): string {
+  if (data && typeof data === 'object') {
+    const payload = data as { message?: string; error?: string }
+    if (payload.message) return payload.message
+    if (payload.error) return payload.error
   }
 
-  if (response.status === 204) {
-    return undefined as T
-  }
-
-  const text = await response.text()
-  if (!text) {
-    return undefined as T
-  }
-
-  return JSON.parse(text) as T
+  return `Request failed (${status})`
 }
+
+export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { body, headers, auth = true, method = 'GET' } = options
+
+  try {
+    const response = await apiClient.request<T>({
+      url: path,
+      method,
+      data: body,
+      headers,
+      skipAuth: !auth,
+    })
+
+    return response.data
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const status = error.response?.status ?? 500
+      throw new ApiError(status, resolveErrorMessage(status, error.response?.data))
+    }
+
+    throw error
+  }
+}
+
+export { apiClient } from './axiosClient'
