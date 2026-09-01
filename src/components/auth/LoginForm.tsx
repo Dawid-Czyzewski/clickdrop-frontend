@@ -23,7 +23,7 @@ export function LoginForm() {
     try {
       const session = await authApi.login({ email, password })
       authService.setSession(session)
-      navigate('/', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (err) {
       const result = resolveLoginError(err, t)
       if (result.kind === 'notVerified') {

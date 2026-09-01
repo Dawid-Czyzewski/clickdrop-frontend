@@ -21,7 +21,7 @@ function renderLoginForm() {
   return renderWithProviders(
     <Routes>
       <Route path="/login" element={<LoginForm />} />
-      <Route path="/" element={<div>Home page</div>} />
+      <Route path="/dashboard" element={<div>Dashboard page</div>} />
       <Route path="/verify-email" element={<div>Verify email page</div>} />
     </Routes>,
     { routerProps: { initialEntries: ['/login'] } },
@@ -29,7 +29,7 @@ function renderLoginForm() {
 }
 
 describe('LoginForm', () => {
-  it('logs in, stores user and redirects to home', async () => {
+  it('logs in, stores user and redirects to dashboard', async () => {
     const user = userEvent.setup()
     loginMock.mockResolvedValue({
       token: 'jwt-ok',
@@ -45,7 +45,7 @@ describe('LoginForm', () => {
     await user.click(screen.getByRole('button', { name: /login/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Home page')).toBeInTheDocument()
+      expect(screen.getByText('Dashboard page')).toBeInTheDocument()
     })
 
     expect(loginMock).toHaveBeenCalledWith({

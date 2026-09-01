@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
+import { HeaderUserStatsPanel } from './HeaderUserStatsPanel'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
@@ -75,8 +76,9 @@ export function SiteHeader() {
           </div>
 
           {loggedIn && user ? (
-            <div className="flex items-center gap-2">
-              <span className="hidden max-w-[180px] truncate text-sm text-cd-text sm:inline">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <HeaderUserStatsPanel />
+              <span className="hidden max-w-[140px] truncate text-sm text-cd-text lg:inline">
                 {user.email}
               </span>
               <button

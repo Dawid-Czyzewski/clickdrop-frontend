@@ -34,7 +34,11 @@
       "shop": "War Tag Shop",
       "online": "online",
       "login": "Zaloguj",
-      "logout": "Wyloguj"
+      "logout": "Wyloguj",
+      "level": "Lvl",
+      "xp": "XP",
+      "clickDollars": "CD",
+      "loadingStats": "Ładowanie statystyk…"
     },
     "nav": {
       "label": "Główne sekcje",
@@ -139,9 +143,15 @@
   },
   "dashboard": {
     "title": "Panel",
-    "welcome": "Jesteś zalogowany.",
-    "email": "Email",
-    "role": "Rola",
+    "welcome": "Podgląd Twojego konta.",
+    "username": "Nazwa użytkownika",
+    "level": "Poziom",
+    "xp": "XP",
+    "clickDollars": "ClickDollars",
+    "loading": "Ładowanie profilu…",
+    "error": "Nie udało się załadować profilu. Spróbuj ponownie.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorServer": "Serwer jest niedostępny. Spróbuj ponownie później.",
     "logout": "Wyloguj"
   }
 }

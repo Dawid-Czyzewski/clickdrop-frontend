@@ -34,7 +34,11 @@
       "shop": "War Tag Shop",
       "online": "online",
       "login": "Login",
-      "logout": "Log out"
+      "logout": "Log out",
+      "level": "Lvl",
+      "xp": "XP",
+      "clickDollars": "CD",
+      "loadingStats": "Loading stats…"
     },
     "nav": {
       "label": "Main sections",
@@ -139,9 +143,15 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "welcome": "You are signed in.",
-    "email": "Email",
-    "role": "Role",
+    "welcome": "Your account overview.",
+    "username": "Username",
+    "level": "Level",
+    "xp": "XP",
+    "clickDollars": "ClickDollars",
+    "loading": "Loading your profile…",
+    "error": "Could not load your profile. Please try again.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorServer": "The server is unavailable. Please try again later.",
     "logout": "Log out"
   }
 }
