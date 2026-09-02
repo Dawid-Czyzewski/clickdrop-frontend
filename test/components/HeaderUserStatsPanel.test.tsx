@@ -16,6 +16,7 @@ describe('HeaderUserStatsPanel', () => {
   it('shows level, xp and click dollars from backend', async () => {
     authService.setSession({
       token: 'jwt-header',
+      refreshToken: 'refresh-header',
       id: 1,
       email: 'player@clickdrop.test',
       role: 'USER',

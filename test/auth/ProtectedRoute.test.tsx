@@ -26,6 +26,7 @@ describe('ProtectedRoute', () => {
   it('renders protected content for authenticated users', () => {
     authService.setSession({
       token: 'jwt-protected',
+      refreshToken: 'refresh-protected',
       id: 1,
       email: 'user@clickdrop.test',
       role: 'USER',

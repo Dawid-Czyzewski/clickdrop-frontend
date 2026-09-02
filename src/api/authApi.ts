@@ -9,9 +9,19 @@ export type LoginRequest = {
 
 export type LoginResponse = {
   token: string
+  refreshToken: string
   id: number
   email: string
   role: Role
+}
+
+export type TokenResponse = {
+  accessToken: string
+  refreshToken: string
+}
+
+export type RefreshTokenRequest = {
+  refreshToken: string
 }
 
 export type RegisterRequest = {
@@ -38,6 +48,14 @@ export type VerifyEmailResponse = {
 export const authApi = {
   login(payload: LoginRequest): Promise<LoginResponse> {
     return apiRequest<LoginResponse>('/api/auth/login', {
+      method: 'POST',
+      body: payload,
+      auth: false,
+    })
+  },
+
+  refresh(payload: RefreshTokenRequest): Promise<TokenResponse> {
+    return apiRequest<TokenResponse>('/api/auth/refresh', {
       method: 'POST',
       body: payload,
       auth: false,

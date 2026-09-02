@@ -1,5 +1,6 @@
-import type { AxiosError, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import { authService } from '../auth/authService'
+import { forceLogoutAndRedirect, refreshAccessToken } from './tokenRefresh'
 
 export function attachAuthHeader(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
   if (config.skipAuth) {
@@ -14,10 +15,32 @@ export function attachAuthHeader(config: InternalAxiosRequestConfig): InternalAx
   return config
 }
 
-export function handleUnauthorized(error: AxiosError): Promise<never> {
-  if (error.response?.status === 401 && !error.config?.skipAuth) {
-    authService.logout()
-  }
+function isAuthRefreshRequest(config?: InternalAxiosRequestConfig): boolean {
+  const url = config?.url ?? ''
+  return url.includes('/api/auth/refresh')
+}
 
-  return Promise.reject(error)
+export function createUnauthorizedHandler(client: AxiosInstance) {
+  return async function handleUnauthorized(error: AxiosError) {
+    const { config, response } = error
+
+    if (response?.status !== 401 || !config || config.skipAuth) {
+      return Promise.reject(error)
+    }
+
+    if (config._retry || isAuthRefreshRequest(config)) {
+      forceLogoutAndRedirect()
+      return Promise.reject(error)
+    }
+
+    config._retry = true
+
+    try {
+      const accessToken = await refreshAccessToken()
+      config.headers.Authorization = `Bearer ${accessToken}`
+      return client.request(config)
+    } catch (refreshError) {
+      return Promise.reject(refreshError)
+    }
+  }
 }

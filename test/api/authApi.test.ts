@@ -14,6 +14,7 @@ describe('authApi', () => {
   it('posts credentials to /api/auth/login', async () => {
     const response = {
       token: 'jwt-login-token',
+      refreshToken: 'jwt-refresh-token',
       id: 42,
       email: 'player@clickdrop.test',
       role: 'USER',
@@ -34,6 +35,25 @@ describe('authApi', () => {
         email: 'player@clickdrop.test',
         password: 'secret123',
       },
+      headers: undefined,
+      skipAuth: true,
+    })
+  })
+
+  it('posts refresh token to /api/auth/refresh', async () => {
+    const response = {
+      accessToken: 'jwt-new-access',
+      refreshToken: 'jwt-new-refresh',
+    }
+    requestMock.mockResolvedValue({ data: response })
+
+    const result = await authApi.refresh({ refreshToken: 'jwt-old-refresh' })
+
+    expect(result).toEqual(response)
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/refresh',
+      method: 'POST',
+      data: { refreshToken: 'jwt-old-refresh' },
       headers: undefined,
       skipAuth: true,
     })

@@ -33,6 +33,7 @@ describe('LoginForm', () => {
     const user = userEvent.setup()
     loginMock.mockResolvedValue({
       token: 'jwt-ok',
+      refreshToken: 'refresh-ok',
       id: 7,
       email: 'ok@clickdrop.test',
       role: 'USER',
@@ -58,6 +59,7 @@ describe('LoginForm', () => {
       role: 'USER',
     })
     expect(localStorage.getItem('clickdrop_auth_token')).toBe('jwt-ok')
+    expect(localStorage.getItem('clickdrop_auth_refresh_token')).toBe('refresh-ok')
   })
 
   it('shows invalid credentials on 401', async () => {

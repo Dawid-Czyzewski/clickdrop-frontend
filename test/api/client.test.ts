@@ -36,6 +36,7 @@ describe('apiRequest', () => {
   it('sends authenticated requests through axios client', async () => {
     setSession({
       token: 'jwt-abc',
+      refreshToken: 'refresh-abc',
       id: 1,
       email: 'a@b.c',
       role: 'USER',
