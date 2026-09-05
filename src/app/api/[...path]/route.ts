@@ -3,12 +3,24 @@ import { NextRequest, NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-function backendOrigin(): string {
+function authOrigin(): string {
   return (
     process.env.API_BACKEND_URL?.replace(/\/$/, '') ||
     process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ||
     'http://localhost:8081'
   )
+}
+
+function economyOrigin(): string {
+  return process.env.API_ECONOMY_URL?.replace(/\/$/, '') || 'http://localhost:8082'
+}
+
+function resolveUpstream(path: string[]): string {
+  const joined = path.join('/')
+  if (path[0] === 'economy') {
+    return `${economyOrigin()}/api/${joined}`
+  }
+  return `${authOrigin()}/api/${joined}`
 }
 
 const HOP_BY_HOP = new Set([
@@ -27,7 +39,7 @@ const HOP_BY_HOP = new Set([
 ])
 
 async function proxy(request: NextRequest, path: string[]): Promise<NextResponse> {
-  const target = `${backendOrigin()}/api/${path.join('/')}${request.nextUrl.search}`
+  const target = `${resolveUpstream(path)}${request.nextUrl.search}`
   const headers = new Headers()
 
   request.headers.forEach((value, key) => {

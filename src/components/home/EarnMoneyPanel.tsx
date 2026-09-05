@@ -1,20 +1,23 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
-import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { useBalance } from '../../hooks/useBalance'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 
 export function EarnMoneyPanel() {
   const { t, i18n } = useTranslation()
-  const loggedIn = authService.hasActiveSession()
-  const { user, isLoading } = useCurrentUser({ enabled: loggedIn })
+  const [loggedIn, setLoggedIn] = useState(false)
+  const { balance, isLoading, error } = useBalance({ enabled: loggedIn })
 
-  const balance =
-    loggedIn && user
-      ? formatClickDollars(user.clickDollars, i18n.language)
-      : null
+  useEffect(() => {
+    setLoggedIn(authService.hasActiveSession())
+  }, [])
+
+  const formattedBalance =
+    balance === null ? null : formatClickDollars(balance, i18n.language)
 
   return (
     <section
@@ -40,19 +43,26 @@ export function EarnMoneyPanel() {
           </h1>
           <p className="max-w-md text-base text-cd-muted">{t('home.earn.subtitle')}</p>
 
-          <div className="mt-2 flex items-baseline gap-2" aria-live="polite">
-            <span className="text-sm font-medium uppercase tracking-wider text-cd-muted">
-              {t('home.earn.balance')}
-            </span>
+          <div className="mt-2 flex flex-col gap-1" aria-live="polite">
             {isLoading ? (
-              <span role="status" className="text-sm text-cd-muted">
+              <p role="status" className="text-sm text-cd-muted">
                 {t('home.earn.loadingBalance')}
-              </span>
-            ) : (
-              <span className="font-display text-2xl font-semibold tabular-nums text-cd-accent">
-                {balance ?? t('home.earn.guestBalance')}
-              </span>
-            )}
+              </p>
+            ) : null}
+
+            {!isLoading && error ? (
+              <p role="alert" className="text-sm text-cd-danger">
+                {error}
+              </p>
+            ) : null}
+
+            {!isLoading && !error ? (
+              <p className="font-display text-2xl font-semibold tabular-nums text-cd-accent">
+                {loggedIn && formattedBalance !== null
+                  ? t('home.earn.balanceValue', { amount: formattedBalance })
+                  : t('home.earn.guestBalance')}
+              </p>
+            ) : null}
           </div>
         </div>
 

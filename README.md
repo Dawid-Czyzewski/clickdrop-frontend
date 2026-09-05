@@ -17,7 +17,7 @@ npm test
 - `NEXT_PUBLIC_API_BASE_URL` — leave empty (recommended) so the browser calls same-origin `/api`
 - `API_BACKEND_URL` — auth-service origin used by the Next.js API proxy (`http://localhost:8081`)
 
-Browser → `localhost:3000/api/*` → Next proxy → auth-service (no CORS issues).
+Browser → `localhost:3000/api/*` → Next proxy → auth-service (`8081`) or economy-service (`8082`).
 
 ## SEO
 

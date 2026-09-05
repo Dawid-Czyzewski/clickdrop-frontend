@@ -1,16 +1,17 @@
 import { screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { EarnMoneyPanel } from '../../src/components/home/EarnMoneyPanel'
+import { ApiError } from '../../src/api/client'
 import { authService } from '../../src/auth/authService'
 import { renderWithProviders } from '../utils/render'
 
-vi.mock('../../src/api/usersApi', () => ({
-  getCurrentUser: vi.fn(),
+vi.mock('../../src/api/economyApi', () => ({
+  getBalance: vi.fn(),
 }))
 
-import { getCurrentUser } from '../../src/api/usersApi'
+import { getBalance } from '../../src/api/economyApi'
 
-const getCurrentUserMock = vi.mocked(getCurrentUser)
+const getBalanceMock = vi.mocked(getBalance)
 
 describe('EarnMoneyPanel', () => {
   it('shows guest state with login CTA', () => {
@@ -18,10 +19,11 @@ describe('EarnMoneyPanel', () => {
 
     expect(screen.getByRole('heading', { name: /earn clickdollars/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /sign in to earn/i })).toHaveAttribute('href', '/login')
-    expect(screen.getByText('—')).toBeInTheDocument()
+    expect(screen.getByText('— ClickDollars')).toBeInTheDocument()
+    expect(getBalanceMock).not.toHaveBeenCalled()
   })
 
-  it('shows user balance and earn button when logged in', async () => {
+  it('loads balance from economy API when logged in', async () => {
     authService.setSession({
       token: 'jwt-earn',
       refreshToken: 'refresh-earn',
@@ -29,21 +31,32 @@ describe('EarnMoneyPanel', () => {
       email: 'player@clickdrop.test',
       role: 'USER',
     })
-    getCurrentUserMock.mockResolvedValue({
-      username: 'player',
-      email: 'player@clickdrop.test',
-      level: 3,
-      experience: 100,
-      clickDollars: 42.25,
-    })
+    getBalanceMock.mockResolvedValue({ balance: 0 })
 
     renderWithProviders(<EarnMoneyPanel />)
 
     await waitFor(() => {
-      expect(screen.getByText('42.25')).toBeInTheDocument()
+      expect(screen.getByText('0.00 ClickDollars')).toBeInTheDocument()
     })
 
+    expect(getBalanceMock).toHaveBeenCalledTimes(1)
     expect(screen.getByRole('button', { name: /earn money/i })).toBeInTheDocument()
-    expect(screen.getByText(/not connected yet/i)).toBeInTheDocument()
+  })
+
+  it('shows error when balance request fails', async () => {
+    authService.setSession({
+      token: 'jwt-earn',
+      refreshToken: 'refresh-earn',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockRejectedValue(new ApiError(500, 'down'))
+
+    renderWithProviders(<EarnMoneyPanel />)
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'The economy service is unavailable. Please try again later.',
+    )
   })
 })

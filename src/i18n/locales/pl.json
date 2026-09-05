@@ -57,12 +57,16 @@
       "eyebrow": "Saldo",
       "title": "Zarabiaj ClickDollary",
       "subtitle": "Wykonuj akcje, aby zwiększać saldo. Mechanika zarabiania pojawi się wkrótce.",
-      "balance": "Twoje saldo",
-      "guestBalance": "—",
-      "loadingBalance": "Ładowanie…",
+      "balanceValue": "{{amount}} ClickDollars",
+      "guestBalance": "— ClickDollars",
+      "loadingBalance": "Ładowanie salda…",
       "cta": "Zarabiaj",
       "loginCta": "Zaloguj się, by zarabiać",
-      "comingSoon": "Jeszcze niepodłączone"
+      "comingSoon": "Jeszcze niepodłączone",
+      "error": "Nie udało się pobrać salda. Spróbuj ponownie.",
+      "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "errorNotFound": "Nie znaleziono portfela. Skontaktuj się z supportem.",
+      "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
     },
     "cases": {
       "heading": "Wyróżnione skrzynki",
