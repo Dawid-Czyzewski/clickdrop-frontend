@@ -1,5 +1,8 @@
+'use client'
+
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { ApiError } from '../../api/client'
@@ -8,7 +11,7 @@ import { authInputClassName, authSubmitClassName } from './authStyles'
 
 export function RegisterForm() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -30,7 +33,7 @@ export function RegisterForm() {
     try {
       await authApi.register({ email, username, password })
       setPendingVerificationEmail(email)
-      navigate('/verify-email', { replace: true, state: { email } })
+      router.replace('/verify-email')
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.status === 409) {
@@ -147,7 +150,7 @@ export function RegisterForm() {
       <p className="text-center text-base text-cd-muted">
         {t('register.loginPrompt')}{' '}
         <Link
-          to="/login"
+          href="/login"
           className="cursor-pointer font-medium text-cd-accent transition hover:text-cd-accent-hover hover:underline"
         >
           {t('register.loginLink')}

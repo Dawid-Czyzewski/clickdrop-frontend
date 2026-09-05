@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { authSubmitClassName } from './authStyles'
 
@@ -21,7 +23,7 @@ export function AuthResultPanel({ message, tone = 'muted' }: AuthResultPanelProp
       <p role={tone === 'danger' ? 'alert' : 'status'} className={`text-base ${toneClass[tone]}`}>
         {message}
       </p>
-      <Link to="/login" className={`${authSubmitClassName} inline-flex justify-center no-underline`}>
+      <Link href="/login" className={`${authSubmitClassName} inline-flex justify-center no-underline`}>
         {t('verifyEmail.goToLogin')}
       </Link>
     </div>

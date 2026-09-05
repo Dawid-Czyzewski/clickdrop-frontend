@@ -1,24 +1,31 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import { authService } from '../../auth/authService'
+import { authService, type AuthUser } from '../../auth/authService'
 import { HeaderUserStatsPanel } from './HeaderUserStatsPanel'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
-  const [, setAuthTick] = useState(0)
-  const loggedIn = authService.hasActiveSession()
-  const user = authService.getAuthUser()
+  const [user, setUser] = useState<AuthUser | null>(null)
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setLoggedIn(authService.hasActiveSession())
+    setUser(authService.getAuthUser())
+  }, [])
 
   function handleLogout() {
     authService.logout()
-    setAuthTick((value) => value + 1)
+    setLoggedIn(false)
+    setUser(null)
   }
 
   return (
     <header className="border-b border-cd-border bg-cd-bg-elevated/95 backdrop-blur-sm">
       <div className="flex h-14 w-full items-center gap-4 px-3 sm:h-16 sm:px-5 lg:px-8">
-        <Link to="/" className="flex shrink-0 items-center gap-2 no-underline">
+        <Link href="/" className="flex shrink-0 items-center gap-2 no-underline">
           <svg viewBox="0 0 64 64" className="h-8 w-8" aria-hidden="true">
             <defs>
               <linearGradient id="cd-header-logo" x1="8" y1="4" x2="56" y2="60">
@@ -91,7 +98,7 @@ export function SiteHeader() {
             </div>
           ) : (
             <Link
-              to="/login"
+              href="/login"
               className="cursor-pointer rounded-md bg-cd-accent px-4 py-1.5 font-display text-xs font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover sm:px-5 sm:text-sm"
             >
               {t('home.header.login')}

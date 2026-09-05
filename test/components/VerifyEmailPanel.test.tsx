@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Route, Routes } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { VerifyEmailPanel } from '../../src/components/auth/VerifyEmailPanel'
 import { ApiError } from '../../src/api/client'
@@ -8,6 +7,7 @@ import {
   clearPendingVerificationEmail,
   setPendingVerificationEmail,
 } from '../../src/auth/pendingVerification'
+import { getMockRouter } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/authApi', () => ({
@@ -21,18 +21,8 @@ import { authApi } from '../../src/api/authApi'
 const resendMock = vi.mocked(authApi.resendVerification)
 
 function renderVerifyEmailPanel(email = 'player@clickdrop.test') {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/verify-email" element={<VerifyEmailPanel />} />
-      <Route path="/register" element={<div>Register page</div>} />
-      <Route path="/login" element={<div>Login page</div>} />
-    </Routes>,
-    {
-      routerProps: {
-        initialEntries: [{ pathname: '/verify-email', state: { email } }],
-      },
-    },
-  )
+  setPendingVerificationEmail(email)
+  return renderWithProviders(<VerifyEmailPanel />)
 }
 
 describe('VerifyEmailPanel', () => {
@@ -52,28 +42,17 @@ describe('VerifyEmailPanel', () => {
     )
   })
 
-  it('redirects to register when email is missing', () => {
-    renderWithProviders(
-      <Routes>
-        <Route path="/verify-email" element={<VerifyEmailPanel />} />
-        <Route path="/register" element={<div>Register page</div>} />
-      </Routes>,
-      { routerProps: { initialEntries: ['/verify-email'] } },
-    )
+  it('redirects to register when email is missing', async () => {
+    renderWithProviders(<VerifyEmailPanel />)
 
-    expect(screen.getByText('Register page')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/register')
+    })
   })
 
-  it('uses pending email from session when location state is missing', () => {
+  it('uses pending email from session storage', () => {
     setPendingVerificationEmail('stored@clickdrop.test')
-
-    renderWithProviders(
-      <Routes>
-        <Route path="/verify-email" element={<VerifyEmailPanel />} />
-        <Route path="/register" element={<div>Register page</div>} />
-      </Routes>,
-      { routerProps: { initialEntries: ['/verify-email'] } },
-    )
+    renderWithProviders(<VerifyEmailPanel />)
 
     expect(screen.getByText('stored@clickdrop.test')).toBeInTheDocument()
   })

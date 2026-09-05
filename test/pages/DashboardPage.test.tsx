@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { ApiError } from '../../src/api/client'
-import { DashboardPage } from '../../src/pages/DashboardPage'
+import { DashboardPage } from '../../src/views/DashboardPage'
 import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/usersApi', () => ({

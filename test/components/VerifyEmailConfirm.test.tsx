@@ -1,5 +1,4 @@
 import { screen, waitFor } from '@testing-library/react'
-import { Route, Routes } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { VerifyEmailConfirm } from '../../src/components/auth/VerifyEmailConfirm'
 import { ApiError } from '../../src/api/client'
@@ -21,16 +20,6 @@ import { authApi } from '../../src/api/authApi'
 
 const verifyMock = vi.mocked(authApi.verifyEmail)
 
-function renderConfirm(token = 'good-token') {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/verify-email" element={<VerifyEmailConfirm token={token} />} />
-      <Route path="/login" element={<div>Login page</div>} />
-    </Routes>,
-    { routerProps: { initialEntries: [`/verify-email?token=${token}`] } },
-  )
-}
-
 describe('VerifyEmailConfirm', () => {
   beforeEach(() => {
     clearPendingVerificationEmail()
@@ -42,7 +31,7 @@ describe('VerifyEmailConfirm', () => {
     setPendingVerificationEmail('player@clickdrop.test')
     verifyMock.mockResolvedValue({ message: 'Email verified successfully' })
 
-    renderConfirm()
+    renderWithProviders(<VerifyEmailConfirm token="good-token" />)
 
     await waitFor(() => {
       expect(screen.getByRole('status')).toHaveTextContent(
@@ -57,7 +46,7 @@ describe('VerifyEmailConfirm', () => {
   it('shows invalid token screen', async () => {
     verifyMock.mockRejectedValue(new ApiError(400, 'Invalid verification token'))
 
-    renderConfirm('bad-token')
+    renderWithProviders(<VerifyEmailConfirm token="bad-token" />)
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'This verification link is invalid.',
@@ -67,7 +56,7 @@ describe('VerifyEmailConfirm', () => {
   it('shows expired token screen', async () => {
     verifyMock.mockRejectedValue(new ApiError(400, 'Verification token is Expired'))
 
-    renderConfirm('old-token')
+    renderWithProviders(<VerifyEmailConfirm token="old-token" />)
 
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent(

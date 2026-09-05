@@ -1,10 +1,10 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Route, Routes } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { LoginForm } from '../../src/components/auth/LoginForm'
 import { ApiError } from '../../src/api/client'
 import { authService } from '../../src/auth/authService'
+import { getMockRouter } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/authApi', () => ({
@@ -17,17 +17,6 @@ import { authApi } from '../../src/api/authApi'
 
 const loginMock = vi.mocked(authApi.login)
 
-function renderLoginForm() {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/dashboard" element={<div>Dashboard page</div>} />
-      <Route path="/verify-email" element={<div>Verify email page</div>} />
-    </Routes>,
-    { routerProps: { initialEntries: ['/login'] } },
-  )
-}
-
 describe('LoginForm', () => {
   it('logs in, stores user and redirects to dashboard', async () => {
     const user = userEvent.setup()
@@ -39,14 +28,14 @@ describe('LoginForm', () => {
       role: 'USER',
     })
 
-    renderLoginForm()
+    renderWithProviders(<LoginForm />)
 
     await user.type(screen.getByLabelText(/email/i), 'ok@clickdrop.test')
     await user.type(screen.getByLabelText(/password/i), 'secret')
     await user.click(screen.getByRole('button', { name: /login/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Dashboard page')).toBeInTheDocument()
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/dashboard')
     })
 
     expect(loginMock).toHaveBeenCalledWith({
@@ -66,7 +55,7 @@ describe('LoginForm', () => {
     const user = userEvent.setup()
     loginMock.mockRejectedValue(new ApiError(401, 'Unauthorized'))
 
-    renderLoginForm()
+    renderWithProviders(<LoginForm />)
 
     await user.type(screen.getByLabelText(/email/i), 'bad@clickdrop.test')
     await user.type(screen.getByLabelText(/password/i), 'wrong')
@@ -84,14 +73,14 @@ describe('LoginForm', () => {
       new ApiError(403, 'Account is not verified. Please confirm your email'),
     )
 
-    renderLoginForm()
+    renderWithProviders(<LoginForm />)
 
     await user.type(screen.getByLabelText(/email/i), 'pending@clickdrop.test')
     await user.type(screen.getByLabelText(/password/i), 'secret')
     await user.click(screen.getByRole('button', { name: /login/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Verify email page')).toBeInTheDocument()
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/verify-email')
     })
 
     expect(authService.getAuthUser()).toBeNull()
@@ -102,7 +91,7 @@ describe('LoginForm', () => {
     const user = userEvent.setup()
     loginMock.mockRejectedValue(new Error('offline'))
 
-    renderLoginForm()
+    renderWithProviders(<LoginForm />)
 
     await user.type(screen.getByLabelText(/email/i), 'net@clickdrop.test')
     await user.type(screen.getByLabelText(/password/i), 'secret')

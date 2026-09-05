@@ -1,5 +1,8 @@
-import { useState } from 'react'
-import { Link, Navigate, useLocation } from 'react-router-dom'
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { ApiError } from '../../api/client'
@@ -9,31 +12,29 @@ import {
 } from '../../auth/pendingVerification'
 import { authSubmitClassName } from './authStyles'
 
-type VerifyEmailLocationState = {
-  email?: string
-}
-
-function resolveEmail(state: VerifyEmailLocationState | null): string {
-  const fromState = state?.email?.trim()
-  if (fromState) {
-    setPendingVerificationEmail(fromState)
-    return fromState
-  }
-  return getPendingVerificationEmail() ?? ''
-}
-
 export function VerifyEmailPanel() {
   const { t } = useTranslation()
-  const location = useLocation()
-  const [email] = useState(() =>
-    resolveEmail(location.state as VerifyEmailLocationState | null),
-  )
+  const router = useRouter()
+  const [email] = useState(() => {
+    const pending = getPendingVerificationEmail()
+    if (pending) {
+      setPendingVerificationEmail(pending)
+      return pending
+    }
+    return ''
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [resent, setResent] = useState(false)
 
+  useEffect(() => {
+    if (!email) {
+      router.replace('/register')
+    }
+  }, [email, router])
+
   if (!email) {
-    return <Navigate to="/register" replace />
+    return null
   }
 
   async function handleResend() {
@@ -89,7 +90,7 @@ export function VerifyEmailPanel() {
 
       <p className="text-base text-cd-muted">
         <Link
-          to="/login"
+          href="/login"
           className="cursor-pointer font-medium text-cd-accent transition hover:text-cd-accent-hover hover:underline"
         >
           {t('verifyEmail.loginLink')}

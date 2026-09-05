@@ -1,9 +1,9 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Route, Routes } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { RegisterForm } from '../../src/components/auth/RegisterForm'
 import { ApiError } from '../../src/api/client'
+import { getMockRouter } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/authApi', () => ({
@@ -16,17 +16,6 @@ import { authApi } from '../../src/api/authApi'
 
 const registerMock = vi.mocked(authApi.register)
 
-function renderRegisterForm() {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/register" element={<RegisterForm />} />
-      <Route path="/verify-email" element={<div>Verify email page</div>} />
-      <Route path="/login" element={<div>Login page</div>} />
-    </Routes>,
-    { routerProps: { initialEntries: ['/register'] } },
-  )
-}
-
 async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText(/username/i), 'playerone')
   await user.type(screen.getByLabelText(/^email$/i), 'player@clickdrop.test')
@@ -37,7 +26,7 @@ async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
 describe('RegisterForm', () => {
   it('shows password mismatch error', async () => {
     const user = userEvent.setup()
-    renderRegisterForm()
+    renderWithProviders(<RegisterForm />)
 
     await user.type(screen.getByLabelText(/username/i), 'playerone')
     await user.type(screen.getByLabelText(/^email$/i), 'player@clickdrop.test')
@@ -58,12 +47,12 @@ describe('RegisterForm', () => {
       role: 'USER',
     })
 
-    renderRegisterForm()
+    renderWithProviders(<RegisterForm />)
     await fillValidForm(user)
     await user.click(screen.getByRole('button', { name: /create account/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Verify email page')).toBeInTheDocument()
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/verify-email')
     })
 
     expect(registerMock).toHaveBeenCalledWith({
@@ -77,7 +66,7 @@ describe('RegisterForm', () => {
     const user = userEvent.setup()
     registerMock.mockRejectedValue(new ApiError(409, 'Email already in use'))
 
-    renderRegisterForm()
+    renderWithProviders(<RegisterForm />)
     await fillValidForm(user)
     await user.click(screen.getByRole('button', { name: /create account/i }))
 

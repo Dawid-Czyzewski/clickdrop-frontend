@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
-import { PageSeo } from '../components/PageSeo'
+'use client'
+
 import { CaseGrid } from '../components/home/CaseGrid'
 import { EventHero } from '../components/home/EventHero'
 import { LiveFeed } from '../components/home/LiveFeed'
@@ -8,16 +8,8 @@ import { SiteHeader } from '../components/home/SiteHeader'
 import { StatsBar } from '../components/home/StatsBar'
 
 export function HomePage() {
-  const { t, i18n } = useTranslation()
-
   return (
     <div className="min-h-svh bg-cd-bg text-cd-text">
-      <PageSeo
-        title={t('seo.home.title')}
-        description={t('seo.home.description')}
-        path="/"
-        lang={i18n.language}
-      />
       <SiteHeader />
       <MainNav />
       <StatsBar />

@@ -1,9 +1,9 @@
 import './axiosTypes'
 import axios from 'axios'
 import { attachAuthHeader, createUnauthorizedHandler } from './axiosInterceptors'
+import { getApiBaseUrl } from './env'
 
-export const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? ''
+export const API_BASE_URL = getApiBaseUrl()
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

@@ -1,34 +1,19 @@
+'use client'
+
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ClickDropLogo } from './ClickDropLogo'
-import { PageSeo } from '../PageSeo'
 
 type AuthLayoutProps = {
   title: string
-  seoTitle: string
-  seoDescription: string
-  path: string
   children: ReactNode
 }
 
-export function AuthLayout({
-  title,
-  seoTitle,
-  seoDescription,
-  path,
-  children,
-}: AuthLayoutProps) {
+export function AuthLayout({ title, children }: AuthLayoutProps) {
   const { t, i18n } = useTranslation()
 
   return (
     <main className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 py-10 sm:px-6">
-      <PageSeo
-        title={seoTitle}
-        description={seoDescription}
-        path={path}
-        noIndex
-        lang={i18n.language}
-      />
       <div className="pointer-events-none absolute inset-0 bg-cd-bg" aria-hidden="true" />
       <div
         className="cd-glow pointer-events-none absolute -top-1/4 left-1/2 h-[60vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-cd-accent/15 blur-[100px]"

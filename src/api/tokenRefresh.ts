@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { authService } from '../auth/authService'
 import type { TokenResponse } from './authApi'
+import { getApiBaseUrl } from './env'
 
 type QueueItem = {
   resolve: (token: string) => void
   reject: (error: unknown) => void
 }
 
-const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? ''
+const API_BASE_URL = getApiBaseUrl()
 
 let isRefreshing = false
 let queue: QueueItem[] = []

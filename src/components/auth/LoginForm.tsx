@@ -1,5 +1,8 @@
+'use client'
+
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { authApi } from '../../api/authApi'
 import { setPendingVerificationEmail } from '../../auth/pendingVerification'
@@ -9,7 +12,7 @@ import { authInputClassName, authSubmitClassName } from './authStyles'
 
 export function LoginForm() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -23,12 +26,12 @@ export function LoginForm() {
     try {
       const session = await authApi.login({ email, password })
       authService.setSession(session)
-      navigate('/dashboard', { replace: true })
+      router.replace('/dashboard')
     } catch (err) {
       const result = resolveLoginError(err, t)
       if (result.kind === 'notVerified') {
         setPendingVerificationEmail(email)
-        navigate('/verify-email', { replace: true, state: { email } })
+        router.replace('/verify-email')
         return
       }
       setError(result.message)
@@ -86,7 +89,7 @@ export function LoginForm() {
       <p className="text-center text-base text-cd-muted">
         {t('login.registerPrompt')}{' '}
         <Link
-          to="/register"
+          href="/register"
           className="cursor-pointer font-medium text-cd-accent transition hover:text-cd-accent-hover hover:underline"
         >
           {t('login.registerLink')}

@@ -1,29 +1,25 @@
-import { screen } from '@testing-library/react'
-import { Route, Routes } from 'react-router-dom'
+import { screen, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { ProtectedRoute } from '../../src/auth/ProtectedRoute'
 import { authService } from '../../src/auth/authService'
+import { getMockRouter } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
-function renderProtected() {
-  return renderWithProviders(
-    <Routes>
-      <Route path="/login" element={<div>Login page</div>} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<div>Protected dashboard</div>} />
-      </Route>
-    </Routes>,
-    { routerProps: { initialEntries: ['/dashboard'] } },
-  )
-}
-
 describe('ProtectedRoute', () => {
-  it('redirects unauthenticated users to login', () => {
-    renderProtected()
-    expect(screen.getByText('Login page')).toBeInTheDocument()
+  it('redirects unauthenticated users to login', async () => {
+    renderWithProviders(
+      <ProtectedRoute>
+        <div>Protected dashboard</div>
+      </ProtectedRoute>,
+    )
+
+    await waitFor(() => {
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/login')
+    })
+    expect(screen.queryByText('Protected dashboard')).not.toBeInTheDocument()
   })
 
-  it('renders protected content for authenticated users', () => {
+  it('renders protected content for authenticated users', async () => {
     authService.setSession({
       token: 'jwt-protected',
       refreshToken: 'refresh-protected',
@@ -32,7 +28,12 @@ describe('ProtectedRoute', () => {
       role: 'USER',
     })
 
-    renderProtected()
-    expect(screen.getByText('Protected dashboard')).toBeInTheDocument()
+    renderWithProviders(
+      <ProtectedRoute>
+        <div>Protected dashboard</div>
+      </ProtectedRoute>,
+    )
+
+    expect(await screen.findByText('Protected dashboard')).toBeInTheDocument()
   })
 })

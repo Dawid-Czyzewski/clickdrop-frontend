@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { renderHook, waitFor } from '@testing-library/react'
 import { I18nextProvider } from 'react-i18next'
-import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiError } from '../../src/api/client'
 import { useCurrentUser } from '../../src/hooks/useCurrentUser'
@@ -16,11 +15,7 @@ import { getCurrentUser } from '../../src/api/usersApi'
 const getCurrentUserMock = vi.mocked(getCurrentUser)
 
 function HookProviders({ children }: { children: ReactNode }) {
-  return (
-    <I18nextProvider i18n={i18n}>
-      <MemoryRouter>{children}</MemoryRouter>
-    </I18nextProvider>
-  )
+  return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
 }
 
 describe('useCurrentUser', () => {
