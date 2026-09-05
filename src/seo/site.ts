@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import en from '../i18n/locales/en.json'
 import pl from '../i18n/locales/pl.json'
 
-export type SeoPageKey = 'home' | 'login' | 'register' | 'verifyEmail' | 'dashboard'
+export type SeoPageKey = 'home' | 'login' | 'register' | 'verifyEmail'
 
 const seoPages: Record<
   SeoPageKey,
@@ -12,7 +12,6 @@ const seoPages: Record<
   login: { path: '/login', noIndex: true },
   register: { path: '/register', noIndex: true },
   verifyEmail: { path: '/verify-email', noIndex: true },
-  dashboard: { path: '/dashboard', noIndex: true },
 }
 
 export function getSiteOrigin(): string {

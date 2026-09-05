@@ -20,10 +20,6 @@
     "verifyEmail": {
       "title": "Verify email | ClickDrop",
       "description": "Confirm your ClickDrop account email to finish registration."
-    },
-    "dashboard": {
-      "title": "Dashboard | ClickDrop",
-      "description": "Your ClickDrop dashboard."
     }
   },
   "home": {
@@ -37,7 +33,6 @@
       "logout": "Log out",
       "level": "Lvl",
       "xp": "XP",
-      "clickDollars": "CD",
       "loadingStats": "Loading stats…"
     },
     "nav": {
@@ -58,16 +53,16 @@
       "label": "Live drops",
       "title": "Live"
     },
-    "hero": {
-      "eyebrow": "Limited event",
-      "title": "Forged Legends",
-      "subtitle": "Open legendary cases, chase gold drops, and climb the event leaderboard.",
-      "countdown": "Event countdown",
-      "days": "Days",
-      "hours": "Hours",
-      "mins": "Min",
-      "secs": "Sec",
-      "cta": "Event page"
+    "earn": {
+      "eyebrow": "Balance",
+      "title": "Earn ClickDollars",
+      "subtitle": "Complete actions to grow your balance. The earn flow is coming soon.",
+      "balance": "Your balance",
+      "guestBalance": "—",
+      "loadingBalance": "Loading…",
+      "cta": "Earn money",
+      "loginCta": "Sign in to earn",
+      "comingSoon": "Not connected yet"
     },
     "cases": {
       "heading": "Featured cases",
@@ -141,17 +136,9 @@
     "expired": "This verification link has expired.",
     "confirmError": "Could not verify your email. Please try again."
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Your account overview.",
-    "username": "Username",
-    "level": "Level",
-    "xp": "XP",
-    "clickDollars": "ClickDollars",
-    "loading": "Loading your profile…",
+  "profile": {
     "error": "Could not load your profile. Please try again.",
     "errorUnauthorized": "Your session has expired. Please sign in again.",
-    "errorServer": "The server is unavailable. Please try again later.",
-    "logout": "Log out"
+    "errorServer": "The server is unavailable. Please try again later."
   }
 }

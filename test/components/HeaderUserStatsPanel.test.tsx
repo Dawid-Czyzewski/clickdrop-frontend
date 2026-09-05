@@ -13,7 +13,7 @@ import { getCurrentUser } from '../../src/api/usersApi'
 const getCurrentUserMock = vi.mocked(getCurrentUser)
 
 describe('HeaderUserStatsPanel', () => {
-  it('shows level, xp and click dollars from backend', async () => {
+  it('shows level and xp from backend without click dollars', async () => {
     authService.setSession({
       token: 'jwt-header',
       refreshToken: 'refresh-header',
@@ -37,7 +37,7 @@ describe('HeaderUserStatsPanel', () => {
     })
 
     expect(screen.getByLabelText('XP 3200')).toBeInTheDocument()
-    expect(screen.getByLabelText('CD 42.25')).toBeInTheDocument()
+    expect(screen.queryByLabelText(/CD/i)).not.toBeInTheDocument()
   })
 
   it('shows loading state while fetching profile', () => {

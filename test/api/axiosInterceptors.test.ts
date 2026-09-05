@@ -103,7 +103,7 @@ describe('axios interceptors', () => {
     setSession(session)
     axiosPost.mockRejectedValue(new Error('invalid refresh'))
     const assignSpy = vi.fn()
-    vi.stubGlobal('location', { pathname: '/dashboard', assign: assignSpy })
+    vi.stubGlobal('location', { pathname: '/', assign: assignSpy })
 
     const handleUnauthorized = createUnauthorizedHandler({ request: vi.fn() } as never)
     const config = {

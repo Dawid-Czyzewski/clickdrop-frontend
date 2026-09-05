@@ -6,11 +6,11 @@ import { ApiError } from '../api/client'
 
 function resolveFetchError(err: unknown, t: (key: string) => string): string {
   if (err instanceof ApiError) {
-    if (err.status === 401) return t('dashboard.errorUnauthorized')
-    if (err.status >= 500) return t('dashboard.errorServer')
+    if (err.status === 401) return t('profile.errorUnauthorized')
+    if (err.status >= 500) return t('profile.errorServer')
   }
 
-  return t('dashboard.error')
+  return t('profile.error')
 }
 
 type UseCurrentUserOptions = {

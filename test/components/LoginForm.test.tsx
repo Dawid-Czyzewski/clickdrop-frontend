@@ -18,7 +18,7 @@ import { authApi } from '../../src/api/authApi'
 const loginMock = vi.mocked(authApi.login)
 
 describe('LoginForm', () => {
-  it('logs in, stores user and redirects to dashboard', async () => {
+  it('logs in, stores user and redirects to home', async () => {
     const user = userEvent.setup()
     loginMock.mockResolvedValue({
       token: 'jwt-ok',
@@ -35,7 +35,7 @@ describe('LoginForm', () => {
     await user.click(screen.getByRole('button', { name: /login/i }))
 
     await waitFor(() => {
-      expect(getMockRouter().replace).toHaveBeenCalledWith('/dashboard')
+      expect(getMockRouter().replace).toHaveBeenCalledWith('/')
     })
 
     expect(loginMock).toHaveBeenCalledWith({

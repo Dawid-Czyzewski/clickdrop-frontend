@@ -77,7 +77,7 @@ describe('tokenRefresh', () => {
 
   it('logs out and redirects when refresh token is missing', async () => {
     const assignSpy = vi.fn()
-    vi.stubGlobal('location', { pathname: '/dashboard', assign: assignSpy })
+    vi.stubGlobal('location', { pathname: '/', assign: assignSpy })
 
     await expect(refreshAccessToken()).rejects.toThrow('Missing refresh token')
     expect(assignSpy).toHaveBeenCalledWith('/login')
@@ -92,7 +92,7 @@ describe('tokenRefresh', () => {
       role: 'USER',
     })
     const assignSpy = vi.fn()
-    vi.stubGlobal('location', { pathname: '/dashboard', assign: assignSpy })
+    vi.stubGlobal('location', { pathname: '/', assign: assignSpy })
 
     forceLogoutAndRedirect()
 

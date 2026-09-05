@@ -22,11 +22,11 @@ describe('seo site metadata', () => {
     )
   })
 
-  it('marks auth and dashboard pages as noindex', () => {
+  it('marks auth pages as noindex', () => {
     expect(buildPageMetadata('login').robots).toEqual(
       expect.objectContaining({ index: false, follow: false }),
     )
-    expect(buildPageMetadata('dashboard').robots).toEqual(
+    expect(buildPageMetadata('register').robots).toEqual(
       expect.objectContaining({ index: false, follow: false }),
     )
   })

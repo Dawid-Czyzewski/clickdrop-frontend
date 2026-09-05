@@ -18,25 +18,15 @@ function HeaderStat({ label, value }: HeaderStatProps) {
 type HeaderUserStatsProps = {
   level: number
   experience: number
-  clickDollars: string
   levelLabel: string
   xpLabel: string
-  clickDollarsLabel: string
 }
 
-export function HeaderUserStats({
-  level,
-  experience,
-  clickDollars,
-  levelLabel,
-  xpLabel,
-  clickDollarsLabel,
-}: HeaderUserStatsProps) {
+export function HeaderUserStats({ level, experience, levelLabel, xpLabel }: HeaderUserStatsProps) {
   return (
     <div className="hidden items-center gap-1.5 md:flex" aria-live="polite">
       <HeaderStat label={levelLabel} value={String(level)} />
       <HeaderStat label={xpLabel} value={String(experience)} />
-      <HeaderStat label={clickDollarsLabel} value={clickDollars} />
     </div>
   )
 }
