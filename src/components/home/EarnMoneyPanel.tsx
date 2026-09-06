@@ -1,16 +1,23 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { ClickButton } from './ClickButton'
+import { EarnedFeedback, type EarnToast } from './EarnedFeedback'
 
 export function EarnMoneyPanel() {
   const { t, i18n } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
-  const { balance, isLoading, error } = useBalance({ enabled: loggedIn })
+  const [earnToasts, setEarnToasts] = useState<EarnToast[]>([])
+  const [earnPulseKey, setEarnPulseKey] = useState(0)
+  const nextToastId = useRef(0)
+  const { balance, isLoading, isClicking, error, clickToEarn } = useBalance({
+    enabled: loggedIn,
+  })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -19,22 +26,45 @@ export function EarnMoneyPanel() {
   const formattedBalance =
     balance === null ? null : formatClickDollars(balance, i18n.language)
 
+  async function handleClick() {
+    const result = await clickToEarn()
+    if (!result) return
+
+    const id = nextToastId.current + 1
+    nextToastId.current = id
+
+    setEarnToasts((prev) => [
+      ...prev,
+      { id, amount: result.earned, drift: ((id * 17) % 5) * 16 - 32 },
+    ])
+    setEarnPulseKey((key) => key + 1)
+  }
+
   return (
     <section
       className="cd-fade-in relative overflow-hidden rounded-lg border border-cd-border bg-cd-surface/60"
       aria-labelledby="earn-panel-title"
     >
       <div
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+          backgroundSize: '36px 36px',
+        }}
+        aria-hidden="true"
+      />
+      <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at 20% 50%, rgba(245,158,11,0.18), transparent 50%), linear-gradient(120deg, #12141c 0%, #0a0b0f 100%)',
+            'radial-gradient(ellipse at 50% 48%, rgba(245,158,11,0.16), transparent 52%), linear-gradient(160deg, #12141c 0%, #0a0b0f 100%)',
         }}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col gap-5 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-9">
-        <div className="flex flex-col gap-2">
+      <div className="relative z-10 flex flex-col items-center gap-6 px-5 py-8 text-center sm:px-8 sm:py-10">
+        <div className="flex flex-col items-center gap-2">
           <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
             {t('home.earn.eyebrow')}
           </p>
@@ -42,48 +72,59 @@ export function EarnMoneyPanel() {
             {t('home.earn.title')}
           </h1>
           <p className="max-w-md text-base text-cd-muted">{t('home.earn.subtitle')}</p>
+        </div>
 
-          <div className="mt-2 flex flex-col gap-1" aria-live="polite">
-            {isLoading ? (
-              <p role="status" className="text-sm text-cd-muted">
-                {t('home.earn.loadingBalance')}
-              </p>
-            ) : null}
+        <div className="flex min-h-[3rem] flex-col items-center justify-center gap-1" aria-live="polite">
+          {isLoading ? (
+            <p role="status" className="text-sm text-cd-muted">
+              {t('home.earn.loadingBalance')}
+            </p>
+          ) : null}
 
-            {!isLoading && error ? (
-              <p role="alert" className="text-sm text-cd-danger">
-                {error}
-              </p>
-            ) : null}
+          {!isLoading && (formattedBalance !== null || !loggedIn) ? (
+            <p
+              key={`balance-${balance ?? 'guest'}-${earnPulseKey}`}
+              className={[
+                'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
+                earnPulseKey > 0 ? 'cd-balance-bump' : '',
+              ].join(' ')}
+            >
+              {loggedIn && formattedBalance !== null
+                ? t('home.earn.balanceValue', { amount: formattedBalance })
+                : t('home.earn.guestBalance')}
+            </p>
+          ) : null}
 
-            {!isLoading && !error ? (
-              <p className="font-display text-2xl font-semibold tabular-nums text-cd-accent">
-                {loggedIn && formattedBalance !== null
-                  ? t('home.earn.balanceValue', { amount: formattedBalance })
-                  : t('home.earn.guestBalance')}
-              </p>
-            ) : null}
+          {!isLoading && error ? (
+            <p role="alert" className="text-sm text-cd-danger">
+              {error}
+            </p>
+          ) : null}
+        </div>
+
+        {loggedIn ? (
+          <div className="relative flex w-full max-w-xl items-center justify-center">
+            <ClickButton
+              disabled={isLoading || isClicking}
+              onClick={() => {
+                void handleClick()
+              }}
+            />
+            <EarnedFeedback
+              toasts={earnToasts}
+              onDismiss={(id) => {
+                setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
+              }}
+            />
           </div>
-        </div>
-
-        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-          {loggedIn ? (
-            <button
-              type="button"
-              className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover"
-            >
-              {t('home.earn.cta')}
-            </button>
-          ) : (
-            <Link
-              href="/login"
-              className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-            >
-              {t('home.earn.loginCta')}
-            </Link>
-          )}
-          <p className="text-xs text-cd-muted">{t('home.earn.comingSoon')}</p>
-        </div>
+        ) : (
+          <Link
+            href="/login"
+            className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
+          >
+            {t('home.earn.loginCta')}
+          </Link>
+        )}
       </div>
     </section>
   )

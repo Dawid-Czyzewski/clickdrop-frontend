@@ -1,17 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ApiError } from '../api/client'
-import { getBalance } from '../api/economyApi'
-
-function resolveBalanceError(err: unknown, t: (key: string) => string): string {
-  if (err instanceof ApiError) {
-    if (err.status === 401) return t('home.earn.errorUnauthorized')
-    if (err.status === 404) return t('home.earn.errorNotFound')
-    if (err.status >= 500) return t('home.earn.errorServer')
-  }
-
-  return t('home.earn.error')
-}
+import { clickToEarn as postClickToEarn, getBalance } from '../api/economyApi'
+import { resolveEconomyError } from '../api/resolveEconomyError'
 
 type UseBalanceOptions = {
   enabled?: boolean
@@ -22,13 +12,17 @@ export function useBalance(options: UseBalanceOptions = {}) {
   const { t } = useTranslation()
   const [balance, setBalance] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(enabled)
+  const [isClicking, setIsClicking] = useState(false)
   const [error, setError] = useState('')
+  const isClickingRef = useRef(false)
 
   useEffect(() => {
     if (!enabled) {
       setBalance(null)
       setError('')
       setIsLoading(false)
+      setIsClicking(false)
+      isClickingRef.current = false
       return
     }
 
@@ -43,7 +37,7 @@ export function useBalance(options: UseBalanceOptions = {}) {
       .catch((err) => {
         if (!cancelled) {
           setBalance(null)
-          setError(resolveBalanceError(err, t))
+          setError(resolveEconomyError(err, t))
         }
       })
       .finally(() => {
@@ -55,5 +49,27 @@ export function useBalance(options: UseBalanceOptions = {}) {
     }
   }, [enabled, t])
 
-  return { balance, isLoading, error }
+  async function clickToEarn() {
+    if (!enabled || isClickingRef.current || isLoading) {
+      return null
+    }
+
+    isClickingRef.current = true
+    setIsClicking(true)
+    setError('')
+
+    try {
+      const result = await postClickToEarn()
+      setBalance(result.balance)
+      return result
+    } catch (err) {
+      setError(resolveEconomyError(err, t))
+      return null
+    } finally {
+      isClickingRef.current = false
+      setIsClicking(false)
+    }
+  }
+
+  return { balance, isLoading, isClicking, error, clickToEarn }
 }

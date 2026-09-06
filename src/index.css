@@ -60,3 +60,78 @@ body {
 .cd-glow {
   animation: cd-glow-pulse 4s ease-in-out infinite;
 }
+
+@keyframes cd-click-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cd-click-btn-pressed {
+  animation: cd-click-pop 0.18s ease-out;
+}
+
+@keyframes cd-earned-float {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+  16% {
+    opacity: 1;
+    transform: translateY(0) scale(1.06);
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(-40px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-64px) scale(0.98);
+  }
+}
+
+.cd-earned-float {
+  animation: cd-earned-float 1.05s ease-out both;
+}
+
+@keyframes cd-click-burst {
+  0% {
+    width: 9rem;
+    height: 9rem;
+    opacity: 0.55;
+    border: 2px solid rgb(245 158 11 / 0.7);
+  }
+  100% {
+    width: 18rem;
+    height: 18rem;
+    opacity: 0;
+    border: 2px solid rgb(245 158 11 / 0);
+  }
+}
+
+.cd-click-burst {
+  border-radius: 9999px;
+  animation: cd-click-burst 0.55s ease-out both;
+}
+
+@keyframes cd-balance-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cd-balance-bump {
+  animation: cd-balance-bump 0.35s ease-out;
+}
