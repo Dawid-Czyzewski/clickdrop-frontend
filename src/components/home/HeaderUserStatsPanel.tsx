@@ -15,11 +15,16 @@ export function HeaderUserStatsPanel() {
   }
 
   return (
-    <HeaderUserStats
-      level={user.level}
-      experience={user.experience}
-      levelLabel={t('home.header.level')}
-      xpLabel={t('home.header.xp')}
-    />
+    <div className="flex items-center gap-2 sm:gap-3">
+      <HeaderUserStats
+        level={user.level}
+        experience={user.experience}
+        levelLabel={t('home.header.level')}
+        xpLabel={t('home.header.xp')}
+      />
+      <span className="hidden max-w-[140px] truncate text-sm text-cd-text lg:inline">
+        {user.username}
+      </span>
+    </div>
   )
 }

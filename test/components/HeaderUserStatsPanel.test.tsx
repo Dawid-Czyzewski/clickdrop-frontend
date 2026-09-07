@@ -37,6 +37,8 @@ describe('HeaderUserStatsPanel', () => {
     })
 
     expect(screen.getByLabelText('XP 3200')).toBeInTheDocument()
+    expect(screen.getByText('player')).toBeInTheDocument()
+    expect(screen.queryByText('player@clickdrop.test')).not.toBeInTheDocument()
     expect(screen.queryByLabelText(/CD/i)).not.toBeInTheDocument()
   })
 

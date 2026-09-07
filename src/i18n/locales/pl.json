@@ -20,6 +20,10 @@
     "verifyEmail": {
       "title": "Weryfikacja e-mail | ClickDrop",
       "description": "Potwierdź adres e-mail konta ClickDrop, aby dokończyć rejestrację."
+    },
+    "upgrades": {
+      "title": "Sklep ulepszeń | ClickDrop",
+      "description": "Kupuj ulepszenia kliknięcia za ClickDollary i zwiększaj moc zarabiania."
     }
   },
   "home": {
@@ -38,9 +42,7 @@
     "nav": {
       "label": "Główne sekcje",
       "cases": "Skrzynie",
-      "event": "Wydarzenie",
-      "battles": "Bitwa o skrzynie",
-      "contracts": "Kontrakt"
+      "upgrades": "Sklep ulepszeń"
     },
     "stats": {
       "cases": "otwartych skrzynek",
@@ -49,10 +51,6 @@
       "contracts": "kontraktów",
       "players": "graczy"
     },
-    "feed": {
-      "label": "Live dropy",
-      "title": "Live"
-    },
     "earn": {
       "eyebrow": "Saldo",
       "title": "Zarabiaj ClickDollary",
@@ -60,6 +58,7 @@
       "balanceValue": "{{amount}} ClickDollars",
       "guestBalance": "— ClickDollars",
       "loadingBalance": "Ładowanie salda…",
+      "perClick": "+{{amount}} / klik",
       "clickLabel": "CLICK TO EARN",
       "cta": "Zarabiaj",
       "loginCta": "Zaloguj się, by zarabiać",
@@ -70,6 +69,7 @@
       "error": "Nie udało się wykonać żądania. Spróbuj ponownie.",
       "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
       "errorNotFound": "Nie znaleziono portfela. Skontaktuj się z supportem.",
+      "errorTooFast": "Za szybko klikasz. Zwolnij trochę.",
       "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
     },
     "cases": {
@@ -82,6 +82,50 @@
       "rift": "Rift",
       "pulse": "Pulse",
       "shadow": "Shadow"
+    }
+  },
+  "upgrades": {
+    "eyebrow": "Sklep",
+    "title": "Ulepszenia",
+    "subtitle": "Wydawaj ClickDollary, aby zwiększać moc klika. Nazwy pochodzą z tłumaczeń.",
+    "buy": "Ulepsz",
+    "buying": "Ulepszanie…",
+    "level": "Poziom {{level}}",
+    "levelLabel": "Poziom",
+    "powerLabel": "Moc klika",
+    "clickPower": "+{{power}} / klik",
+    "nextCostLabel": "Koszt kolejnego poziomu",
+    "balance": "{{amount}} ClickDollars",
+    "insufficientFunds": "Za mało ClickDolarów",
+    "loading": "Ładowanie ulepszeń…",
+    "empty": "Brak dostępnych ulepszeń.",
+    "loginHint": "Zaloguj się, aby przeglądać i kupować ulepszenia.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się wczytać ulepszeń. Spróbuj ponownie.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Nie znaleziono ulepszenia.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
+    "ownedLeft": "Posiadane ulepszenia",
+    "ownedRight": "Posiadane ulepszenia",
+    "BETTER_MOUSE": {
+      "name": "Lepsza myszka",
+      "description": "+1 do mocy klika za każdy poziom"
+    },
+    "GAMING_MOUSE": {
+      "name": "Mysz gamingowa",
+      "description": "+2 do mocy klika za każdy poziom"
+    },
+    "MECHANICAL_KEYBOARD": {
+      "name": "Klawiatura mechaniczna",
+      "description": "+4 do mocy klika za każdy poziom"
+    },
+    "GAMING_SETUP": {
+      "name": "Setup gamingowy",
+      "description": "+10 do mocy klika za każdy poziom"
+    },
+    "AI_AUTO_CLICKER": {
+      "name": "Auto-kliker AI",
+      "description": "+25 do mocy klika za każdy poziom"
     }
   },
   "language": {

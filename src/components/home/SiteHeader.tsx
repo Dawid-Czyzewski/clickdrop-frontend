@@ -3,23 +3,20 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import { authService, type AuthUser } from '../../auth/authService'
+import { authService } from '../../auth/authService'
 import { HeaderUserStatsPanel } from './HeaderUserStatsPanel'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
-  const [user, setUser] = useState<AuthUser | null>(null)
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
-    setUser(authService.getAuthUser())
   }, [])
 
   function handleLogout() {
     authService.logout()
     setLoggedIn(false)
-    setUser(null)
   }
 
   return (
@@ -82,12 +79,9 @@ export function SiteHeader() {
             </button>
           </div>
 
-          {loggedIn && user ? (
+          {loggedIn ? (
             <div className="flex items-center gap-2 sm:gap-3">
               <HeaderUserStatsPanel />
-              <span className="hidden max-w-[140px] truncate text-sm text-cd-text lg:inline">
-                {user.email}
-              </span>
               <button
                 type="button"
                 onClick={handleLogout}

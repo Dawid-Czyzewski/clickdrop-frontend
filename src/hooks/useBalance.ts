@@ -71,5 +71,10 @@ export function useBalance(options: UseBalanceOptions = {}) {
     }
   }
 
-  return { balance, isLoading, isClicking, error, clickToEarn }
+  function applyBalance(next: number) {
+    setBalance(next)
+    setError('')
+  }
+
+  return { balance, isLoading, isClicking, error, clickToEarn, applyBalance }
 }

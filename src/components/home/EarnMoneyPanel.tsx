@@ -5,9 +5,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
+import { useUpgrades } from '../../hooks/useUpgrades'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { totalClickReward } from '../../lib/clickReward'
 import { ClickButton } from './ClickButton'
 import { EarnedFeedback, type EarnToast } from './EarnedFeedback'
+import { OwnedUpgradesFlank } from './OwnedUpgradesFlank'
 
 export function EarnMoneyPanel() {
   const { t, i18n } = useTranslation()
@@ -18,6 +21,7 @@ export function EarnMoneyPanel() {
   const { balance, isLoading, isClicking, error, clickToEarn } = useBalance({
     enabled: loggedIn,
   })
+  const { upgrades } = useUpgrades({ enabled: loggedIn })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -25,6 +29,7 @@ export function EarnMoneyPanel() {
 
   const formattedBalance =
     balance === null ? null : formatClickDollars(balance, i18n.language)
+  const clickReward = totalClickReward(upgrades)
 
   async function handleClick() {
     const result = await clickToEarn()
@@ -82,17 +87,24 @@ export function EarnMoneyPanel() {
           ) : null}
 
           {!isLoading && (formattedBalance !== null || !loggedIn) ? (
-            <p
-              key={`balance-${balance ?? 'guest'}-${earnPulseKey}`}
-              className={[
-                'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
-                earnPulseKey > 0 ? 'cd-balance-bump' : '',
-              ].join(' ')}
-            >
-              {loggedIn && formattedBalance !== null
-                ? t('home.earn.balanceValue', { amount: formattedBalance })
-                : t('home.earn.guestBalance')}
-            </p>
+            <div className="flex flex-col items-center gap-1">
+              <p
+                key={`balance-${balance ?? 'guest'}-${earnPulseKey}`}
+                className={[
+                  'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
+                  earnPulseKey > 0 ? 'cd-balance-bump' : '',
+                ].join(' ')}
+              >
+                {loggedIn && formattedBalance !== null
+                  ? t('home.earn.balanceValue', { amount: formattedBalance })
+                  : t('home.earn.guestBalance')}
+              </p>
+              {loggedIn ? (
+                <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
+                  {t('home.earn.perClick', { amount: clickReward })}
+                </p>
+              ) : null}
+            </div>
           ) : null}
 
           {!isLoading && error ? (
@@ -103,19 +115,23 @@ export function EarnMoneyPanel() {
         </div>
 
         {loggedIn ? (
-          <div className="relative flex w-full max-w-xl items-center justify-center">
-            <ClickButton
-              disabled={isLoading || isClicking}
-              onClick={() => {
-                void handleClick()
-              }}
-            />
-            <EarnedFeedback
-              toasts={earnToasts}
-              onDismiss={(id) => {
-                setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
-              }}
-            />
+          <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
+            <OwnedUpgradesFlank upgrades={upgrades} side="left" />
+            <div className="relative flex shrink-0 items-center justify-center">
+              <ClickButton
+                disabled={isLoading || isClicking}
+                onClick={() => {
+                  void handleClick()
+                }}
+              />
+              <EarnedFeedback
+                toasts={earnToasts}
+                onDismiss={(id) => {
+                  setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
+                }}
+              />
+            </div>
+            <OwnedUpgradesFlank upgrades={upgrades} side="right" />
           </div>
         ) : (
           <Link

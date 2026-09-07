@@ -9,12 +9,15 @@ import { renderWithProviders } from '../utils/render'
 vi.mock('../../src/api/economyApi', () => ({
   getBalance: vi.fn(),
   clickToEarn: vi.fn(),
+  getMyUpgrades: vi.fn(),
+  buyUpgrade: vi.fn(),
 }))
 
-import { clickToEarn, getBalance } from '../../src/api/economyApi'
+import { clickToEarn, getBalance, getMyUpgrades } from '../../src/api/economyApi'
 
 const getBalanceMock = vi.mocked(getBalance)
 const clickToEarnMock = vi.mocked(clickToEarn)
+const getMyUpgradesMock = vi.mocked(getMyUpgrades)
 
 function setLoggedInSession() {
   authService.setSession({
@@ -31,6 +34,8 @@ describe('EarnMoneyPanel', () => {
     authService.logout()
     getBalanceMock.mockReset()
     clickToEarnMock.mockReset()
+    getMyUpgradesMock.mockReset()
+    getMyUpgradesMock.mockResolvedValue([])
   })
 
   it('shows guest state with login CTA', () => {

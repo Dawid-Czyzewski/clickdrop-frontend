@@ -20,6 +20,10 @@
     "verifyEmail": {
       "title": "Verify email | ClickDrop",
       "description": "Confirm your ClickDrop account email to finish registration."
+    },
+    "upgrades": {
+      "title": "Upgrades shop | ClickDrop",
+      "description": "Buy click upgrades with ClickDollars and boost your earn power."
     }
   },
   "home": {
@@ -38,9 +42,7 @@
     "nav": {
       "label": "Main sections",
       "cases": "Cases",
-      "event": "Event",
-      "battles": "Case Battle",
-      "contracts": "Contract"
+      "upgrades": "Upgrades shop"
     },
     "stats": {
       "cases": "cases opened",
@@ -49,10 +51,6 @@
       "contracts": "contracts",
       "players": "players"
     },
-    "feed": {
-      "label": "Live drops",
-      "title": "Live"
-    },
     "earn": {
       "eyebrow": "Balance",
       "title": "Earn ClickDollars",
@@ -60,6 +58,7 @@
       "balanceValue": "{{amount}} ClickDollars",
       "guestBalance": "— ClickDollars",
       "loadingBalance": "Loading balance…",
+      "perClick": "+{{amount}} / click",
       "clickLabel": "CLICK TO EARN",
       "cta": "Earn money",
       "loginCta": "Sign in to earn",
@@ -68,6 +67,7 @@
       "error": "Could not process your request. Please try again.",
       "errorUnauthorized": "Your session has expired. Please sign in again.",
       "errorNotFound": "Wallet not found. Please contact support.",
+      "errorTooFast": "You're clicking too fast. Slow down a bit.",
       "errorServer": "The economy service is unavailable. Please try again later."
     },
     "cases": {
@@ -80,6 +80,50 @@
       "rift": "Rift",
       "pulse": "Pulse",
       "shadow": "Shadow"
+    }
+  },
+  "upgrades": {
+    "eyebrow": "Shop",
+    "title": "Upgrades",
+    "subtitle": "Spend ClickDollars to raise click power. Names come from your language pack.",
+    "buy": "Upgrade",
+    "buying": "Upgrading…",
+    "level": "Level {{level}}",
+    "levelLabel": "Level",
+    "powerLabel": "Click power",
+    "clickPower": "+{{power}} / click",
+    "nextCostLabel": "Next upgrade cost",
+    "balance": "{{amount}} ClickDollars",
+    "insufficientFunds": "Not enough ClickDollars",
+    "loading": "Loading upgrades…",
+    "empty": "No upgrades available yet.",
+    "loginHint": "Sign in to browse and buy upgrades.",
+    "loginCta": "Sign in",
+    "error": "Could not load upgrades. Please try again.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "Upgrade not found.",
+    "errorServer": "The economy service is unavailable. Please try again later.",
+    "ownedLeft": "Owned upgrades",
+    "ownedRight": "Owned upgrades",
+    "BETTER_MOUSE": {
+      "name": "Better Mouse",
+      "description": "+1 click power per level"
+    },
+    "GAMING_MOUSE": {
+      "name": "Gaming Mouse",
+      "description": "+2 click power per level"
+    },
+    "MECHANICAL_KEYBOARD": {
+      "name": "Mechanical Keyboard",
+      "description": "+4 click power per level"
+    },
+    "GAMING_SETUP": {
+      "name": "Gaming Setup",
+      "description": "+10 click power per level"
+    },
+    "AI_AUTO_CLICKER": {
+      "name": "AI Auto Clicker",
+      "description": "+25 click power per level"
     }
   },
   "language": {
