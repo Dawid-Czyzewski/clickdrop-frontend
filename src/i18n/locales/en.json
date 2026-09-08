@@ -94,6 +94,7 @@
     "clickPower": "+{{power}} / click",
     "nextCostLabel": "Next upgrade cost",
     "balance": "{{amount}} ClickDollars",
+    "perClick": "+{{amount}} / click",
     "insufficientFunds": "Not enough ClickDollars",
     "loading": "Loading upgrades…",
     "empty": "No upgrades available yet.",

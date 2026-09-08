@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
+import { useClickPower } from '../../hooks/useClickPower'
 import { useUpgrades } from '../../hooks/useUpgrades'
 import { formatClickDollars } from '../../lib/formatClickDollars'
-import { totalClickReward } from '../../lib/clickReward'
 import { ClickButton } from './ClickButton'
 import { EarnedFeedback, type EarnToast } from './EarnedFeedback'
 import { OwnedUpgradesFlank } from './OwnedUpgradesFlank'
@@ -21,6 +21,7 @@ export function EarnMoneyPanel() {
   const { balance, isLoading, isClicking, error, clickToEarn } = useBalance({
     enabled: loggedIn,
   })
+  const { rewardPerClick } = useClickPower({ enabled: loggedIn })
   const { upgrades } = useUpgrades({ enabled: loggedIn })
 
   useEffect(() => {
@@ -29,7 +30,6 @@ export function EarnMoneyPanel() {
 
   const formattedBalance =
     balance === null ? null : formatClickDollars(balance, i18n.language)
-  const clickReward = totalClickReward(upgrades)
 
   async function handleClick() {
     const result = await clickToEarn()
@@ -99,9 +99,9 @@ export function EarnMoneyPanel() {
                   ? t('home.earn.balanceValue', { amount: formattedBalance })
                   : t('home.earn.guestBalance')}
               </p>
-              {loggedIn ? (
+              {loggedIn && rewardPerClick !== null ? (
                 <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
-                  {t('home.earn.perClick', { amount: clickReward })}
+                  {t('home.earn.perClick', { amount: rewardPerClick })}
                 </p>
               ) : null}
             </div>

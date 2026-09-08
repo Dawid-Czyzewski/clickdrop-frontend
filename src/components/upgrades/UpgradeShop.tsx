@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
+import { useClickPower } from '../../hooks/useClickPower'
 import { useUpgrades } from '../../hooks/useUpgrades'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { UpgradeCard } from './UpgradeCard'
@@ -13,6 +14,9 @@ export function UpgradeShop() {
   const { t, i18n } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
   const { balance, isLoading: balanceLoading, applyBalance } = useBalance({
+    enabled: loggedIn,
+  })
+  const { rewardPerClick, refresh: refreshClickPower } = useClickPower({
     enabled: loggedIn,
   })
   const { upgrades, isLoading, buyingId, error, buyUpgrade } = useUpgrades({
@@ -25,7 +29,10 @@ export function UpgradeShop() {
 
   async function handleBuy(upgradeId: number) {
     const result = await buyUpgrade(upgradeId)
-    if (result) applyBalance(result.balance)
+    if (!result) return
+
+    applyBalance(result.balance)
+    await refreshClickPower()
   }
 
   if (!loggedIn) {
@@ -71,9 +78,16 @@ export function UpgradeShop() {
           <p className="mt-1 max-w-xl text-cd-muted">{t('upgrades.subtitle')}</p>
         </div>
         {balance !== null ? (
-          <p className="font-display text-lg font-semibold tabular-nums text-cd-accent">
-            {t('upgrades.balance', { amount: formatClickDollars(balance, i18n.language) })}
-          </p>
+          <div className="flex flex-col items-end gap-1">
+            <p className="font-display text-lg font-semibold tabular-nums text-cd-accent">
+              {t('upgrades.balance', { amount: formatClickDollars(balance, i18n.language) })}
+            </p>
+            {rewardPerClick !== null ? (
+              <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
+                {t('upgrades.perClick', { amount: rewardPerClick })}
+              </p>
+            ) : null}
+          </div>
         ) : null}
       </div>
 

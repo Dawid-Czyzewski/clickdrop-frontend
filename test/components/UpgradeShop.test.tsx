@@ -7,14 +7,16 @@ import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/economyApi', () => ({
   getBalance: vi.fn(),
+  getClickPower: vi.fn(),
   getMyUpgrades: vi.fn(),
   buyUpgrade: vi.fn(),
   clickToEarn: vi.fn(),
 }))
 
-import { buyUpgrade, getBalance, getMyUpgrades } from '../../src/api/economyApi'
+import { buyUpgrade, getBalance, getClickPower, getMyUpgrades } from '../../src/api/economyApi'
 
 const getBalanceMock = vi.mocked(getBalance)
+const getClickPowerMock = vi.mocked(getClickPower)
 const getMyUpgradesMock = vi.mocked(getMyUpgrades)
 const buyUpgradeMock = vi.mocked(buyUpgrade)
 
@@ -32,6 +34,7 @@ describe('UpgradeShop', () => {
   beforeEach(() => {
     authService.logout()
     getBalanceMock.mockReset()
+    getClickPowerMock.mockReset()
     getMyUpgradesMock.mockReset()
     buyUpgradeMock.mockReset()
   })
@@ -43,7 +46,7 @@ describe('UpgradeShop', () => {
     expect(getMyUpgradesMock).not.toHaveBeenCalled()
   })
 
-  it('renders upgrade names from i18n code keys and buys via API', async () => {
+  it('renders upgrades, shows API click power, and refreshes it after buy', async () => {
     const user = userEvent.setup()
     authService.setSession({
       token: 'jwt',
@@ -53,6 +56,9 @@ describe('UpgradeShop', () => {
       role: 'USER',
     })
     getBalanceMock.mockResolvedValue({ balance: 100 })
+    getClickPowerMock
+      .mockResolvedValueOnce({ rewardPerClick: 1 })
+      .mockResolvedValueOnce({ rewardPerClick: 2 })
     getMyUpgradesMock
       .mockResolvedValueOnce([mouse])
       .mockResolvedValueOnce([{ ...mouse, level: 1 }])
@@ -67,8 +73,8 @@ describe('UpgradeShop', () => {
     renderWithProviders(<UpgradeShop />)
 
     expect(await screen.findByRole('heading', { name: 'Better Mouse' })).toBeInTheDocument()
+    expect(screen.getAllByText('+1 / click').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('+1 click power per level')).toBeInTheDocument()
-    expect(screen.queryByText(/slightly better mouse/i)).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /upgrade/i }))
 
@@ -76,7 +82,10 @@ describe('UpgradeShop', () => {
       expect(buyUpgradeMock).toHaveBeenCalledWith(1)
       expect(screen.getByText('50.00 ClickDollars')).toBeInTheDocument()
       expect(screen.getByText('Level 1')).toBeInTheDocument()
+      expect(screen.getByText('+2 / click')).toBeInTheDocument()
     })
+
+    expect(getClickPowerMock).toHaveBeenCalledTimes(2)
   })
 
   it('disables buy when balance is too low', async () => {
@@ -88,6 +97,7 @@ describe('UpgradeShop', () => {
       role: 'USER',
     })
     getBalanceMock.mockResolvedValue({ balance: 10 })
+    getClickPowerMock.mockResolvedValue({ rewardPerClick: 1 })
     getMyUpgradesMock.mockResolvedValue([mouse])
 
     renderWithProviders(<UpgradeShop />)

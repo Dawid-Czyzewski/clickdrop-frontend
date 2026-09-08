@@ -96,6 +96,7 @@
     "clickPower": "+{{power}} / klik",
     "nextCostLabel": "Koszt kolejnego poziomu",
     "balance": "{{amount}} ClickDollars",
+    "perClick": "+{{amount}} / klik",
     "insufficientFunds": "Za mało ClickDolarów",
     "loading": "Ładowanie ulepszeń…",
     "empty": "Brak dostępnych ulepszeń.",

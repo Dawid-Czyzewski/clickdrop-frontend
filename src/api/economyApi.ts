@@ -27,8 +27,16 @@ export type BuyUpgradeResponse = {
   cost: number
 }
 
+export type ClickPowerResponse = {
+  rewardPerClick: number
+}
+
 export function getBalance(): Promise<BalanceResponse> {
   return apiRequest<BalanceResponse>('/api/economy/balance')
+}
+
+export function getClickPower(): Promise<ClickPowerResponse> {
+  return apiRequest<ClickPowerResponse>('/api/economy/click-power')
 }
 
 export function clickToEarn(): Promise<ClickToEarnResponse> {
@@ -49,6 +57,7 @@ export function buyUpgrade(upgradeId: number): Promise<BuyUpgradeResponse> {
 
 export const economyApi = {
   getBalance,
+  getClickPower,
   clickToEarn,
   getMyUpgrades,
   buyUpgrade,

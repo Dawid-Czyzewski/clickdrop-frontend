@@ -6,24 +6,27 @@ import { renderWithProviders } from '../utils/render'
 
 vi.mock('../../src/api/economyApi', () => ({
   getBalance: vi.fn(),
+  getClickPower: vi.fn(),
   clickToEarn: vi.fn(),
   getMyUpgrades: vi.fn(),
   buyUpgrade: vi.fn(),
 }))
 
-import { getBalance, getMyUpgrades } from '../../src/api/economyApi'
+import { getBalance, getClickPower, getMyUpgrades } from '../../src/api/economyApi'
 
 const getBalanceMock = vi.mocked(getBalance)
+const getClickPowerMock = vi.mocked(getClickPower)
 const getMyUpgradesMock = vi.mocked(getMyUpgrades)
 
 describe('EarnMoneyPanel owned upgrades', () => {
   beforeEach(() => {
     authService.logout()
     getBalanceMock.mockReset()
+    getClickPowerMock.mockReset()
     getMyUpgradesMock.mockReset()
   })
 
-  it('shows owned upgrades around the click button using i18n names', async () => {
+  it('shows owned upgrades and rewardPerClick from API', async () => {
     authService.setSession({
       token: 'jwt',
       refreshToken: 'refresh',
@@ -32,6 +35,7 @@ describe('EarnMoneyPanel owned upgrades', () => {
       role: 'USER',
     })
     getBalanceMock.mockResolvedValue({ balance: 20 })
+    getClickPowerMock.mockResolvedValue({ rewardPerClick: 5 })
     getMyUpgradesMock.mockResolvedValue([
       {
         id: 1,
@@ -60,9 +64,9 @@ describe('EarnMoneyPanel owned upgrades', () => {
       expect(screen.getByText('Gaming Mouse')).toBeInTheDocument()
     })
 
-    // Better Mouse lvl2×1=2, Gaming Mouse lvl1×2=2; chips + total (base 1 → 5)
     expect(screen.getAllByText('+2 / click')).toHaveLength(2)
     expect(screen.getByText('+5 / click')).toBeInTheDocument()
+    expect(getClickPowerMock).toHaveBeenCalled()
     expect(screen.getByRole('button', { name: /click to earn/i })).toBeInTheDocument()
   })
 })
