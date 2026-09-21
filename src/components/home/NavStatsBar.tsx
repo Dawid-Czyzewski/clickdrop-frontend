@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { STATS } from '../../data/home'
 
 const NAV_LINKS = [
-  { href: '/', key: 'cases' as const },
   { href: '/upgrades', key: 'upgrades' as const },
+  { href: '/inventory', key: 'inventory' as const },
 ]
 
 export function NavStatsBar() {
@@ -17,7 +17,7 @@ export function NavStatsBar() {
   return (
     <div className="border-b border-cd-border bg-cd-surface/60">
       <div className="flex w-full flex-wrap items-center gap-x-6 gap-y-2 px-3 py-0 sm:px-5 lg:px-8">
-        <nav className="flex shrink-0 items-stretch gap-1" aria-label={t('home.nav.label')}>
+        <nav className="relative z-10 flex shrink-0 items-stretch gap-1" aria-label={t('home.nav.label')}>
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href
             return (

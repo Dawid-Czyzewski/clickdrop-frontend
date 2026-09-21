@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { HeaderUserStatsPanel } from './HeaderUserStatsPanel'
 
 export function SiteHeader() {
   const { t, i18n } = useTranslation()
+  const router = useRouter()
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -17,6 +19,7 @@ export function SiteHeader() {
   function handleLogout() {
     authService.logout()
     setLoggedIn(false)
+    router.push('/')
   }
 
   return (
@@ -44,10 +47,9 @@ export function SiteHeader() {
         </Link>
 
         <nav className="ml-2 hidden items-center gap-4 text-sm text-cd-muted lg:flex" aria-label={t('home.header.links')}>
-          <span className="cursor-default transition hover:text-cd-text">{t('home.header.blog')}</span>
-          <span className="cursor-default transition hover:text-cd-text">{t('home.header.daily')}</span>
-          <span className="cursor-default transition hover:text-cd-text">{t('home.header.shop')}</span>
-          <span className="inline-flex items-center gap-1.5 text-cd-text">
+          <span className="cursor-pointer transition hover:text-cd-text">{t('home.header.forum')}</span>
+          <span className="cursor-pointer transition hover:text-cd-text">{t('home.header.daily')}</span>
+          <span className="inline-flex cursor-pointer items-center gap-1.5 text-cd-text">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" aria-hidden="true" />
             1 284 {t('home.header.online')}
           </span>

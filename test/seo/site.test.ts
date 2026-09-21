@@ -32,6 +32,6 @@ describe('seo site metadata', () => {
   })
 
   it('includes only public paths in sitemap list', () => {
-    expect(publicSitemapPaths).toEqual(['/', '/upgrades'])
+    expect(publicSitemapPaths).toEqual(['/', '/upgrades', '/inventory'])
   })
 })

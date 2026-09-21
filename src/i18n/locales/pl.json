@@ -24,14 +24,17 @@
     "upgrades": {
       "title": "Sklep ulepszeń | ClickDrop",
       "description": "Kupuj ulepszenia kliknięcia za ClickDollary i zwiększaj moc zarabiania."
+    },
+    "inventory": {
+      "title": "Ekwipunek | ClickDrop",
+      "description": "Przeglądaj skiny i sprzedawaj je za ClickDollary."
     }
   },
   "home": {
     "header": {
       "links": "Szybkie linki",
-      "blog": "Blog",
+      "forum": "Forum",
       "daily": "Daily Free",
-      "shop": "War Tag Shop",
       "online": "online",
       "login": "Zaloguj",
       "logout": "Wyloguj",
@@ -41,8 +44,8 @@
     },
     "nav": {
       "label": "Główne sekcje",
-      "cases": "Skrzynie",
-      "upgrades": "Sklep ulepszeń"
+      "upgrades": "Sklep ulepszeń",
+      "inventory": "Ekwipunek"
     },
     "stats": {
       "cases": "otwartych skrzynek",
@@ -55,13 +58,35 @@
       "eyebrow": "Saldo",
       "title": "Zarabiaj ClickDollary",
       "subtitle": "Kliknij przycisk, aby zarabiać ClickDollary.",
+      "guestEyebrow": "Zacznij tutaj",
+      "guestTitle": "Klikaj. Zarabiaj. Otwieraj skrzynie.",
+      "guestSubtitle": "Zaloguj się, aby klikać o ClickDollary, kupować ulepszenia i otwierać skrzynie ze skinami.",
+      "guestPerClick": "+1 / klik",
+      "guestHint": "Dołącz za darmo — saldo i ekwipunek synchronizują się od razu.",
+      "guestSteps": {
+        "click": {
+          "label": "01",
+          "title": "Klikaj i zarabiaj",
+          "text": "Każdy klik dodaje ClickDollary do portfela."
+        },
+        "upgrade": {
+          "label": "02",
+          "title": "Zwiększaj moc",
+          "text": "Kupuj ulepszenia, by zarabiać więcej za klik."
+        },
+        "cases": {
+          "label": "03",
+          "title": "Otwieraj skrzynie",
+          "text": "Wydawaj CD na skrzynie i sprzedawaj dropy."
+        }
+      },
       "balanceValue": "{{amount}} ClickDollars",
       "guestBalance": "— ClickDollars",
       "loadingBalance": "Ładowanie salda…",
       "perClick": "+{{amount}} / klik",
       "clickLabel": "CLICK TO EARN",
       "cta": "Zarabiaj",
-      "loginCta": "Zaloguj się, by zarabiać",
+      "loginCta": "Zaloguj się, by grać",
       "earned_one": "+{{count}} ClickDollar",
       "earned_few": "+{{count}} ClickDollary",
       "earned_many": "+{{count}} ClickDollarów",
@@ -71,17 +96,6 @@
       "errorNotFound": "Nie znaleziono portfela. Skontaktuj się z supportem.",
       "errorTooFast": "Za szybko klikasz. Zwolnij trochę.",
       "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
-    },
-    "cases": {
-      "heading": "Wyróżnione skrzynki",
-      "anvil": "Anvil",
-      "temper": "Temper",
-      "forgefire": "Forgefire",
-      "ember": "Ember",
-      "nova": "Nova",
-      "rift": "Rift",
-      "pulse": "Pulse",
-      "shadow": "Shadow"
     }
   },
   "upgrades": {
@@ -128,6 +142,79 @@
       "name": "Auto-kliker AI",
       "description": "+25 do mocy klika za każdy poziom"
     }
+  },
+  "cases": {
+    "eyebrow": "Skrzynie",
+    "title": "Otwieraj skrzynie",
+    "subtitle": "Wydawaj ClickDollary, aby otworzyć skrzynkę i zdobyć skin.",
+    "open": "Otwórz",
+    "opening": "Otwieranie…",
+    "spinning": "Otwieranie skrzynki…",
+    "view": "Zobacz skrzynię",
+    "back": "Wróć do skrzyń",
+    "dropsHeading": "Możliwe dropy",
+    "dropsSubtitle": "Przy każdym skinie widać szansę wylosowania go z tej skrzynki.",
+    "dropsLoading": "Ładowanie dropów…",
+    "dropsEmpty": "Ta skrzynka nie ma jeszcze skonfigurowanych dropów.",
+    "keep": "Do ekwipunku",
+    "sellNow": "Sprzedaj za {{amount}} CD",
+    "selling": "Sprzedawanie…",
+    "suggestedSell": "Sugerowana sprzedaż: {{amount}} CD",
+    "balance": "{{amount}} ClickDollars",
+    "insufficientFunds": "Za mało ClickDolarów",
+    "loading": "Ładowanie skrzynek…",
+    "empty": "Brak dostępnych skrzynek.",
+    "loginHint": "Zaloguj się, aby otwierać skrzynki.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się wykonać operacji na skrzynce. Spróbuj ponownie.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Nie znaleziono skrzynki.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
+    "ANVIL": { "name": "Anvil" },
+    "TEMPER": { "name": "Temper" },
+    "FORGEFIRE": { "name": "Forgefire" },
+    "EMBER": { "name": "Ember" },
+    "NOVA": { "name": "Nova" },
+    "RIFT": { "name": "Rift" },
+    "PULSE": { "name": "Pulse" },
+    "SHADOW": { "name": "Shadow" }
+  },
+  "inventory": {
+    "eyebrow": "Ekwipunek",
+    "title": "Twój ekwipunek",
+    "subtitle": "Skiny zostawione po otwarciu skrzynek. Sprzedaj je w dowolnym momencie.",
+    "sell": "Sprzedaj za {{amount}} CD",
+    "selling": "Sprzedawanie…",
+    "balance": "{{amount}} ClickDollars",
+    "loading": "Ładowanie ekwipunku…",
+    "empty": "Ekwipunek jest pusty. Otwórz skrzynkę, aby zdobyć skiny.",
+    "loginHint": "Zaloguj się, aby zobaczyć ekwipunek.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się wczytać ekwipunku. Spróbuj ponownie.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
+  },
+  "items": {
+    "GLOCK_WATER_ELEMENTAL": { "name": "Glock | Water Elemental" },
+    "USP_GUARDIAN": { "name": "USP-S | Guardian" },
+    "AK_REDLINE": { "name": "AK-47 | Redline" },
+    "AWP_ELECTRIC_HIVE": { "name": "AWP | Electric Hive" },
+    "M4A4_DESERT_STRIKE": { "name": "M4A4 | Desert-Strike" },
+    "AWP_ASIIMOV": { "name": "AWP | Asiimov" }
+  },
+  "rarity": {
+    "MIL_SPEC": "Mil-Spec",
+    "RESTRICTED": "Restricted",
+    "CLASSIFIED": "Classified",
+    "COVERT": "Covert"
+  },
+  "exteriors": {
+    "FACTORY_NEW": "Factory New",
+    "MINIMAL_WEAR": "Minimal Wear",
+    "FIELD_TESTED": "Field-Tested",
+    "WELL_WORN": "Well-Worn",
+    "BATTLE_SCARRED": "Battle-Scarred"
   },
   "language": {
     "label": "Język",

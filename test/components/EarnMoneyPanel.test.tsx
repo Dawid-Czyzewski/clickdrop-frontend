@@ -42,13 +42,14 @@ describe('EarnMoneyPanel', () => {
     getClickPowerMock.mockResolvedValue({ rewardPerClick: 1 })
   })
 
-  it('shows guest state with login CTA', () => {
+  it('shows guest preview with login CTA and teaser steps', () => {
     renderWithProviders(<EarnMoneyPanel />)
 
-    expect(screen.getByRole('heading', { name: /earn clickdollars/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /sign in to earn/i })).toHaveAttribute('href', '/login')
-    expect(screen.getByText('— ClickDollars')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /click to earn/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /click\. earn\. open cases/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /sign in to play/i })).toHaveAttribute('href', '/login')
+    expect(screen.getByRole('button', { name: /click to earn/i })).toBeDisabled()
+    expect(screen.getByText('+1 / click')).toBeInTheDocument()
+    expect(screen.getByText(/boost power/i)).toBeInTheDocument()
     expect(getBalanceMock).not.toHaveBeenCalled()
   })
 

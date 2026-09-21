@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
@@ -10,6 +9,7 @@ import { useUpgrades } from '../../hooks/useUpgrades'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { ClickButton } from './ClickButton'
 import { EarnedFeedback, type EarnToast } from './EarnedFeedback'
+import { GuestEarnPreview } from './GuestEarnPreview'
 import { OwnedUpgradesFlank } from './OwnedUpgradesFlank'
 
 export function EarnMoneyPanel() {
@@ -71,75 +71,75 @@ export function EarnMoneyPanel() {
       <div className="relative z-10 flex flex-col items-center gap-6 px-5 py-8 text-center sm:px-8 sm:py-10">
         <div className="flex flex-col items-center gap-2">
           <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
-            {t('home.earn.eyebrow')}
+            {t(loggedIn ? 'home.earn.eyebrow' : 'home.earn.guestEyebrow')}
           </p>
-          <h1 id="earn-panel-title" className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-            {t('home.earn.title')}
+          <h1
+            id="earn-panel-title"
+            className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl"
+          >
+            {t(loggedIn ? 'home.earn.title' : 'home.earn.guestTitle')}
           </h1>
-          <p className="max-w-md text-base text-cd-muted">{t('home.earn.subtitle')}</p>
-        </div>
-
-        <div className="flex min-h-[3rem] flex-col items-center justify-center gap-1" aria-live="polite">
-          {isLoading ? (
-            <p role="status" className="text-sm text-cd-muted">
-              {t('home.earn.loadingBalance')}
-            </p>
-          ) : null}
-
-          {!isLoading && (formattedBalance !== null || !loggedIn) ? (
-            <div className="flex flex-col items-center gap-1">
-              <p
-                key={`balance-${balance ?? 'guest'}-${earnPulseKey}`}
-                className={[
-                  'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
-                  earnPulseKey > 0 ? 'cd-balance-bump' : '',
-                ].join(' ')}
-              >
-                {loggedIn && formattedBalance !== null
-                  ? t('home.earn.balanceValue', { amount: formattedBalance })
-                  : t('home.earn.guestBalance')}
-              </p>
-              {loggedIn && rewardPerClick !== null ? (
-                <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
-                  {t('home.earn.perClick', { amount: rewardPerClick })}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-
-          {!isLoading && error ? (
-            <p role="alert" className="text-sm text-cd-danger">
-              {error}
-            </p>
-          ) : null}
+          <p className="max-w-lg text-base text-cd-muted">
+            {t(loggedIn ? 'home.earn.subtitle' : 'home.earn.guestSubtitle')}
+          </p>
         </div>
 
         {loggedIn ? (
-          <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
-            <OwnedUpgradesFlank upgrades={upgrades} side="left" />
-            <div className="relative flex shrink-0 items-center justify-center">
-              <ClickButton
-                disabled={isLoading || isClicking}
-                onClick={() => {
-                  void handleClick()
-                }}
-              />
-              <EarnedFeedback
-                toasts={earnToasts}
-                onDismiss={(id) => {
-                  setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
-                }}
-              />
+          <>
+            <div className="flex min-h-[3rem] flex-col items-center justify-center gap-1" aria-live="polite">
+              {isLoading ? (
+                <p role="status" className="text-sm text-cd-muted">
+                  {t('home.earn.loadingBalance')}
+                </p>
+              ) : null}
+
+              {!isLoading && formattedBalance !== null ? (
+                <div className="flex flex-col items-center gap-1">
+                  <p
+                    key={`balance-${balance}-${earnPulseKey}`}
+                    className={[
+                      'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
+                      earnPulseKey > 0 ? 'cd-balance-bump' : '',
+                    ].join(' ')}
+                  >
+                    {t('home.earn.balanceValue', { amount: formattedBalance })}
+                  </p>
+                  {rewardPerClick !== null ? (
+                    <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
+                      {t('home.earn.perClick', { amount: rewardPerClick })}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {!isLoading && error ? (
+                <p role="alert" className="text-sm text-cd-danger">
+                  {error}
+                </p>
+              ) : null}
             </div>
-            <OwnedUpgradesFlank upgrades={upgrades} side="right" />
-          </div>
+
+            <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
+              <OwnedUpgradesFlank upgrades={upgrades} side="left" />
+              <div className="relative flex shrink-0 items-center justify-center">
+                <ClickButton
+                  disabled={isLoading || isClicking}
+                  onClick={() => {
+                    void handleClick()
+                  }}
+                />
+                <EarnedFeedback
+                  toasts={earnToasts}
+                  onDismiss={(id) => {
+                    setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
+                  }}
+                />
+              </div>
+              <OwnedUpgradesFlank upgrades={upgrades} side="right" />
+            </div>
+          </>
         ) : (
-          <Link
-            href="/login"
-            className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-          >
-            {t('home.earn.loginCta')}
-          </Link>
+          <GuestEarnPreview />
         )}
       </div>
     </section>

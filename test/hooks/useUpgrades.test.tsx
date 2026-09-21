@@ -67,10 +67,7 @@ describe('useUpgrades', () => {
       expect(result.current.isLoading).toBe(false)
     })
 
-    let purchase: Awaited<ReturnType<typeof result.current.buyUpgrade>> = null
-    await act(async () => {
-      purchase = await result.current.buyUpgrade(1)
-    })
+    const purchase = await act(async () => result.current.buyUpgrade(1))
 
     expect(purchase?.balance).toBe(25)
     expect(result.current.upgrades[0]?.level).toBe(2)

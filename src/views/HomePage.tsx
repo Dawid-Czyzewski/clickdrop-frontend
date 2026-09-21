@@ -1,6 +1,6 @@
 'use client'
 
-import { CaseGrid } from '../components/home/CaseGrid'
+import { CasesShop } from '../components/cases/CasesShop'
 import { EarnMoneyPanel } from '../components/home/EarnMoneyPanel'
 import { AppShell } from '../components/home/AppShell'
 
@@ -11,7 +11,7 @@ export function HomePage() {
         <div className="mb-8">
           <EarnMoneyPanel />
         </div>
-        <CaseGrid />
+        <CasesShop />
       </main>
     </AppShell>
   )

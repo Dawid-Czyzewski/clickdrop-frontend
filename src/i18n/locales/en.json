@@ -24,14 +24,17 @@
     "upgrades": {
       "title": "Upgrades shop | ClickDrop",
       "description": "Buy click upgrades with ClickDollars and boost your earn power."
+    },
+    "inventory": {
+      "title": "Inventory | ClickDrop",
+      "description": "Browse your skins and sell them for ClickDollars."
     }
   },
   "home": {
     "header": {
       "links": "Quick links",
-      "blog": "Blog",
+      "forum": "Forum",
       "daily": "Daily Free",
-      "shop": "War Tag Shop",
       "online": "online",
       "login": "Login",
       "logout": "Log out",
@@ -41,8 +44,8 @@
     },
     "nav": {
       "label": "Main sections",
-      "cases": "Cases",
-      "upgrades": "Upgrades shop"
+      "upgrades": "Upgrades shop",
+      "inventory": "Inventory"
     },
     "stats": {
       "cases": "cases opened",
@@ -55,13 +58,35 @@
       "eyebrow": "Balance",
       "title": "Earn ClickDollars",
       "subtitle": "Click the button to earn ClickDollars.",
+      "guestEyebrow": "Start here",
+      "guestTitle": "Click. Earn. Open cases.",
+      "guestSubtitle": "Sign in to click for ClickDollars, buy upgrades, and open cases for skins.",
+      "guestPerClick": "+1 / click",
+      "guestHint": "Free to join — your balance and inventory sync instantly.",
+      "guestSteps": {
+        "click": {
+          "label": "01",
+          "title": "Click to earn",
+          "text": "Every click adds ClickDollars to your wallet."
+        },
+        "upgrade": {
+          "label": "02",
+          "title": "Boost power",
+          "text": "Buy upgrades to earn more per click."
+        },
+        "cases": {
+          "label": "03",
+          "title": "Open cases",
+          "text": "Spend CD on cases and sell drops anytime."
+        }
+      },
       "balanceValue": "{{amount}} ClickDollars",
       "guestBalance": "— ClickDollars",
       "loadingBalance": "Loading balance…",
       "perClick": "+{{amount}} / click",
       "clickLabel": "CLICK TO EARN",
       "cta": "Earn money",
-      "loginCta": "Sign in to earn",
+      "loginCta": "Sign in to play",
       "earned_one": "+{{count}} ClickDollar",
       "earned_other": "+{{count}} ClickDollars",
       "error": "Could not process your request. Please try again.",
@@ -69,17 +94,6 @@
       "errorNotFound": "Wallet not found. Please contact support.",
       "errorTooFast": "You're clicking too fast. Slow down a bit.",
       "errorServer": "The economy service is unavailable. Please try again later."
-    },
-    "cases": {
-      "heading": "Featured cases",
-      "anvil": "Anvil",
-      "temper": "Temper",
-      "forgefire": "Forgefire",
-      "ember": "Ember",
-      "nova": "Nova",
-      "rift": "Rift",
-      "pulse": "Pulse",
-      "shadow": "Shadow"
     }
   },
   "upgrades": {
@@ -126,6 +140,79 @@
       "name": "AI Auto Clicker",
       "description": "+25 click power per level"
     }
+  },
+  "cases": {
+    "eyebrow": "Cases",
+    "title": "Open cases",
+    "subtitle": "Spend ClickDollars to open a case and get a skin drop.",
+    "open": "Open",
+    "opening": "Opening…",
+    "spinning": "Opening case…",
+    "view": "View case",
+    "back": "Back to cases",
+    "dropsHeading": "Possible drops",
+    "dropsSubtitle": "Each skin shows your chance to get it from this case.",
+    "dropsLoading": "Loading drops…",
+    "dropsEmpty": "No drops configured for this case yet.",
+    "keep": "Keep in inventory",
+    "sellNow": "Sell for {{amount}} CD",
+    "selling": "Selling…",
+    "suggestedSell": "Suggested sell: {{amount}} CD",
+    "balance": "{{amount}} ClickDollars",
+    "insufficientFunds": "Not enough ClickDollars",
+    "loading": "Loading cases…",
+    "empty": "No cases available yet.",
+    "loginHint": "Sign in to open cases.",
+    "loginCta": "Sign in",
+    "error": "Could not process the case request. Please try again.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "Case not found.",
+    "errorServer": "The economy service is unavailable. Please try again later.",
+    "ANVIL": { "name": "Anvil" },
+    "TEMPER": { "name": "Temper" },
+    "FORGEFIRE": { "name": "Forgefire" },
+    "EMBER": { "name": "Ember" },
+    "NOVA": { "name": "Nova" },
+    "RIFT": { "name": "Rift" },
+    "PULSE": { "name": "Pulse" },
+    "SHADOW": { "name": "Shadow" }
+  },
+  "inventory": {
+    "eyebrow": "Inventory",
+    "title": "Your inventory",
+    "subtitle": "Skins you kept after opening cases. Sell them anytime.",
+    "sell": "Sell for {{amount}} CD",
+    "selling": "Selling…",
+    "balance": "{{amount}} ClickDollars",
+    "loading": "Loading inventory…",
+    "empty": "Inventory is empty. Open a case to get skins.",
+    "loginHint": "Sign in to view your inventory.",
+    "loginCta": "Sign in",
+    "error": "Could not load inventory. Please try again.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "Inventory item not found.",
+    "errorServer": "The economy service is unavailable. Please try again later."
+  },
+  "items": {
+    "GLOCK_WATER_ELEMENTAL": { "name": "Glock | Water Elemental" },
+    "USP_GUARDIAN": { "name": "USP-S | Guardian" },
+    "AK_REDLINE": { "name": "AK-47 | Redline" },
+    "AWP_ELECTRIC_HIVE": { "name": "AWP | Electric Hive" },
+    "M4A4_DESERT_STRIKE": { "name": "M4A4 | Desert-Strike" },
+    "AWP_ASIIMOV": { "name": "AWP | Asiimov" }
+  },
+  "rarity": {
+    "MIL_SPEC": "Mil-Spec",
+    "RESTRICTED": "Restricted",
+    "CLASSIFIED": "Classified",
+    "COVERT": "Covert"
+  },
+  "exteriors": {
+    "FACTORY_NEW": "Factory New",
+    "MINIMAL_WEAR": "Minimal Wear",
+    "FIELD_TESTED": "Field-Tested",
+    "WELL_WORN": "Well-Worn",
+    "BATTLE_SCARRED": "Battle-Scarred"
   },
   "language": {
     "label": "Language",
