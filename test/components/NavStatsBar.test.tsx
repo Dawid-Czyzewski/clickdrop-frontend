@@ -5,11 +5,10 @@ import { setMockPathname } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 describe('NavStatsBar', () => {
-  it('shows upgrades and inventory links with stats', () => {
+  it('shows upgrades, inventory, and daily links', () => {
     setMockPathname('/')
     renderWithProviders(<NavStatsBar />)
 
-    expect(screen.queryByRole('link', { name: /^cases$/i })).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: /upgrades shop/i })).toHaveAttribute(
       'href',
       '/upgrades',
@@ -18,14 +17,14 @@ describe('NavStatsBar', () => {
       'href',
       '/inventory',
     )
-    expect(screen.getByText(/cases opened/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /daily free/i })).toHaveAttribute('href', '/daily')
   })
 
-  it('marks upgrades as active on /upgrades', () => {
-    setMockPathname('/upgrades')
+  it('marks daily as active on /daily', () => {
+    setMockPathname('/daily')
     renderWithProviders(<NavStatsBar />)
 
-    expect(screen.getByRole('link', { name: /upgrades shop/i }).className).toContain(
+    expect(screen.getByRole('link', { name: /daily free/i }).className).toContain(
       'border-emerald-400',
     )
   })

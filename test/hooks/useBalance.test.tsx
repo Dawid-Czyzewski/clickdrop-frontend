@@ -12,6 +12,7 @@ vi.mock('../../src/api/economyApi', () => ({
 }))
 
 import { clickToEarn, getBalance } from '../../src/api/economyApi'
+import { resetSharedBalance } from '../../src/lib/balanceStore'
 
 const getBalanceMock = vi.mocked(getBalance)
 const clickToEarnMock = vi.mocked(clickToEarn)
@@ -24,6 +25,7 @@ describe('useBalance', () => {
   beforeEach(() => {
     getBalanceMock.mockReset()
     clickToEarnMock.mockReset()
+    resetSharedBalance()
   })
 
   it('loads balance from economy API', async () => {
@@ -153,5 +155,25 @@ describe('useBalance', () => {
 
     expect(result.current.balance).toBe(11)
     expect(result.current.isClicking).toBe(false)
+  })
+
+  it('syncs balance across multiple hook instances', async () => {
+    getBalanceMock.mockResolvedValue({ balance: 10 })
+    clickToEarnMock.mockResolvedValue({ balance: 16, earned: 6 })
+
+    const first = renderHook(() => useBalance(), { wrapper: HookProviders })
+    const second = renderHook(() => useBalance(), { wrapper: HookProviders })
+
+    await waitFor(() => {
+      expect(first.result.current.balance).toBe(10)
+      expect(second.result.current.balance).toBe(10)
+    })
+
+    await act(async () => {
+      await first.result.current.clickToEarn()
+    })
+
+    expect(first.result.current.balance).toBe(16)
+    expect(second.result.current.balance).toBe(16)
   })
 })

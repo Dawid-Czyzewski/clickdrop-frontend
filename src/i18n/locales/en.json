@@ -28,6 +28,10 @@
     "inventory": {
       "title": "Inventory | ClickDrop",
       "description": "Browse your skins and sell them for ClickDollars."
+    },
+    "daily": {
+      "title": "Daily Free | ClickDrop",
+      "description": "Claim your free daily skin drop on ClickDrop."
     }
   },
   "home": {
@@ -45,7 +49,8 @@
     "nav": {
       "label": "Main sections",
       "upgrades": "Upgrades shop",
-      "inventory": "Inventory"
+      "inventory": "Inventory",
+      "daily": "Daily Free"
     },
     "stats": {
       "cases": "cases opened",
@@ -213,6 +218,22 @@
     "FIELD_TESTED": "Field-Tested",
     "WELL_WORN": "Well-Worn",
     "BATTLE_SCARRED": "Battle-Scarred"
+  },
+  "daily": {
+    "eyebrow": "Free drop",
+    "title": "Daily Free",
+    "subtitle": "Claim one free skin every 24 hours. No ClickDollars required.",
+    "guestSubtitle": "Sign in to claim your free daily skin drop.",
+    "claim": "Claim free skin",
+    "claiming": "Claiming…",
+    "loading": "Loading Daily Free…",
+    "loginCta": "Sign in to claim",
+    "countdown": "Daily {{time}}",
+    "countdownHint": "Next free drop available after the countdown",
+    "error": "Could not claim Daily Free. Please try again.",
+    "errorTooEarly": "Already claimed. Come back when the timer ends.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorServer": "The economy service is unavailable. Please try again later."
   },
   "language": {
     "label": "Language",

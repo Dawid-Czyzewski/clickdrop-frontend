@@ -46,15 +46,6 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="ml-2 hidden items-center gap-4 text-sm text-cd-muted lg:flex" aria-label={t('home.header.links')}>
-          <span className="cursor-pointer transition hover:text-cd-text">{t('home.header.forum')}</span>
-          <span className="cursor-pointer transition hover:text-cd-text">{t('home.header.daily')}</span>
-          <span className="inline-flex cursor-pointer items-center gap-1.5 text-cd-text">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" aria-hidden="true" />
-            1 284 {t('home.header.online')}
-          </span>
-        </nav>
-
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
           <div className="flex gap-1" role="group" aria-label={t('language.label')}>
             <button

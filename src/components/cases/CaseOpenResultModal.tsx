@@ -10,8 +10,13 @@ import {
   rarityLabelKey,
 } from '../../lib/caseI18n'
 
+export type SkinDropResult = Pick<
+  OpenCaseResponse,
+  'inventoryItemId' | 'itemCode' | 'rarity' | 'exterior' | 'suggestedSellPrice'
+>
+
 type CaseOpenResultModalProps = {
-  drop: OpenCaseResponse
+  drop: SkinDropResult
   isSelling: boolean
   onKeep: () => void
   onSell: () => void

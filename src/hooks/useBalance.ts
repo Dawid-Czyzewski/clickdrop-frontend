@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { clickToEarn as postClickToEarn, getBalance } from '../api/economyApi'
 import { resolveEconomyError } from '../api/resolveEconomyError'
+import {
+  getSharedBalance,
+  setSharedBalance,
+  subscribeSharedBalance,
+} from '../lib/balanceStore'
 
 type UseBalanceOptions = {
   enabled?: boolean
@@ -10,8 +15,10 @@ type UseBalanceOptions = {
 export function useBalance(options: UseBalanceOptions = {}) {
   const { enabled = true } = options
   const { t } = useTranslation()
-  const [balance, setBalance] = useState<number | null>(null)
-  const [isLoading, setIsLoading] = useState(enabled)
+  const [balance, setBalance] = useState<number | null>(() =>
+    enabled ? getSharedBalance() : null,
+  )
+  const [isLoading, setIsLoading] = useState(enabled && getSharedBalance() === null)
   const [isClicking, setIsClicking] = useState(false)
   const [error, setError] = useState('')
   const isClickingRef = useRef(false)
@@ -26,17 +33,31 @@ export function useBalance(options: UseBalanceOptions = {}) {
       return
     }
 
+    return subscribeSharedBalance((next) => {
+      setBalance(next)
+    })
+  }, [enabled])
+
+  useEffect(() => {
+    if (!enabled) return
+
     let cancelled = false
-    setIsLoading(true)
+    const cached = getSharedBalance()
+    if (cached !== null) {
+      setBalance(cached)
+      setIsLoading(false)
+    } else {
+      setIsLoading(true)
+    }
     setError('')
 
     getBalance()
       .then((data) => {
-        if (!cancelled) setBalance(data.balance)
+        if (!cancelled) setSharedBalance(data.balance)
       })
       .catch((err) => {
         if (!cancelled) {
-          setBalance(null)
+          setSharedBalance(null)
           setError(resolveEconomyError(err, t))
         }
       })
@@ -60,7 +81,7 @@ export function useBalance(options: UseBalanceOptions = {}) {
 
     try {
       const result = await postClickToEarn()
-      setBalance(result.balance)
+      setSharedBalance(result.balance)
       return result
     } catch (err) {
       setError(resolveEconomyError(err, t))
@@ -72,7 +93,7 @@ export function useBalance(options: UseBalanceOptions = {}) {
   }
 
   function applyBalance(next: number) {
-    setBalance(next)
+    setSharedBalance(next)
     setError('')
   }
 
