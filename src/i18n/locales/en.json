@@ -172,6 +172,7 @@
     "error": "Could not process the case request. Please try again.",
     "errorUnauthorized": "Your session has expired. Please sign in again.",
     "errorNotFound": "Case not found.",
+    "errorTooFast": "You're opening cases too fast. Slow down a bit.",
     "errorServer": "The economy service is unavailable. Please try again later.",
     "ANVIL": { "name": "Anvil" },
     "TEMPER": { "name": "Temper" },
