@@ -1,5 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { claimDaily, dailyApi, getDailyStatus } from '../../src/api/dailyApi'
+import {
+  claimDaily,
+  dailyApi,
+  getDailyDrops,
+  getDailyStatus,
+  isDailyCashClaim,
+  isDailySkinClaim,
+} from '../../src/api/dailyApi'
 
 const requestMock = vi.hoisted(() => vi.fn())
 
@@ -33,9 +40,33 @@ describe('dailyApi', () => {
     })
   })
 
-  it('claimDaily posts to /api/economy/daily/claim without body', async () => {
+  it('getDailyDrops calls GET /api/economy/daily/drops without auth', async () => {
+    requestMock.mockResolvedValue({
+      data: [
+        { type: 'SKIN', itemId: 3, itemCode: 'AK_REDLINE', rarity: 'RESTRICTED', weight: 10 },
+        { type: 'CASH', cashAmount: 5, weight: 40 },
+      ],
+    })
+
+    const result = await getDailyDrops()
+
+    expect(result).toHaveLength(2)
+    expect(result[0]).toMatchObject({ type: 'SKIN', itemCode: 'AK_REDLINE' })
+    expect(result[1]).toMatchObject({ type: 'CASH', cashAmount: 5 })
+    expect(dailyApi.getDailyDrops).toBe(getDailyDrops)
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/economy/daily/drops',
+      method: 'GET',
+      data: undefined,
+      headers: undefined,
+      skipAuth: true,
+    })
+  })
+
+  it('claimDaily posts and narrows SKIN vs CASH', async () => {
     requestMock.mockResolvedValue({
       data: {
+        type: 'SKIN',
         inventoryItemId: 9,
         itemCode: 'AK_REDLINE',
         rarity: 'RESTRICTED',
@@ -45,10 +76,13 @@ describe('dailyApi', () => {
       },
     })
 
-    const result = await claimDaily()
+    const skin = await claimDaily()
 
-    expect(result.itemCode).toBe('AK_REDLINE')
-    expect(dailyApi.claimDaily).toBe(claimDaily)
+    expect(isDailySkinClaim(skin)).toBe(true)
+    expect(isDailyCashClaim(skin)).toBe(false)
+    if (isDailySkinClaim(skin)) {
+      expect(skin.itemCode).toBe('AK_REDLINE')
+    }
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/daily/claim',
       method: 'POST',
@@ -56,5 +90,21 @@ describe('dailyApi', () => {
       headers: undefined,
       skipAuth: false,
     })
+
+    requestMock.mockResolvedValue({
+      data: {
+        type: 'CASH',
+        cashAmount: 12.5,
+        balance: 62.5,
+        nextClaimAt: '2026-09-26T15:00:00Z',
+      },
+    })
+
+    const cash = await claimDaily()
+    expect(isDailyCashClaim(cash)).toBe(true)
+    if (isDailyCashClaim(cash)) {
+      expect(cash.cashAmount).toBe(12.5)
+      expect(cash.balance).toBe(62.5)
+    }
   })
 })

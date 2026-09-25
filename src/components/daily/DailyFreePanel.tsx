@@ -2,21 +2,28 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { isDailyCashClaim, isDailySkinClaim } from '../../api/dailyApi'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useDailyFree } from '../../hooks/useDailyFree'
+import { dailyDropSpinCode, toSpinCaseDrop } from '../../lib/dailySpin'
 import { formatCountdown } from '../../lib/formatCountdown'
-import { CasePlaceholder } from '../home/CasePlaceholder'
 import { CaseOpenResultModal } from '../cases/CaseOpenResultModal'
+import { CaseOpenSpinner } from '../cases/CaseOpenSpinner'
+import { CasePlaceholder } from '../home/CasePlaceholder'
+import { DailyCashResultModal } from './DailyCashResultModal'
+import { DailyDropsGrid } from './DailyDropsGrid'
 
 export function DailyFreePanel() {
   const { t } = useTranslation()
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState(false)
+  const [spinning, setSpinning] = useState(false)
   const { applyBalance } = useBalance({ enabled: loggedIn })
   const {
+    drops,
     status,
     drop,
     isLoading,
@@ -28,15 +35,28 @@ export function DailyFreePanel() {
     claim,
     sellDrop,
     keepDrop,
-  } = useDailyFree({ enabled: loggedIn })
+  } = useDailyFree({ loggedIn })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
+  const spinPool = useMemo(() => drops.map(toSpinCaseDrop), [drops])
+  const locked = Boolean(loggedIn && status && !status.available)
+  const isOpening = isClaiming || spinning
+  const openDisabled = !canClaim || spinning
+
+  async function handleOpen() {
+    const result = await claim()
+    if (!result) return
+    if (isDailyCashClaim(result)) applyBalance(result.balance)
+    const skipSpin = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setSpinning(!skipSpin && spinPool.length > 0)
+  }
+
   async function handleSell() {
-    const balance = await sellDrop()
-    if (balance !== null) applyBalance(balance)
+    const next = await sellDrop()
+    if (next !== null) applyBalance(next)
   }
 
   function handleKeep() {
@@ -44,29 +64,10 @@ export function DailyFreePanel() {
     router.push('/inventory')
   }
 
-  if (!loggedIn) {
-    return (
-      <div className="flex flex-col items-center gap-6 py-12 text-center">
-        <div className="flex h-40 w-40 items-center justify-center rounded-xl border border-cd-border bg-cd-bg/60">
-          <CasePlaceholder accent="#f59e0b" className="h-[70%] w-[70%]" />
-        </div>
-        <div>
-          <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
-            {t('daily.eyebrow')}
-          </p>
-          <h1 className="mt-1 font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-            {t('daily.title')}
-          </h1>
-          <p className="mt-2 max-w-md text-cd-muted">{t('daily.guestSubtitle')}</p>
-        </div>
-        <Link
-          href="/login"
-          className="cursor-pointer rounded-md bg-cd-accent px-8 py-3.5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-        >
-          {t('daily.loginCta')}
-        </Link>
-      </div>
-    )
+  function winnerCode(): string {
+    if (!drop) return ''
+    if (isDailySkinClaim(drop)) return drop.itemCode
+    return dailyDropSpinCode({ type: 'CASH', cashAmount: drop.cashAmount, weight: 1 })
   }
 
   if (isLoading) {
@@ -77,57 +78,82 @@ export function DailyFreePanel() {
     )
   }
 
-  const locked = Boolean(status && !status.available)
-
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-6 py-6 text-center sm:py-10">
-      <div>
-        <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
-          {t('daily.eyebrow')}
-        </p>
-        <h1 className="mt-1 font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-          {t('daily.title')}
-        </h1>
-        <p className="mt-2 text-cd-muted">{t('daily.subtitle')}</p>
-      </div>
-
-      <div
-        className="flex aspect-square w-full max-w-sm items-center justify-center rounded-xl border border-cd-border bg-cd-bg/60"
-        style={{
-          background: 'radial-gradient(circle at 50% 40%, rgba(245,158,11,0.18), transparent 65%)',
-        }}
-      >
-        <CasePlaceholder accent="#f59e0b" className="h-[70%] w-[70%]" />
-      </div>
-
-      {locked ? (
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-sm text-cd-muted">{t('daily.countdownHint')}</p>
-          <p className="font-display text-3xl font-bold tabular-nums text-cd-accent">
-            {formatCountdown(remainingMs)}
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-10">
+        <div className="flex w-full max-w-sm flex-col items-center gap-4 text-center">
+          <div
+            className="flex aspect-square w-full items-center justify-center rounded-xl border border-cd-border bg-cd-bg/60"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 40%, rgba(245,158,11,0.18), transparent 65%)',
+            }}
+          >
+            <CasePlaceholder accent="#f59e0b" className="h-[70%] w-[70%]" />
+          </div>
+          <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
+            {t('daily.eyebrow')}
           </p>
-        </div>
-      ) : (
-        <button
-          type="button"
-          disabled={!canClaim}
-          aria-busy={isClaiming || undefined}
-          onClick={() => {
-            void claim()
-          }}
-          className="w-full max-w-sm cursor-pointer rounded-md bg-cd-accent px-6 py-3.5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {isClaiming ? t('daily.claiming') : t('daily.claim')}
-        </button>
-      )}
+          <h1 className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
+            {t('daily.title')}
+          </h1>
+          <p className="text-cd-muted">
+            {loggedIn ? t('daily.subtitle') : t('daily.guestSubtitle')}
+          </p>
 
-      {error ? (
-        <p role="alert" className="text-sm text-cd-danger">
-          {error}
-        </p>
+          {!loggedIn ? (
+            <Link
+              href="/login"
+              className="w-full cursor-pointer rounded-md bg-cd-accent px-6 py-3.5 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
+            >
+              {t('daily.loginCta')}
+            </Link>
+          ) : locked ? (
+            <div className="flex w-full flex-col items-center gap-2">
+              <p className="text-sm text-cd-muted">{t('daily.countdownHint')}</p>
+              <p className="font-display text-3xl font-bold tabular-nums text-cd-accent">
+                {formatCountdown(remainingMs)}
+              </p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              disabled={openDisabled}
+              aria-busy={isOpening || undefined}
+              onClick={() => {
+                void handleOpen()
+              }}
+              className="w-full cursor-pointer rounded-md bg-cd-accent px-6 py-3.5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isOpening ? t('daily.opening') : t('daily.open')}
+            </button>
+          )}
+
+          {error ? (
+            <p role="alert" className="text-sm text-cd-danger">
+              {error}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <h2 className="font-display text-sm font-medium tracking-[0.2em] text-cd-muted uppercase">
+            {t('daily.dropsHeading')}
+          </h2>
+          <p className="mt-1 mb-4 text-sm text-cd-muted">{t('daily.dropsSubtitle')}</p>
+          <DailyDropsGrid drops={drops} />
+        </div>
+      </div>
+
+      {spinning && drop ? (
+        <CaseOpenSpinner
+          drops={spinPool}
+          winnerCode={winnerCode()}
+          onComplete={() => setSpinning(false)}
+        />
       ) : null}
 
-      {drop ? (
+      {!spinning && drop && isDailySkinClaim(drop) ? (
         <CaseOpenResultModal
           drop={drop}
           isSelling={isSelling}
@@ -135,6 +161,14 @@ export function DailyFreePanel() {
           onSell={() => {
             void handleSell()
           }}
+        />
+      ) : null}
+
+      {!spinning && drop && isDailyCashClaim(drop) ? (
+        <DailyCashResultModal
+          cashAmount={drop.cashAmount}
+          balance={drop.balance}
+          onClose={keepDrop}
         />
       ) : null}
     </div>

@@ -11,6 +11,8 @@ import {
   SPIN_WINNER_INDEX,
   spinOffsetPx,
 } from '../../lib/caseSpin'
+import { formatClickDollars } from '../../lib/formatClickDollars'
+import { isCashSpinCode, parseCashSpinAmount } from '../../lib/dailySpin'
 
 type CaseOpenSpinnerProps = {
   drops: CaseDrop[]
@@ -19,7 +21,7 @@ type CaseOpenSpinnerProps = {
 }
 
 export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinnerProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const viewportRef = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(0)
   const [running, setRunning] = useState(false)
@@ -93,7 +95,9 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
             }}
           >
             {strip.map((drop, index) => {
-              const color = RARITY_COLOR[drop.rarity] ?? '#8b92a5'
+              const cashAmount = parseCashSpinAmount(drop.code)
+              const isCash = isCashSpinCode(drop.code)
+              const color = isCash ? '#f59e0b' : (RARITY_COLOR[drop.rarity] ?? '#8b92a5')
               return (
                 <div
                   key={`${drop.code}-${index}`}
@@ -108,17 +112,19 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                     }}
                   >
                     <span className="font-display text-2xl font-bold" style={{ color }}>
-                      ★
+                      {isCash ? '$' : '★'}
                     </span>
                   </div>
                   <p
                     className="mt-2 max-w-full truncate text-center text-[0.65rem] font-medium uppercase"
                     style={{ color }}
                   >
-                    {t(rarityLabelKey(drop.rarity))}
+                    {isCash ? t('daily.cashLabel') : t(rarityLabelKey(drop.rarity))}
                   </p>
                   <p className="max-w-full truncate text-center text-xs text-cd-text">
-                    {t(itemNameKey(drop.code))}
+                    {isCash && cashAmount !== null
+                      ? `${formatClickDollars(cashAmount, i18n.language)} CD`
+                      : t(itemNameKey(drop.code))}
                   </p>
                 </div>
               )

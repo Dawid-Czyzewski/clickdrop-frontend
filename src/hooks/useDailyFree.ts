@@ -4,8 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   claimDaily,
+  getDailyDrops,
   getDailyStatus,
+  isDailySkinClaim,
   type DailyClaimResponse,
+  type DailyDrop,
   type DailyStatusResponse,
 } from '../api/dailyApi'
 import { sellInventoryItem } from '../api/casesApi'
@@ -13,15 +16,17 @@ import { resolveDailyError } from '../api/resolveDailyError'
 import { msUntil } from '../lib/formatCountdown'
 
 type UseDailyFreeOptions = {
-  enabled?: boolean
+  loggedIn?: boolean
 }
 
 export function useDailyFree(options: UseDailyFreeOptions = {}) {
-  const { enabled = true } = options
+  const { loggedIn = true } = options
   const { t } = useTranslation()
+  const [drops, setDrops] = useState<DailyDrop[]>([])
   const [status, setStatus] = useState<DailyStatusResponse | null>(null)
   const [drop, setDrop] = useState<DailyClaimResponse | null>(null)
-  const [isLoading, setIsLoading] = useState(enabled)
+  const [isLoadingDrops, setIsLoadingDrops] = useState(true)
+  const [isLoadingStatus, setIsLoadingStatus] = useState(loggedIn)
   const [isClaiming, setIsClaiming] = useState(false)
   const [isSelling, setIsSelling] = useState(false)
   const [error, setError] = useState('')
@@ -29,18 +34,39 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
   const busyRef = useRef(false)
 
   useEffect(() => {
-    if (!enabled) {
+    let cancelled = false
+    setIsLoadingDrops(true)
+
+    getDailyDrops()
+      .then((data) => {
+        if (!cancelled) setDrops(data)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setDrops([])
+          setError(resolveDailyError(err, t))
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingDrops(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [t])
+
+  useEffect(() => {
+    if (!loggedIn) {
       setStatus(null)
       setDrop(null)
-      setError('')
-      setIsLoading(false)
+      setIsLoadingStatus(false)
       busyRef.current = false
       return
     }
 
     let cancelled = false
-    setIsLoading(true)
-    setError('')
+    setIsLoadingStatus(true)
 
     getDailyStatus()
       .then((data) => {
@@ -53,30 +79,29 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
         }
       })
       .finally(() => {
-        if (!cancelled) setIsLoading(false)
+        if (!cancelled) setIsLoadingStatus(false)
       })
 
     return () => {
       cancelled = true
     }
-  }, [enabled, t])
+  }, [loggedIn, t])
 
   const remainingMs = status && !status.available ? msUntil(status.nextClaimAt, now) : 0
 
   useEffect(() => {
-    if (!enabled || !status || status.available || remainingMs <= 0) return
-
+    if (!loggedIn || !status || status.available || remainingMs <= 0) return
     const id = window.setInterval(() => setNow(Date.now()), 1000)
     return () => window.clearInterval(id)
-  }, [enabled, status, remainingMs])
+  }, [loggedIn, status, remainingMs])
 
   useEffect(() => {
-    if (!enabled || !status || status.available || remainingMs > 0) return
+    if (!loggedIn || !status || status.available || remainingMs > 0) return
     setStatus({ available: true, nextClaimAt: null })
-  }, [enabled, status, remainingMs])
+  }, [loggedIn, status, remainingMs])
 
   async function claim(): Promise<DailyClaimResponse | null> {
-    if (!enabled || busyRef.current || isClaiming) return null
+    if (!loggedIn || busyRef.current || isClaiming) return null
 
     busyRef.current = true
     setIsClaiming(true)
@@ -97,7 +122,7 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
   }
 
   async function sellDrop(): Promise<number | null> {
-    if (!drop || busyRef.current) return null
+    if (!drop || !isDailySkinClaim(drop) || busyRef.current) return null
 
     busyRef.current = true
     setIsSelling(true)
@@ -121,14 +146,17 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
   }
 
   return {
+    drops,
     status,
     drop,
-    isLoading,
+    isLoadingDrops,
+    isLoadingStatus,
+    isLoading: isLoadingDrops || (loggedIn && isLoadingStatus),
     isClaiming,
     isSelling,
     error,
     remainingMs,
-    canClaim: Boolean(enabled && status?.available && !isClaiming && !drop),
+    canClaim: Boolean(loggedIn && status?.available && !isClaiming && !drop),
     claim,
     sellDrop,
     keepDrop,
