@@ -9,6 +9,7 @@ import {
   RARITY_COLOR,
   rarityLabelKey,
 } from '../../lib/caseI18n'
+import { AssetImage } from '../media/AssetImage'
 
 type InventoryItemCardProps = {
   item: InventoryItem
@@ -25,33 +26,29 @@ export function InventoryItemCard({
 }: InventoryItemCardProps) {
   const { t, i18n } = useTranslation()
   const color = RARITY_COLOR[item.rarity] ?? '#8b92a5'
+  const name = t(itemNameKey(item.code))
 
   return (
     <article
-      className="flex flex-col gap-3 rounded-lg border bg-cd-surface/70 p-4 text-left"
+      className="flex flex-col gap-2 rounded-lg border bg-cd-surface/70 p-2.5 text-left"
       style={{ borderColor: `${color}55` }}
     >
       <div
-        className="flex h-20 items-center justify-center rounded-md border"
+        className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md border p-1"
         style={{
           borderColor: color,
           background: `radial-gradient(circle at 50% 40%, ${color}28, transparent 70%)`,
         }}
-        aria-hidden="true"
       >
-        <span className="font-display text-2xl font-bold" style={{ color }}>
-          ★
-        </span>
+        <AssetImage kind="item" code={item.code} alt={name} className="h-full w-full object-contain" />
       </div>
 
-      <div>
-        <p className="text-xs font-medium tracking-wide uppercase" style={{ color }}>
+      <div className="min-w-0">
+        <p className="text-[0.65rem] font-medium tracking-wide uppercase" style={{ color }}>
           {t(rarityLabelKey(item.rarity))}
         </p>
-        <h2 className="mt-0.5 font-display text-base font-semibold text-cd-text">
-          {t(itemNameKey(item.code))}
-        </h2>
-        <p className="text-sm text-cd-muted">{t(exteriorLabelKey(item.exterior))}</p>
+        <h2 className="mt-0.5 truncate font-display text-sm font-semibold text-cd-text">{name}</h2>
+        <p className="truncate text-xs text-cd-muted">{t(exteriorLabelKey(item.exterior))}</p>
       </div>
 
       <button
@@ -59,7 +56,7 @@ export function InventoryItemCard({
         disabled={disabled || isSelling}
         aria-busy={isSelling || undefined}
         onClick={() => onSell(item.inventoryItemId)}
-        className="cursor-pointer rounded-md bg-cd-accent px-3 py-2 font-display text-xs font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+        className="cursor-pointer rounded-md bg-cd-accent px-2 py-1.5 font-display text-[0.65rem] font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSelling
           ? t('inventory.selling')

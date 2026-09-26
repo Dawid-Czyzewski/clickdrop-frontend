@@ -13,6 +13,7 @@ import {
 } from '../../lib/caseSpin'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { isCashSpinCode, parseCashSpinAmount } from '../../lib/dailySpin'
+import { AssetImage } from '../media/AssetImage'
 
 type CaseOpenSpinnerProps = {
   drops: CaseDrop[]
@@ -105,15 +106,24 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                   style={{ width: SPIN_ITEM_WIDTH }}
                 >
                   <div
-                    className="flex h-20 w-24 items-center justify-center rounded-md border"
+                    className="flex h-20 w-24 items-center justify-center overflow-hidden rounded-md border p-1"
                     style={{
                       borderColor: color,
                       background: `radial-gradient(circle at 50% 40%, ${color}44, transparent 70%)`,
                     }}
                   >
-                    <span className="font-display text-2xl font-bold" style={{ color }}>
-                      {isCash ? '$' : '★'}
-                    </span>
+                    {isCash ? (
+                      <span className="font-display text-2xl font-bold" style={{ color }}>
+                        $
+                      </span>
+                    ) : (
+                      <AssetImage
+                        kind="item"
+                        code={drop.code}
+                        alt={t(itemNameKey(drop.code))}
+                        className="h-full w-full object-contain"
+                      />
+                    )}
                   </div>
                   <p
                     className="mt-2 max-w-full truncate text-center text-[0.65rem] font-medium uppercase"

@@ -9,6 +9,7 @@ import {
   RARITY_COLOR,
   rarityLabelKey,
 } from '../../lib/caseI18n'
+import { AssetImage } from '../media/AssetImage'
 
 export type SkinDropResult = Pick<
   OpenCaseResponse,
@@ -30,6 +31,7 @@ export function CaseOpenResultModal({
 }: CaseOpenResultModalProps) {
   const { t, i18n } = useTranslation()
   const color = RARITY_COLOR[drop.rarity] ?? '#8b92a5'
+  const name = t(itemNameKey(drop.itemCode))
 
   return (
     <div
@@ -46,21 +48,23 @@ export function CaseOpenResultModal({
           {t(rarityLabelKey(drop.rarity))}
         </p>
         <h2 id="case-drop-title" className="mt-2 font-display text-2xl font-bold text-cd-text">
-          {t(itemNameKey(drop.itemCode))}
+          {name}
         </h2>
         <p className="mt-1 text-sm text-cd-muted">{t(exteriorLabelKey(drop.exterior))}</p>
 
         <div
-          className="mx-auto mt-5 flex h-28 w-40 items-center justify-center rounded-md border"
+          className="mx-auto mt-5 flex aspect-[5/4] w-44 items-center justify-center overflow-hidden rounded-md border p-2"
           style={{
             borderColor: color,
             background: `radial-gradient(circle at 50% 40%, ${color}33, transparent 70%)`,
           }}
-          aria-hidden="true"
         >
-          <span className="font-display text-3xl font-bold" style={{ color }}>
-            ★
-          </span>
+          <AssetImage
+            kind="item"
+            code={drop.itemCode}
+            alt={name}
+            className="h-full w-full object-contain"
+          />
         </div>
 
         <p className="mt-4 text-sm text-cd-muted">

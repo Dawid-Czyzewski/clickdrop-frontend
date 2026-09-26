@@ -38,6 +38,7 @@ describe('CasesShop', () => {
     renderWithProviders(<CasesShop />)
 
     expect(await screen.findByRole('heading', { name: 'Anvil' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Anvil' })).toHaveAttribute('src', '/cases/ANVIL.webp')
     expect(screen.getByText('50.00 CD')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /anvil/i })).toHaveAttribute('href', '/cases/1')
   })

@@ -68,6 +68,10 @@ describe('InventoryPanel', () => {
     renderWithProviders(<InventoryPanel />)
 
     expect(await screen.findByText('AK-47 | Redline')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'AK-47 | Redline' })).toHaveAttribute(
+      'src',
+      '/items/AK_REDLINE.webp',
+    )
     expect(screen.getByText('Restricted')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /sell for 40.00 cd/i }))

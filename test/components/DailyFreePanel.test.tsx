@@ -79,7 +79,15 @@ describe('DailyFreePanel', () => {
       'href',
       '/login',
     )
+    expect(screen.getByRole('img', { name: 'Daily Free' })).toHaveAttribute(
+      'src',
+      '/cases/ANVIL.webp',
+    )
     expect(screen.getByText('AK-47 | Redline')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'AK-47 | Redline' })).toHaveAttribute(
+      'src',
+      '/items/AK_REDLINE.webp',
+    )
     expect(screen.getByText('ClickDollars')).toBeInTheDocument()
     expect(screen.getByText(/5\.00 CD/)).toBeInTheDocument()
     expect(getStatusMock).not.toHaveBeenCalled()

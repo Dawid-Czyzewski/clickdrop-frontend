@@ -11,7 +11,7 @@ import { useCaseDrops } from '../../hooks/useCaseDrops'
 import { useInventory } from '../../hooks/useInventory'
 import { CASE_ACCENT, caseNameKey } from '../../lib/caseI18n'
 import { formatClickDollars } from '../../lib/formatClickDollars'
-import { CasePlaceholder } from '../home/CasePlaceholder'
+import { AssetImage } from '../media/AssetImage'
 import { CaseDropsGrid } from './CaseDropsGrid'
 import { CaseOpenResultModal } from './CaseOpenResultModal'
 import { CaseOpenSpinner } from './CaseOpenSpinner'
@@ -81,12 +81,17 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-10">
         <div className="flex w-full max-w-sm flex-col items-center gap-4">
           <div
-            className="flex aspect-square w-full items-center justify-center rounded-xl border border-cd-border bg-cd-bg/60"
+            className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-cd-border bg-cd-bg/60 p-4"
             style={{
               background: `radial-gradient(circle at 50% 40%, ${accent}22, transparent 65%)`,
             }}
           >
-            <CasePlaceholder accent={accent} className="h-[70%] w-[70%]" />
+            <AssetImage
+              kind="case"
+              code={gameCase.code}
+              alt={t(caseNameKey(gameCase.code))}
+              className="h-full w-full object-contain"
+            />
           </div>
           <h1 className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
             {t(caseNameKey(gameCase.code))}

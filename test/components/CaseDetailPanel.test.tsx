@@ -64,6 +64,11 @@ describe('CaseDetailPanel', () => {
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
     expect(await screen.findByText('Glock | Water Elemental')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Anvil' })).toHaveAttribute('src', '/cases/ANVIL.webp')
+    expect(screen.getByRole('img', { name: 'Glock | Water Elemental' })).toHaveAttribute(
+      'src',
+      '/items/GLOCK_WATER_ELEMENTAL.webp',
+    )
     expect(screen.getByText('50%')).toBeInTheDocument()
     expect(screen.getByText('30%')).toBeInTheDocument()
     expect(screen.getByText('15%')).toBeInTheDocument()

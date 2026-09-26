@@ -12,7 +12,7 @@ import { dailyDropSpinCode, toSpinCaseDrop } from '../../lib/dailySpin'
 import { formatCountdown } from '../../lib/formatCountdown'
 import { CaseOpenResultModal } from '../cases/CaseOpenResultModal'
 import { CaseOpenSpinner } from '../cases/CaseOpenSpinner'
-import { CasePlaceholder } from '../home/CasePlaceholder'
+import { AssetImage } from '../media/AssetImage'
 import { DailyCashResultModal } from './DailyCashResultModal'
 import { DailyDropsGrid } from './DailyDropsGrid'
 
@@ -83,13 +83,18 @@ export function DailyFreePanel() {
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-10">
         <div className="flex w-full max-w-sm flex-col items-center gap-4 text-center">
           <div
-            className="flex aspect-square w-full items-center justify-center rounded-xl border border-cd-border bg-cd-bg/60"
+            className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-cd-border bg-cd-bg/60 p-4"
             style={{
               background:
                 'radial-gradient(circle at 50% 40%, rgba(245,158,11,0.18), transparent 65%)',
             }}
           >
-            <CasePlaceholder accent="#f59e0b" className="h-[70%] w-[70%]" />
+            <AssetImage
+              kind="case"
+              code="ANVIL"
+              alt={t('daily.title')}
+              className="h-full w-full object-contain"
+            />
           </div>
           <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
             {t('daily.eyebrow')}
