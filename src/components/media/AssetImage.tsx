@@ -28,7 +28,7 @@ export function AssetImage({ code, alt, kind, className = '' }: AssetImageProps)
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={`cd-img-fade ${className}`}
       draggable={false}
       onError={() => {
         if (src !== fallback) setSrc(fallback)

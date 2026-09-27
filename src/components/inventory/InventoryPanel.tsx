@@ -6,13 +6,19 @@ import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useInventory } from '../../hooks/useInventory'
-import { formatClickDollars } from '../../lib/formatClickDollars'
+import { CatalogSkeleton } from '../ui/Skeleton'
+import {
+  cdBodyMuted,
+  cdBtnPrimaryLink,
+  cdEyebrow,
+  cdPageTitle,
+} from '../ui/uiStyles'
 import { InventoryItemCard } from './InventoryItemCard'
 
 export function InventoryPanel() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
-  const { balance, isLoading: balanceLoading, applyBalance } = useBalance({
+  const { applyBalance } = useBalance({
     enabled: loggedIn,
   })
   const { items, isLoading, sellingId, error, sellItem } = useInventory({
@@ -30,43 +36,41 @@ export function InventoryPanel() {
 
   if (!loggedIn) {
     return (
-      <div className="flex flex-col items-center gap-4 py-10 text-center">
-        <p className="text-cd-muted">{t('inventory.loginHint')}</p>
-        <Link
-          href="/login"
-          className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-        >
+      <div className="flex flex-col items-center gap-4 py-12 text-center">
+        <p className={cdBodyMuted}>{t('inventory.loginHint')}</p>
+        <Link href="/login" className={cdBtnPrimaryLink}>
           {t('inventory.loginCta')}
         </Link>
       </div>
     )
   }
 
-  if (isLoading || balanceLoading) {
+  if (isLoading) {
     return (
-      <p role="status" className="py-10 text-center text-sm text-cd-muted">
-        {t('inventory.loading')}
-      </p>
+      <div className="flex flex-col gap-5">
+        <div>
+          <p className={cdEyebrow}>{t('inventory.eyebrow')}</p>
+          <h1 className={cdPageTitle}>{t('inventory.title')}</h1>
+        </div>
+        <CatalogSkeleton
+          count={6}
+          colsClassName="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        />
+      </div>
     )
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
-            {t('inventory.eyebrow')}
-          </p>
-          <h1 className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-            {t('inventory.title')}
-          </h1>
-          <p className="mt-1 max-w-xl text-cd-muted">{t('inventory.subtitle')}</p>
+          <p className={cdEyebrow}>{t('inventory.eyebrow')}</p>
+          <h1 className={cdPageTitle}>{t('inventory.title')}</h1>
+          <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('inventory.subtitle')}</p>
         </div>
-        {balance !== null ? (
-          <p className="font-display text-lg font-semibold tabular-nums text-cd-accent">
-            {t('inventory.balance', { amount: formatClickDollars(balance, i18n.language) })}
-          </p>
-        ) : null}
+        <Link href="/skin-upgrade" className={`${cdBtnPrimaryLink} cursor-pointer`}>
+          {t('inventory.upgradePage')}
+        </Link>
       </div>
 
       {error ? (
@@ -76,7 +80,7 @@ export function InventoryPanel() {
       ) : null}
 
       {items.length === 0 ? (
-        <p className="text-sm text-cd-muted">{t('inventory.empty')}</p>
+        <p className={cdBodyMuted}>{t('inventory.empty')}</p>
       ) : (
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {items.map((item) => (

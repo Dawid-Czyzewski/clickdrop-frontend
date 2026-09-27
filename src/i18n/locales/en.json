@@ -32,6 +32,10 @@
     "daily": {
       "title": "Daily Free | ClickDrop",
       "description": "Claim your free daily skin drop on ClickDrop."
+    },
+    "skinUpgrade": {
+      "title": "Skin upgrade | ClickDrop",
+      "description": "Risk your skin for a chance at a better one. Free upgrade — no ClickDollars."
     }
   },
   "home": {
@@ -44,11 +48,14 @@
       "logout": "Log out",
       "level": "Lvl",
       "xp": "XP",
+      "cd": "CD",
       "loadingStats": "Loading stats…"
     },
     "nav": {
       "label": "Main sections",
       "upgrades": "Upgrades shop",
+      "skinUpgrade": "Skin upgrade",
+      "cases": "Cases",
       "inventory": "Inventory",
       "daily": "Daily Free"
     },
@@ -160,6 +167,7 @@
     "dropsLoading": "Loading drops…",
     "dropsEmpty": "No drops configured for this case yet.",
     "keep": "Keep in inventory",
+    "close": "Close",
     "sellNow": "Sell for {{amount}} CD",
     "selling": "Selling…",
     "suggestedSell": "Suggested sell: {{amount}} CD",
@@ -189,12 +197,44 @@
     "subtitle": "Skins you kept after opening cases. Sell them anytime.",
     "sell": "Sell for {{amount}} CD",
     "selling": "Selling…",
+    "upgrade": "Upgrade",
+    "upgradePage": "Skin upgrade",
     "balance": "{{amount}} ClickDollars",
     "loading": "Loading inventory…",
     "empty": "Inventory is empty. Open a case to get skins.",
     "loginHint": "Sign in to view your inventory.",
     "loginCta": "Sign in",
     "error": "Could not load inventory. Please try again.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "Inventory item not found.",
+    "errorServer": "The economy service is unavailable. Please try again later."
+  },
+  "skinUpgrade": {
+    "eyebrow": "Skin upgrade",
+    "title": "Upgrade your skin",
+    "subtitle": "Pick a skin, risk it for a better one. Free — no ClickDollars. Not the same as click upgrades.",
+    "selectLabel": "Choose your skin",
+    "emptyInventory": "No skins to upgrade. Open a case first.",
+    "riskCopy": "{{win}}% better skin / {{lose}}% you lose this one",
+    "targetsLabel": "Possible better skins",
+    "noTargets": "No dearer skins available for this item.",
+    "upgradeFree": "Upgrade",
+    "confirmTitle": "Risk losing this skin?",
+    "confirmBody": "On failure your skin is destroyed and removed from inventory. There is no ClickDollar cost.",
+    "confirmCta": "Confirm upgrade",
+    "cancel": "Cancel",
+    "back": "Back",
+    "animating": "Upgrading…",
+    "win": "Win",
+    "lose": "Lose",
+    "failTitle": "Skin lost",
+    "failBody": "The upgrade failed. Your skin is gone.",
+    "tryAgain": "Try another",
+    "toInventory": "Inventory",
+    "loginHint": "Sign in to upgrade skins.",
+    "loginCta": "Sign in",
+    "error": "Could not upgrade. Please try again.",
+    "errorNoTargets": "No better skins available for this item.",
     "errorUnauthorized": "Your session has expired. Please sign in again.",
     "errorNotFound": "Inventory item not found.",
     "errorServer": "The economy service is unavailable. Please try again later."

@@ -23,7 +23,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="border-b border-cd-border bg-cd-bg-elevated/95 backdrop-blur-sm">
+    <header className="border-b border-cd-border bg-cd-bg-elevated/90 backdrop-blur-md">
       <div className="flex h-14 w-full items-center gap-4 px-3 sm:h-16 sm:px-5 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2 no-underline">
           <svg viewBox="0 0 64 64" className="h-8 w-8" aria-hidden="true">

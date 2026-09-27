@@ -32,6 +32,10 @@
     "daily": {
       "title": "Daily Free | ClickDrop",
       "description": "Odbierz darmowy dzienny drop skina na ClickDrop."
+    },
+    "skinUpgrade": {
+      "title": "Ulepszanie skinów | ClickDrop",
+      "description": "Ryzykuj skinem o szansę na lepszy. Darmowe ulepszenie — bez ClickDolarów."
     }
   },
   "home": {
@@ -44,11 +48,14 @@
       "logout": "Wyloguj",
       "level": "Lvl",
       "xp": "XP",
+      "cd": "CD",
       "loadingStats": "Ładowanie statystyk…"
     },
     "nav": {
       "label": "Główne sekcje",
       "upgrades": "Sklep ulepszeń",
+      "skinUpgrade": "Ulepsz skiny",
+      "cases": "Skrzynki",
       "inventory": "Ekwipunek",
       "daily": "Daily Free"
     },
@@ -162,6 +169,7 @@
     "dropsLoading": "Ładowanie dropów…",
     "dropsEmpty": "Ta skrzynka nie ma jeszcze skonfigurowanych dropów.",
     "keep": "Do ekwipunku",
+    "close": "Zamknij",
     "sellNow": "Sprzedaj za {{amount}} CD",
     "selling": "Sprzedawanie…",
     "suggestedSell": "Sugerowana sprzedaż: {{amount}} CD",
@@ -191,12 +199,44 @@
     "subtitle": "Skiny zostawione po otwarciu skrzynek. Sprzedaj je w dowolnym momencie.",
     "sell": "Sprzedaj za {{amount}} CD",
     "selling": "Sprzedawanie…",
+    "upgrade": "Ulepsz",
+    "upgradePage": "Ulepsz skiny",
     "balance": "{{amount}} ClickDollars",
     "loading": "Ładowanie ekwipunku…",
     "empty": "Ekwipunek jest pusty. Otwórz skrzynkę, aby zdobyć skiny.",
     "loginHint": "Zaloguj się, aby zobaczyć ekwipunek.",
     "loginCta": "Zaloguj się",
     "error": "Nie udało się wczytać ekwipunku. Spróbuj ponownie.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
+  },
+  "skinUpgrade": {
+    "eyebrow": "Ulepszanie skinów",
+    "title": "Ulepsz swojego skina",
+    "subtitle": "Wybierz skin i ryzykuj o lepszy. Za darmo — bez ClickDolarów. To nie to samo co ulepszenia klików.",
+    "selectLabel": "Wybierz skina",
+    "emptyInventory": "Brak skinów do ulepszenia. Najpierw otwórz skrzynkę.",
+    "riskCopy": "{{win}}% lepszy skin / {{lose}}% tracisz ten",
+    "targetsLabel": "Możliwe lepsze skiny",
+    "noTargets": "Brak droższych skinów dla tego przedmiotu.",
+    "upgradeFree": "Ulepsz",
+    "confirmTitle": "Ryzykujesz utratą skina?",
+    "confirmBody": "Przy porażce skin znika z ekwipunku. Ulepszenie nie kosztuje ClickDolarów.",
+    "confirmCta": "Potwierdź ulepszenie",
+    "cancel": "Anuluj",
+    "back": "Wstecz",
+    "animating": "Ulepszanie…",
+    "win": "Wygrana",
+    "lose": "Przegrana",
+    "failTitle": "Skin utracony",
+    "failBody": "Ulepszenie się nie udało. Twój skin zniknął.",
+    "tryAgain": "Spróbuj inny",
+    "toInventory": "Ekwipunek",
+    "loginHint": "Zaloguj się, aby ulepszać skiny.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się ulepszyć skina. Spróbuj ponownie.",
+    "errorNoTargets": "Brak lepszych skinów dla tego przedmiotu.",
     "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
     "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."

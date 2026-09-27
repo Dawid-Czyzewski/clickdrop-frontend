@@ -5,9 +5,11 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 
 const NAV_LINKS = [
-  { href: '/upgrades', key: 'upgrades' as const },
-  { href: '/inventory', key: 'inventory' as const },
-  { href: '/daily', key: 'daily' as const },
+  { href: '/#cases', key: 'cases' as const, match: '/' },
+  { href: '/upgrades', key: 'upgrades' as const, match: '/upgrades' },
+  { href: '/skin-upgrade', key: 'skinUpgrade' as const, match: '/skin-upgrade' },
+  { href: '/inventory', key: 'inventory' as const, match: '/inventory' },
+  { href: '/daily', key: 'daily' as const, match: '/daily' },
 ]
 
 export function NavStatsBar() {
@@ -15,20 +17,28 @@ export function NavStatsBar() {
   const pathname = usePathname()
 
   return (
-    <div className="border-b border-cd-border bg-cd-surface/60">
+    <div className="border-b border-cd-border bg-cd-bg-elevated/50">
       <div className="flex w-full items-center px-3 sm:px-5 lg:px-8">
-        <nav className="relative z-10 flex shrink-0 items-stretch gap-1" aria-label={t('home.nav.label')}>
+        <nav
+          className="relative z-10 flex shrink-0 items-center gap-1 py-1.5"
+          aria-label={t('home.nav.label')}
+        >
           {NAV_LINKS.map((link) => {
-            const active = pathname === link.href
+            const active = pathname === link.match
+            const isCases = link.key === 'cases'
             return (
               <Link
-                key={link.href}
+                key={link.key}
                 href={link.href}
                 className={[
-                  'cursor-pointer shrink-0 border-b-2 px-4 py-2.5 text-sm font-medium tracking-wide uppercase no-underline transition',
-                  active
-                    ? 'border-emerald-400 text-cd-text'
-                    : 'border-transparent text-cd-muted hover:text-cd-text',
+                  'cursor-pointer shrink-0 px-3.5 py-2 text-sm font-medium tracking-wide uppercase no-underline transition',
+                  isCases
+                    ? active
+                      ? 'rounded-md bg-cd-accent font-semibold text-cd-bg'
+                      : 'rounded-md text-cd-muted hover:bg-cd-surface hover:text-cd-text'
+                    : active
+                      ? 'border-b-2 border-cd-accent text-cd-text'
+                      : 'border-b-2 border-transparent text-cd-muted hover:text-cd-text',
                 ].join(' ')}
               >
                 {t(`home.nav.${link.key}`)}

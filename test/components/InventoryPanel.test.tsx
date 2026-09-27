@@ -78,7 +78,6 @@ describe('InventoryPanel', () => {
 
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
-      expect(screen.getByText('90.00 ClickDollars')).toBeInTheDocument()
       expect(screen.queryByText('AK-47 | Redline')).not.toBeInTheDocument()
     })
   })

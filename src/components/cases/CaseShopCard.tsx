@@ -6,6 +6,8 @@ import type { GameCase } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { CASE_ACCENT, caseNameKey } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { CurrencyBadge } from '../ui/CurrencyBadge'
+import { cdTile } from '../ui/uiStyles'
 
 type CaseShopCardProps = {
   gameCase: GameCase
@@ -19,28 +21,28 @@ export function CaseShopCard({ gameCase }: CaseShopCardProps) {
   return (
     <Link
       href={`/cases/${gameCase.id}`}
-      className="group flex cursor-pointer flex-col rounded-lg border border-cd-border bg-cd-surface/70 p-3 no-underline transition hover:border-cd-accent/50 hover:bg-cd-surface"
+      className={`group flex cursor-pointer flex-col overflow-hidden no-underline ${cdTile}`}
     >
       <div
-        className="relative flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md bg-cd-bg/60"
+        className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-cd-bg/40 p-3 sm:aspect-square sm:p-4"
         style={{
-          background: `radial-gradient(circle at 50% 40%, ${accent}28, transparent 70%)`,
+          background: `radial-gradient(circle at 50% 42%, ${accent}30, transparent 68%)`,
         }}
       >
         <AssetImage
           kind="case"
           code={gameCase.code}
           alt={name}
-          className="h-[85%] w-[85%] object-contain transition duration-300 group-hover:scale-105"
+          className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.05]"
         />
       </div>
-      <h3 className="mt-3 truncate text-center text-sm font-medium text-cd-text">{name}</h3>
-      <p className="mt-1 text-center text-xs tabular-nums text-cd-muted">
-        {formatClickDollars(gameCase.price, i18n.language)} CD
-      </p>
-      <span className="mt-2 rounded-md bg-cd-accent/90 px-3 py-2 text-center font-display text-xs font-semibold tracking-wide text-cd-bg uppercase transition group-hover:bg-cd-accent">
-        {t('cases.view')}
-      </span>
+      <div className="flex flex-col items-center gap-1.5 border-t border-cd-border/60 px-2.5 py-2.5">
+        <h3 className="w-full truncate text-center text-sm font-medium text-cd-text">{name}</h3>
+        <p className="flex items-center gap-1.5 font-display text-sm font-semibold tabular-nums text-cd-accent">
+          <CurrencyBadge />
+          {formatClickDollars(gameCase.price, i18n.language)}
+        </p>
+      </div>
     </Link>
   )
 }

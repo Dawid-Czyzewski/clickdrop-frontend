@@ -128,7 +128,7 @@ describe('DailyFreePanel', () => {
     })
   })
 
-  it('opens cash claim and shows cash result with new balance', async () => {
+  it('opens cash claim and shows cash win amount', async () => {
     const user = userEvent.setup()
     authService.setSession({
       token: 'jwt',
@@ -151,7 +151,7 @@ describe('DailyFreePanel', () => {
 
     const dialog = await screen.findByRole('dialog')
     expect(dialog).toHaveTextContent(/\+12\.50 ClickDollars/)
-    expect(dialog).toHaveTextContent(/62\.50/)
+    expect(dialog).not.toHaveTextContent(/62\.50/)
     expect(sellMock).not.toHaveBeenCalled()
   })
 

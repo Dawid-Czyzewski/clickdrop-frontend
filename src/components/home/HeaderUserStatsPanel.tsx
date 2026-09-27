@@ -1,10 +1,15 @@
+'use client'
+
 import { useTranslation } from 'react-i18next'
+import { useBalance } from '../../hooks/useBalance'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { formatClickDollars } from '../../lib/formatClickDollars'
 import { HeaderUserStats, HeaderUserStatsLoading } from './HeaderUserStats'
 
 export function HeaderUserStatsPanel() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { user, isLoading, error } = useCurrentUser({ enabled: true })
+  const { balance } = useBalance({ enabled: true })
 
   if (isLoading) {
     return <HeaderUserStatsLoading label={t('home.header.loadingStats')} />
@@ -14,13 +19,18 @@ export function HeaderUserStatsPanel() {
     return null
   }
 
+  const formattedBalance =
+    balance === null ? null : formatClickDollars(balance, i18n.language)
+
   return (
     <div className="flex items-center gap-2 sm:gap-3">
       <HeaderUserStats
         level={user.level}
         experience={user.experience}
+        balance={formattedBalance}
         levelLabel={t('home.header.level')}
         xpLabel={t('home.header.xp')}
+        balanceLabel={t('home.header.cd')}
       />
       <span className="hidden max-w-[140px] truncate text-sm text-cd-text lg:inline">
         {user.username}

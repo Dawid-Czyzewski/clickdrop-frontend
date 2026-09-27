@@ -1,6 +1,6 @@
 import type { CaseDrop } from '../api/casesApi'
 
-export const SPIN_ITEM_WIDTH = 120
+export const SPIN_ITEM_WIDTH = 168
 export const SPIN_STRIP_LENGTH = 52
 export const SPIN_WINNER_INDEX = 44
 export const SPIN_DURATION_MS = 5500

@@ -47,7 +47,7 @@ export function EarnMoneyPanel() {
 
   return (
     <section
-      className="cd-fade-in relative overflow-hidden rounded-lg border border-cd-border bg-cd-surface/60"
+      className="cd-fade-in relative overflow-hidden rounded-xl border border-cd-border bg-cd-surface/50"
       aria-labelledby="earn-panel-title"
     >
       <div
@@ -86,54 +86,56 @@ export function EarnMoneyPanel() {
 
         {loggedIn ? (
           <>
-            <div className="flex min-h-[3rem] flex-col items-center justify-center gap-1" aria-live="polite">
-              {isLoading ? (
-                <p role="status" className="text-sm text-cd-muted">
-                  {t('home.earn.loadingBalance')}
-                </p>
-              ) : null}
+            <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
+              <OwnedUpgradesFlank upgrades={upgrades} side="left" />
+              <div className="relative flex shrink-0 flex-col items-center gap-3">
+                <div className="relative flex items-center justify-center">
+                  <ClickButton
+                    disabled={isLoading || isClicking}
+                    onClick={() => {
+                      void handleClick()
+                    }}
+                  />
+                  <EarnedFeedback
+                    toasts={earnToasts}
+                    onDismiss={(id) => {
+                      setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
+                    }}
+                  />
+                </div>
 
-              {!isLoading && formattedBalance !== null ? (
-                <div className="flex flex-col items-center gap-1">
-                  <p
-                    key={`balance-${balance}-${earnPulseKey}`}
-                    className={[
-                      'font-display text-2xl font-semibold tabular-nums text-cd-accent sm:text-3xl',
-                      earnPulseKey > 0 ? 'cd-balance-bump' : '',
-                    ].join(' ')}
-                  >
-                    {t('home.earn.balanceValue', { amount: formattedBalance })}
-                  </p>
-                  {rewardPerClick !== null ? (
-                    <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
-                      {t('home.earn.perClick', { amount: rewardPerClick })}
+                <div className="flex min-h-[2.75rem] flex-col items-center justify-center gap-0.5" aria-live="polite">
+                  {isLoading ? (
+                    <p role="status" className="text-sm text-cd-muted">
+                      {t('home.earn.loadingBalance')}
+                    </p>
+                  ) : null}
+
+                  {!isLoading && formattedBalance !== null ? (
+                    <>
+                      <p
+                        key={`balance-${balance}-${earnPulseKey}`}
+                        className={[
+                          'font-display text-xl font-semibold tabular-nums text-cd-accent sm:text-2xl',
+                          earnPulseKey > 0 ? 'cd-balance-bump' : '',
+                        ].join(' ')}
+                      >
+                        {t('home.earn.balanceValue', { amount: formattedBalance })}
+                      </p>
+                      {rewardPerClick !== null ? (
+                        <p className="font-display text-sm font-semibold tabular-nums text-cd-muted">
+                          {t('home.earn.perClick', { amount: rewardPerClick })}
+                        </p>
+                      ) : null}
+                    </>
+                  ) : null}
+
+                  {!isLoading && error ? (
+                    <p role="alert" className="text-sm text-cd-danger">
+                      {error}
                     </p>
                   ) : null}
                 </div>
-              ) : null}
-
-              {!isLoading && error ? (
-                <p role="alert" className="text-sm text-cd-danger">
-                  {error}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
-              <OwnedUpgradesFlank upgrades={upgrades} side="left" />
-              <div className="relative flex shrink-0 items-center justify-center">
-                <ClickButton
-                  disabled={isLoading || isClicking}
-                  onClick={() => {
-                    void handleClick()
-                  }}
-                />
-                <EarnedFeedback
-                  toasts={earnToasts}
-                  onDismiss={(id) => {
-                    setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
-                  }}
-                />
               </div>
               <OwnedUpgradesFlank upgrades={upgrades} side="right" />
             </div>

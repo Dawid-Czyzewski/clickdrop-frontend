@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { useCases } from '../hooks/useCases'
 import { AppShell } from '../components/home/AppShell'
 import { CaseDetailPanel } from '../components/cases/CaseDetailPanel'
+import { CatalogSkeleton } from '../components/ui/Skeleton'
+import { cdBodyMuted, cdPagePad } from '../components/ui/uiStyles'
 
 type CaseDetailPageProps = {
   caseId: number
@@ -17,18 +19,18 @@ export function CaseDetailPage({ caseId }: CaseDetailPageProps) {
 
   return (
     <AppShell>
-      <main className="w-full px-3 py-4 sm:px-5 sm:py-6 lg:px-8">
+      <main className={cdPagePad}>
         {isLoading ? (
-          <p role="status" className="py-10 text-center text-sm text-cd-muted">
-            {t('cases.loading')}
-          </p>
+          <div className="mx-auto max-w-md">
+            <CatalogSkeleton count={1} colsClassName="grid-cols-1" />
+          </div>
         ) : error ? (
           <p role="alert" className="text-sm text-cd-danger">
             {error}
           </p>
         ) : !gameCase ? (
           <div className="flex flex-col items-center gap-4 py-16 text-center">
-            <p className="text-cd-muted">{t('cases.errorNotFound')}</p>
+            <p className={cdBodyMuted}>{t('cases.errorNotFound')}</p>
             <Link
               href="/#cases"
               className="cursor-pointer text-sm text-cd-accent no-underline hover:text-cd-accent-hover"

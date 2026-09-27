@@ -80,7 +80,6 @@ describe('UpgradeShop', () => {
 
     await waitFor(() => {
       expect(buyUpgradeMock).toHaveBeenCalledWith(1)
-      expect(screen.getByText('50.00 ClickDollars')).toBeInTheDocument()
       expect(screen.getByText('Level 1')).toBeInTheDocument()
       expect(screen.getByText('+2 / click')).toBeInTheDocument()
     })

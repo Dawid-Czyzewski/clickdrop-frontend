@@ -7,11 +7,17 @@ import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useClickPower } from '../../hooks/useClickPower'
 import { useUpgrades } from '../../hooks/useUpgrades'
-import { formatClickDollars } from '../../lib/formatClickDollars'
+import { CatalogSkeleton } from '../ui/Skeleton'
+import {
+  cdBodyMuted,
+  cdBtnPrimaryLink,
+  cdEyebrow,
+  cdPageTitle,
+} from '../ui/uiStyles'
 import { UpgradeCard } from './UpgradeCard'
 
 export function UpgradeShop() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
   const { balance, isLoading: balanceLoading, applyBalance } = useBalance({
     enabled: loggedIn,
@@ -30,19 +36,15 @@ export function UpgradeShop() {
   async function handleBuy(upgradeId: number) {
     const result = await buyUpgrade(upgradeId)
     if (!result) return
-
     applyBalance(result.balance)
     await refreshClickPower()
   }
 
   if (!loggedIn) {
     return (
-      <div className="flex flex-col items-center gap-4 py-10 text-center">
-        <p className="text-cd-muted">{t('upgrades.loginHint')}</p>
-        <Link
-          href="/login"
-          className="cursor-pointer rounded-md bg-cd-accent px-6 py-3 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-        >
+      <div className="flex flex-col items-center gap-4 py-12 text-center">
+        <p className={cdBodyMuted}>{t('upgrades.loginHint')}</p>
+        <Link href="/login" className={cdBtnPrimaryLink}>
           {t('upgrades.loginCta')}
         </Link>
       </div>
@@ -51,9 +53,13 @@ export function UpgradeShop() {
 
   if (isLoading || balanceLoading) {
     return (
-      <p role="status" className="py-10 text-center text-sm text-cd-muted">
-        {t('upgrades.loading')}
-      </p>
+      <div className="flex flex-col gap-5">
+        <div>
+          <p className={cdEyebrow}>{t('upgrades.eyebrow')}</p>
+          <h1 className={cdPageTitle}>{t('upgrades.title')}</h1>
+        </div>
+        <CatalogSkeleton count={3} colsClassName="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3" />
+      </div>
     )
   }
 
@@ -66,28 +72,17 @@ export function UpgradeShop() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-display text-xs tracking-[0.2em] text-cd-accent uppercase">
-            {t('upgrades.eyebrow')}
-          </p>
-          <h1 className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-            {t('upgrades.title')}
-          </h1>
-          <p className="mt-1 max-w-xl text-cd-muted">{t('upgrades.subtitle')}</p>
+          <p className={cdEyebrow}>{t('upgrades.eyebrow')}</p>
+          <h1 className={cdPageTitle}>{t('upgrades.title')}</h1>
+          <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('upgrades.subtitle')}</p>
         </div>
-        {balance !== null ? (
-          <div className="flex flex-col items-end gap-1">
-            <p className="font-display text-lg font-semibold tabular-nums text-cd-accent">
-              {t('upgrades.balance', { amount: formatClickDollars(balance, i18n.language) })}
-            </p>
-            {rewardPerClick !== null ? (
-              <p className="font-display text-sm font-semibold tabular-nums text-[#7dffa0]">
-                {t('upgrades.perClick', { amount: rewardPerClick })}
-              </p>
-            ) : null}
-          </div>
+        {rewardPerClick !== null ? (
+          <p className="text-sm tabular-nums text-cd-muted">
+            {t('upgrades.perClick', { amount: rewardPerClick })}
+          </p>
         ) : null}
       </div>
 
@@ -98,9 +93,9 @@ export function UpgradeShop() {
       ) : null}
 
       {upgrades.length === 0 ? (
-        <p className="text-sm text-cd-muted">{t('upgrades.empty')}</p>
+        <p className={cdBodyMuted}>{t('upgrades.empty')}</p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {upgrades.map((upgrade) => (
             <UpgradeCard
               key={upgrade.id}

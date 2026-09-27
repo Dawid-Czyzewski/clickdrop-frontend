@@ -10,6 +10,7 @@ import {
   rarityLabelKey,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { cdBtnPrimary } from '../ui/uiStyles'
 
 type InventoryItemCardProps = {
   item: InventoryItem
@@ -29,41 +30,45 @@ export function InventoryItemCard({
   const name = t(itemNameKey(item.code))
 
   return (
-    <article
-      className="flex flex-col gap-2 rounded-lg border bg-cd-surface/70 p-2.5 text-left"
-      style={{ borderColor: `${color}55` }}
-    >
-      <div
-        className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md border p-1"
-        style={{
-          borderColor: color,
-          background: `radial-gradient(circle at 50% 40%, ${color}28, transparent 70%)`,
-        }}
-      >
-        <AssetImage kind="item" code={item.code} alt={name} className="h-full w-full object-contain" />
-      </div>
+    <article className="flex flex-col overflow-hidden rounded-lg border border-cd-border bg-cd-surface/80">
+      <div className="h-0.5 w-full shrink-0" style={{ backgroundColor: color }} />
+      <div className="flex flex-col gap-2 p-2.5">
+        <div
+          className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1"
+          style={{
+            background: `radial-gradient(circle at 50% 40%, ${color}22, transparent 70%)`,
+          }}
+        >
+          <AssetImage
+            kind="item"
+            code={item.code}
+            alt={name}
+            className="h-full w-full object-contain"
+          />
+        </div>
 
-      <div className="min-w-0">
-        <p className="text-[0.65rem] font-medium tracking-wide uppercase" style={{ color }}>
-          {t(rarityLabelKey(item.rarity))}
-        </p>
-        <h2 className="mt-0.5 truncate font-display text-sm font-semibold text-cd-text">{name}</h2>
-        <p className="truncate text-xs text-cd-muted">{t(exteriorLabelKey(item.exterior))}</p>
-      </div>
+        <div className="min-w-0">
+          <p className="text-[0.6rem] font-medium tracking-wide uppercase" style={{ color }}>
+            {t(rarityLabelKey(item.rarity))}
+          </p>
+          <h2 className="mt-0.5 truncate font-display text-sm font-semibold text-cd-text">{name}</h2>
+          <p className="truncate text-xs text-cd-muted">{t(exteriorLabelKey(item.exterior))}</p>
+        </div>
 
-      <button
-        type="button"
-        disabled={disabled || isSelling}
-        aria-busy={isSelling || undefined}
-        onClick={() => onSell(item.inventoryItemId)}
-        className="cursor-pointer rounded-md bg-cd-accent px-2 py-1.5 font-display text-[0.65rem] font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {isSelling
-          ? t('inventory.selling')
-          : t('inventory.sell', {
-              amount: formatClickDollars(item.suggestedSellPrice, i18n.language),
-            })}
-      </button>
+        <button
+          type="button"
+          disabled={disabled || isSelling}
+          aria-busy={isSelling || undefined}
+          onClick={() => onSell(item.inventoryItemId)}
+          className={`${cdBtnPrimary} h-9 w-full cursor-pointer px-2 text-[0.65rem]`}
+        >
+          {isSelling
+            ? t('inventory.selling')
+            : t('inventory.sell', {
+                amount: formatClickDollars(item.suggestedSellPrice, i18n.language),
+              })}
+        </button>
+      </div>
     </article>
   )
 }

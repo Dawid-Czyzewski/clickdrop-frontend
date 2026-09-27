@@ -2,7 +2,15 @@ import type { Metadata } from 'next'
 import en from '../i18n/locales/en.json'
 import pl from '../i18n/locales/pl.json'
 
-export type SeoPageKey = 'home' | 'login' | 'register' | 'verifyEmail' | 'upgrades' | 'inventory' | 'daily'
+export type SeoPageKey =
+  | 'home'
+  | 'login'
+  | 'register'
+  | 'verifyEmail'
+  | 'upgrades'
+  | 'inventory'
+  | 'daily'
+  | 'skinUpgrade'
 
 const seoPages: Record<
   SeoPageKey,
@@ -12,6 +20,7 @@ const seoPages: Record<
   daily: { path: '/daily' },
   upgrades: { path: '/upgrades' },
   inventory: { path: '/inventory' },
+  skinUpgrade: { path: '/skin-upgrade' },
   login: { path: '/login', noIndex: true },
   register: { path: '/register', noIndex: true },
   verifyEmail: { path: '/verify-email', noIndex: true },

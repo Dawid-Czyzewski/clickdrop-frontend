@@ -12,6 +12,16 @@ import { useInventory } from '../../hooks/useInventory'
 import { CASE_ACCENT, caseNameKey } from '../../lib/caseI18n'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { AssetImage } from '../media/AssetImage'
+import { CatalogSkeleton } from '../ui/Skeleton'
+import {
+  cdBodyMuted,
+  cdBtnPrimaryBlock,
+  cdBtnPrimaryLink,
+  cdHeroFrame,
+  cdMoney,
+  cdPageTitle,
+  cdSectionLabel,
+} from '../ui/uiStyles'
 import { CaseDropsGrid } from './CaseDropsGrid'
 import { CaseOpenResultModal } from './CaseOpenResultModal'
 import { CaseOpenSpinner } from './CaseOpenSpinner'
@@ -78,12 +88,12 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         ← {t('cases.back')}
       </Link>
 
-      <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-10">
-        <div className="flex w-full max-w-sm flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:gap-12">
+        <div className="flex w-full max-w-md flex-col items-center gap-4">
           <div
-            className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-cd-border bg-cd-bg/60 p-4"
+            className={cdHeroFrame}
             style={{
-              background: `radial-gradient(circle at 50% 40%, ${accent}22, transparent 65%)`,
+              background: `radial-gradient(circle at 50% 40%, ${accent}20, transparent 65%)`,
             }}
           >
             <AssetImage
@@ -93,17 +103,8 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
               className="h-full w-full object-contain"
             />
           </div>
-          <h1 className="font-display text-2xl font-bold tracking-wide text-cd-text sm:text-3xl">
-            {t(caseNameKey(gameCase.code))}
-          </h1>
-          <p className="font-display text-lg font-semibold tabular-nums text-cd-accent">
-            {formatClickDollars(gameCase.price, i18n.language)} CD
-          </p>
-          {loggedIn && balance !== null ? (
-            <p className="text-sm text-cd-muted">
-              {t('cases.balance', { amount: formatClickDollars(balance, i18n.language) })}
-            </p>
-          ) : null}
+          <h1 className={`${cdPageTitle} text-center`}>{t(caseNameKey(gameCase.code))}</h1>
+          <p className={cdMoney}>{formatClickDollars(gameCase.price, i18n.language)} CD</p>
 
           {loggedIn ? (
             <button
@@ -113,15 +114,12 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
               onClick={() => {
                 void handleOpen()
               }}
-              className="w-full cursor-pointer rounded-md bg-cd-accent px-6 py-3.5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+              className={cdBtnPrimaryBlock}
             >
               {isOpening ? t('cases.opening') : t('cases.open')}
             </button>
           ) : (
-            <Link
-              href="/login"
-              className="w-full cursor-pointer rounded-md bg-cd-accent px-6 py-3.5 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover"
-            >
+            <Link href="/login" className={`${cdBtnPrimaryLink} w-full`}>
               {t('cases.loginCta')}
             </Link>
           )}
@@ -137,14 +135,10 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h2 className="font-display text-sm font-medium tracking-[0.2em] text-cd-muted uppercase">
-            {t('cases.dropsHeading')}
-          </h2>
-          <p className="mt-1 mb-4 text-sm text-cd-muted">{t('cases.dropsSubtitle')}</p>
+          <h2 className={cdSectionLabel}>{t('cases.dropsHeading')}</h2>
+          <p className={`mt-1 mb-4 ${cdBodyMuted}`}>{t('cases.dropsSubtitle')}</p>
           {dropsLoading ? (
-            <p role="status" className="text-sm text-cd-muted">
-              {t('cases.dropsLoading')}
-            </p>
+            <CatalogSkeleton count={4} colsClassName="grid-cols-2 sm:grid-cols-3" />
           ) : dropsError ? (
             <p role="alert" className="text-sm text-cd-danger">
               {dropsError}
@@ -167,10 +161,12 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         <CaseOpenResultModal
           drop={drop}
           isSelling={sellingId === drop.inventoryItemId}
+          onClose={() => setDrop(null)}
           onKeep={handleKeep}
           onSell={() => {
             void handleSellNow()
           }}
+          backdropCodes={drops.map((d) => d.code)}
         />
       ) : null}
     </div>

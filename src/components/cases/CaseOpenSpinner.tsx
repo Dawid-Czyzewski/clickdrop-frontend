@@ -58,30 +58,30 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-[2px]"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-spin-title"
       aria-busy="true"
     >
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-6xl">
         <p
           id="case-spin-title"
-          className="mb-4 text-center font-display text-sm tracking-[0.2em] text-cd-accent uppercase"
+          className="mb-5 text-center font-display text-sm tracking-[0.2em] text-cd-accent uppercase sm:text-base"
         >
           {t('cases.spinning')}
         </p>
 
         <div
           ref={viewportRef}
-          className="relative overflow-hidden rounded-xl border border-cd-border bg-cd-bg py-4"
+          className="relative overflow-hidden rounded-xl border border-cd-border bg-cd-bg py-6 sm:py-8"
         >
           <div
             className="pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-cd-accent"
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute inset-y-2 left-1/2 z-10 w-28 -translate-x-1/2 rounded-md border-2 border-cd-accent/80"
+            className="pointer-events-none absolute inset-y-3 left-1/2 z-10 w-40 -translate-x-1/2 rounded-lg border-2 border-cd-accent/80 sm:inset-y-4 sm:w-44"
             aria-hidden="true"
           />
 
@@ -106,14 +106,14 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                   style={{ width: SPIN_ITEM_WIDTH }}
                 >
                   <div
-                    className="flex h-20 w-24 items-center justify-center overflow-hidden rounded-md border p-1"
+                    className="flex h-28 w-36 items-center justify-center overflow-hidden rounded-lg border p-1.5 sm:h-32 sm:w-40"
                     style={{
                       borderColor: color,
                       background: `radial-gradient(circle at 50% 40%, ${color}44, transparent 70%)`,
                     }}
                   >
                     {isCash ? (
-                      <span className="font-display text-2xl font-bold" style={{ color }}>
+                      <span className="font-display text-3xl font-bold sm:text-4xl" style={{ color }}>
                         $
                       </span>
                     ) : (
@@ -126,12 +126,12 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                     )}
                   </div>
                   <p
-                    className="mt-2 max-w-full truncate text-center text-[0.65rem] font-medium uppercase"
+                    className="mt-2.5 max-w-full truncate text-center text-xs font-medium uppercase"
                     style={{ color }}
                   >
                     {isCash ? t('daily.cashLabel') : t(rarityLabelKey(drop.rarity))}
                   </p>
-                  <p className="max-w-full truncate text-center text-xs text-cd-text">
+                  <p className="max-w-full truncate text-center text-sm text-cd-text">
                     {isCash && cashAmount !== null
                       ? `${formatClickDollars(cashAmount, i18n.language)} CD`
                       : t(itemNameKey(drop.code))}

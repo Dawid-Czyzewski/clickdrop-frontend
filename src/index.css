@@ -32,10 +32,52 @@ body {
   min-height: 100svh;
 }
 
+.cd-app-shell {
+  min-height: 100svh;
+  color: var(--color-cd-text);
+  background-color: var(--color-cd-bg);
+  background-image:
+    radial-gradient(ellipse 110% 70% at 50% -15%, rgb(245 158 11 / 0.08), transparent 55%),
+    radial-gradient(ellipse 90% 45% at 50% 110%, rgb(18 20 28 / 0.95), transparent 55%);
+}
+
+.cd-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(22 25 34) 0%,
+    rgb(36 41 56) 45%,
+    rgb(22 25 34) 100%
+  );
+  background-size: 200% 100%;
+  animation: cd-skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes cd-skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.cd-img-fade {
+  animation: cd-img-fade-in 0.35s ease-out both;
+}
+
+@keyframes cd-img-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes cd-fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -54,7 +96,7 @@ body {
 }
 
 .cd-fade-in {
-  animation: cd-fade-in-up 0.55s ease-out both;
+  animation: cd-fade-in-up 0.5s ease-out both;
 }
 
 .cd-glow {
@@ -134,4 +176,36 @@ body {
 
 .cd-balance-bump {
   animation: cd-balance-bump 0.35s ease-out;
+}
+
+@keyframes cd-upgrade-needle {
+  0% {
+    left: 8%;
+  }
+  18% {
+    left: 72%;
+  }
+  38% {
+    left: 28%;
+  }
+  58% {
+    left: 88%;
+  }
+  78% {
+    left: 35%;
+  }
+  100% {
+    left: var(--land-pct, 50%);
+  }
+}
+
+.cd-upgrade-needle {
+  animation: cd-upgrade-needle 1.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cd-upgrade-needle {
+    animation: none;
+    left: var(--land-pct, 50%);
+  }
 }
