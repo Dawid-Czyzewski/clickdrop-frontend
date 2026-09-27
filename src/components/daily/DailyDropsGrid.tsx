@@ -8,7 +8,7 @@ import {
   totalDropWeight,
 } from '../../lib/dropChance'
 import { formatClickDollars } from '../../lib/formatClickDollars'
-import { itemNameKey, RARITY_COLOR, rarityLabelKey } from '../../lib/caseI18n'
+import { RARITY_COLOR, rarityLabelKey, resolveItemLabel } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
 
 type DailyDropsGridProps = {
@@ -62,7 +62,7 @@ export function DailyDropsGrid({ drops }: DailyDropsGridProps) {
         }
 
         const color = RARITY_COLOR[drop.rarity] ?? '#8b92a5'
-        const name = t(itemNameKey(drop.itemCode))
+        const name = resolveItemLabel(t, drop.itemCode, drop.itemDisplayName)
         return (
           <li
             key={`skin-${drop.itemId}`}

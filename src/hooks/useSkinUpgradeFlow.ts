@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { sellInventoryItem, type InventoryItem } from '../api/casesApi'
 import {
   isSkinUpgradeSuccess,
+  type SkinUpgradeChoice,
   type SkinUpgradeResult,
   type SkinUpgradeSuccess,
 } from '../api/skinUpgradeApi'
@@ -10,11 +11,21 @@ import { useSkinUpgrade } from './useSkinUpgrade'
 
 export type SkinUpgradePhase = 'select' | 'preview' | 'animating' | 'fail'
 
+type SkinUpgradeFlowOptions = {
+  refreshInventory: () => Promise<void>
+  removeInventoryItem: (inventoryItemId: number) => void
+}
+
 function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boolean) {
+export function useSkinUpgradeFlow(
+  items: InventoryItem[],
+  inventoryLoading: boolean,
+  options: SkinUpgradeFlowOptions,
+) {
+  const { refreshInventory, removeInventoryItem } = options
   const router = useRouter()
   const searchParams = useSearchParams()
   const itemParam = searchParams.get('item')
@@ -56,9 +67,10 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
     void selectItem(id)
   }, [inventoryLoading, itemParam, items, selectedId, selectItem])
 
-  async function confirmUpgrade() {
+  async function confirmUpgrade(choice: SkinUpgradeChoice) {
     if (selectedId == null) return
-    const result = await runUpgrade(selectedId)
+    const lostId = selectedId
+    const result = await runUpgrade(selectedId, choice)
     if (!result) {
       setConfirming(false)
       return
@@ -66,17 +78,23 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
     setConfirming(false)
     setOutcome(result)
     setBackdropCodes(preview?.possibleTargets.map((x) => x.itemCode) ?? [])
-    if (prefersReducedMotion()) finishOutcome(result)
+    if (prefersReducedMotion()) await finishOutcome(result, lostId)
     else setPhase('animating')
   }
 
-  function finishOutcome(result: SkinUpgradeResult) {
+  async function finishOutcome(result: SkinUpgradeResult, lostId = selectedId) {
+    if (lostId != null) removeInventoryItem(lostId)
+    void refreshInventory()
+
     if (isSkinUpgradeSuccess(result)) {
       setSuccessDrop(result)
       setPhase('select')
       clearPreview()
       setSelectedId(null)
+      setOutcome(null)
     } else {
+      clearPreview()
+      setSelectedId(null)
       setPhase('fail')
     }
   }
@@ -89,6 +107,7 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
     setSuccessDrop(null)
     setBackdropCodes([])
     clearPreview()
+    void refreshInventory()
   }
 
   async function sellSuccess() {
@@ -97,6 +116,7 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
     try {
       await sellInventoryItem(successDrop.inventoryItemId)
       setSuccessDrop(null)
+      void refreshInventory()
     } finally {
       setSelling(false)
     }
@@ -104,7 +124,7 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
 
   function keepSuccess() {
     setSuccessDrop(null)
-    router.push('/inventory')
+    void refreshInventory()
   }
 
   return {
@@ -125,7 +145,7 @@ export function useSkinUpgradeFlow(items: InventoryItem[], inventoryLoading: boo
     confirmUpgrade,
     resetToSelect,
     finishAnim: () => {
-      if (outcome) finishOutcome(outcome)
+      if (outcome) void finishOutcome(outcome, selectedId)
     },
     sellSuccess,
     keepSuccess,

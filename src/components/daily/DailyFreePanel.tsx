@@ -106,7 +106,7 @@ export function DailyFreePanel() {
           >
             <AssetImage
               kind="case"
-              code="ANVIL"
+              code="REVOLUTION_CASE"
               alt={t('daily.title')}
               className="h-full w-full object-contain"
             />

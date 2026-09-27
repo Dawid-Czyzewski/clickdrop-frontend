@@ -42,7 +42,8 @@ const getBalanceMock = vi.mocked(getBalance)
 const inventoryItem = {
   inventoryItemId: 9,
   itemId: 3,
-  code: 'AK_REDLINE',
+  code: 'AK_47_SLATE',
+  displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
   suggestedSellPrice: 40,
@@ -52,7 +53,8 @@ const inventoryItem = {
 const preview = {
   inventoryItemId: 9,
   current: {
-    itemCode: 'AK_REDLINE',
+    itemCode: 'AK_47_SLATE',
+    itemDisplayName: 'AK-47 | Slate',
     rarity: 'RESTRICTED' as const,
     exterior: 'FIELD_TESTED' as const,
     suggestedSellPrice: 40,
@@ -60,10 +62,12 @@ const preview = {
   successChance: 0.5,
   possibleTargets: [
     {
-      itemId: 6,
-      itemCode: 'AWP_ASIIMOV',
-      rarity: 'COVERT' as const,
-      suggestedSellPrice: 200,
+      itemId: 3,
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
+      rarity: 'RESTRICTED' as const,
+      exterior: 'MINIMAL_WEAR' as const,
+      suggestedSellPrice: 48,
     },
   ],
 }
@@ -107,11 +111,11 @@ describe('SkinUpgradePanel', () => {
 
     renderWithProviders(<SkinUpgradePanel />)
 
-    expect(await screen.findByText('AK-47 | Redline')).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: /ak-47 \| redline/i }))
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /ak-47 \| slate/i }))
 
     expect(await screen.findByText(/50% better skin \/ 50% you lose this one/i)).toBeInTheDocument()
-    expect(screen.getByText('AWP | Asiimov')).toBeInTheDocument()
+    expect(screen.getByText(/minimal wear/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /^upgrade$/i })).toBeInTheDocument()
     expect(previewMock).toHaveBeenCalledWith(9)
   })
@@ -123,20 +127,24 @@ describe('SkinUpgradePanel', () => {
     upgradeMock.mockResolvedValue({
       result: 'SUCCESS',
       inventoryItemId: 12,
-      itemCode: 'AWP_ASIIMOV',
-      rarity: 'COVERT',
-      exterior: 'FACTORY_NEW',
-      suggestedSellPrice: 220,
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
+      rarity: 'RESTRICTED',
+      exterior: 'MINIMAL_WEAR',
+      suggestedSellPrice: 48,
     })
 
     renderWithProviders(<SkinUpgradePanel />)
 
-    await user.click(await screen.findByRole('button', { name: /ak-47 \| redline/i }))
+    await user.click(await screen.findByRole('button', { name: /ak-47 \| slate/i }))
     await user.click(await screen.findByRole('button', { name: /^upgrade$/i }))
     await user.click(screen.getByRole('button', { name: /confirm upgrade/i }))
 
     expect(await screen.findByRole('dialog')).toBeInTheDocument()
-    expect(screen.getByText('AWP | Asiimov')).toBeInTheDocument()
+    expect(upgradeMock).toHaveBeenCalledWith(9, {
+      targetItemId: 3,
+      targetExterior: 'MINIMAL_WEAR',
+    })
     expect(screen.getByRole('button', { name: /keep/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /sell/i })).toBeInTheDocument()
   })
@@ -149,14 +157,17 @@ describe('SkinUpgradePanel', () => {
 
     renderWithProviders(<SkinUpgradePanel />)
 
-    await user.click(await screen.findByRole('button', { name: /ak-47 \| redline/i }))
+    await user.click(await screen.findByRole('button', { name: /ak-47 \| slate/i }))
     await user.click(await screen.findByRole('button', { name: /^upgrade$/i }))
     await user.click(screen.getByRole('button', { name: /confirm upgrade/i }))
 
     expect(await screen.findByText(/skin lost/i)).toBeInTheDocument()
     expect(screen.getByText(/your skin is gone/i)).toBeInTheDocument()
     await waitFor(() => {
-      expect(upgradeMock).toHaveBeenCalledWith(9)
+      expect(upgradeMock).toHaveBeenCalledWith(9, {
+        targetItemId: 3,
+        targetExterior: 'MINIMAL_WEAR',
+      })
     })
   })
 })

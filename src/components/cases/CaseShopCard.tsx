@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import type { GameCase } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
-import { CASE_ACCENT, caseNameKey } from '../../lib/caseI18n'
+import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
 import { CurrencyBadge } from '../ui/CurrencyBadge'
 import { cdTile } from '../ui/uiStyles'
@@ -15,8 +15,8 @@ type CaseShopCardProps = {
 
 export function CaseShopCard({ gameCase }: CaseShopCardProps) {
   const { t, i18n } = useTranslation()
-  const accent = CASE_ACCENT[gameCase.code] ?? '#f59e0b'
-  const name = t(caseNameKey(gameCase.code))
+  const accent = caseAccent(gameCase.code)
+  const name = resolveCaseLabel(t, gameCase.code, gameCase.displayName)
 
   return (
     <Link

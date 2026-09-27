@@ -5,9 +5,9 @@ import type { OpenCaseResponse } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import {
   exteriorLabelKey,
-  itemNameKey,
   RARITY_COLOR,
   rarityLabelKey,
+  resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
 import { CurrencyBadge } from '../ui/CurrencyBadge'
@@ -15,7 +15,12 @@ import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
 
 export type SkinDropResult = Pick<
   OpenCaseResponse,
-  'inventoryItemId' | 'itemCode' | 'rarity' | 'exterior' | 'suggestedSellPrice'
+  | 'inventoryItemId'
+  | 'itemCode'
+  | 'itemDisplayName'
+  | 'rarity'
+  | 'exterior'
+  | 'suggestedSellPrice'
 >
 
 type CaseOpenResultModalProps = {
@@ -37,7 +42,7 @@ export function CaseOpenResultModal({
 }: CaseOpenResultModalProps) {
   const { t, i18n } = useTranslation()
   const color = RARITY_COLOR[drop.rarity] ?? '#8b92a5'
-  const name = t(itemNameKey(drop.itemCode))
+  const name = resolveItemLabel(t, drop.itemCode, drop.itemDisplayName)
   const strip = (backdropCodes.length > 0 ? backdropCodes : [drop.itemCode]).slice(0, 8)
 
   function handleDismiss() {

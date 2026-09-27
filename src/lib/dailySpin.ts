@@ -24,6 +24,7 @@ export function toSpinCaseDrop(drop: DailyDrop): CaseDrop {
     return {
       itemId: drop.itemId,
       code: drop.itemCode,
+      displayName: drop.itemDisplayName,
       rarity: drop.rarity,
       weight: drop.weight,
     }
@@ -32,6 +33,7 @@ export function toSpinCaseDrop(drop: DailyDrop): CaseDrop {
   return {
     itemId: -Math.round(drop.cashAmount * 100) || -1,
     code: dailyCashSpinCode(drop.cashAmount),
+    displayName: '',
     rarity: 'MIL_SPEC',
     weight: drop.weight,
   }

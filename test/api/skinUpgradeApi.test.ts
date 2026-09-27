@@ -25,7 +25,8 @@ describe('skinUpgradeApi', () => {
       data: {
         inventoryItemId: 9,
         current: {
-          itemCode: 'AK_REDLINE',
+          itemCode: 'AK_47_SLATE',
+          itemDisplayName: 'AK-47 | Slate',
           rarity: 'RESTRICTED',
           exterior: 'FIELD_TESTED',
           suggestedSellPrice: 40,
@@ -34,8 +35,10 @@ describe('skinUpgradeApi', () => {
         possibleTargets: [
           {
             itemId: 6,
-            itemCode: 'AWP_ASIIMOV',
+            itemCode: 'AK_47_ASIIMOV',
+            itemDisplayName: 'AK-47 | Asiimov',
             rarity: 'COVERT',
+            exterior: 'MINIMAL_WEAR',
             suggestedSellPrice: 200,
           },
         ],
@@ -45,7 +48,7 @@ describe('skinUpgradeApi', () => {
     const preview = await getSkinUpgradePreview(9)
 
     expect(preview.successChance).toBe(0.5)
-    expect(preview.possibleTargets[0]?.itemCode).toBe('AWP_ASIIMOV')
+    expect(preview.possibleTargets[0]?.itemCode).toBe('AK_47_ASIIMOV')
     expect(skinUpgradeApi.getSkinUpgradePreview).toBe(getSkinUpgradePreview)
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/inventory/9/upgrade-preview',
@@ -61,26 +64,33 @@ describe('skinUpgradeApi', () => {
       data: {
         result: 'SUCCESS',
         inventoryItemId: 12,
-        itemCode: 'AWP_ASIIMOV',
+        itemCode: 'AK_47_ASIIMOV',
+        itemDisplayName: 'AK-47 | Asiimov',
         rarity: 'COVERT',
         exterior: 'FACTORY_NEW',
         suggestedSellPrice: 220,
       },
     })
 
-    const win = await upgradeSkin(9)
+    const win = await upgradeSkin(9, {
+      targetItemId: 6,
+      targetExterior: 'FACTORY_NEW',
+    })
     expect(isSkinUpgradeSuccess(win)).toBe(true)
     if (isSkinUpgradeSuccess(win)) {
-      expect(win.itemCode).toBe('AWP_ASIIMOV')
+      expect(win.itemCode).toBe('AK_47_ASIIMOV')
     }
 
     requestMock.mockResolvedValueOnce({ data: { result: 'FAIL' } })
-    const lose = await upgradeSkin(9)
+    const lose = await upgradeSkin(9, {
+      targetItemId: 6,
+      targetExterior: 'MINIMAL_WEAR',
+    })
     expect(isSkinUpgradeSuccess(lose)).toBe(false)
     expect(requestMock).toHaveBeenLastCalledWith({
       url: '/api/economy/inventory/9/upgrade',
       method: 'POST',
-      data: undefined,
+      data: { targetItemId: 6, targetExterior: 'MINIMAL_WEAR' },
       headers: undefined,
       skipAuth: false,
     })

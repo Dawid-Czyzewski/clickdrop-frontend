@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next'
 import {
   getSkinUpgradePreview,
   upgradeSkin,
+  type SkinUpgradeChoice,
   type SkinUpgradePreview,
   type SkinUpgradeResult,
 } from '../api/skinUpgradeApi'
 import { resolveSkinUpgradeError } from '../api/resolveSkinUpgradeError'
+import { filterTargetsInPriceBand } from '../lib/skinUpgradePricing'
 
 export function useSkinUpgrade() {
   const { t } = useTranslation()
@@ -26,8 +28,15 @@ export function useSkinUpgrade() {
 
       try {
         const data = await getSkinUpgradePreview(inventoryItemId)
-        setPreview(data)
-        return data
+        const banded: SkinUpgradePreview = {
+          ...data,
+          possibleTargets: filterTargetsInPriceBand(
+            data.current.suggestedSellPrice,
+            data.possibleTargets,
+          ),
+        }
+        setPreview(banded)
+        return banded
       } catch (err) {
         setError(resolveSkinUpgradeError(err, t))
         return null
@@ -40,14 +49,17 @@ export function useSkinUpgrade() {
   )
 
   const runUpgrade = useCallback(
-    async (inventoryItemId: number): Promise<SkinUpgradeResult | null> => {
+    async (
+      inventoryItemId: number,
+      choice: SkinUpgradeChoice,
+    ): Promise<SkinUpgradeResult | null> => {
       if (busyRef.current) return null
       busyRef.current = true
       setIsUpgrading(true)
       setError('')
 
       try {
-        return await upgradeSkin(inventoryItemId)
+        return await upgradeSkin(inventoryItemId, choice)
       } catch (err) {
         setError(resolveSkinUpgradeError(err, t))
         return null

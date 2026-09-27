@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CaseDrop } from '../../api/casesApi'
-import { itemNameKey, RARITY_COLOR, rarityLabelKey } from '../../lib/caseI18n'
+import { RARITY_COLOR, rarityLabelKey, resolveItemLabel } from '../../lib/caseI18n'
+import { isRareSpecialItem, RARE_SPECIAL_COLOR } from '../../lib/rareSpecial'
 import {
   buildSpinStrip,
   SPIN_DURATION_MS,
@@ -98,7 +99,12 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
             {strip.map((drop, index) => {
               const cashAmount = parseCashSpinAmount(drop.code)
               const isCash = isCashSpinCode(drop.code)
-              const color = isCash ? '#f59e0b' : (RARITY_COLOR[drop.rarity] ?? '#8b92a5')
+              const isRare = !isCash && isRareSpecialItem(drop.code, drop.displayName)
+              const color = isCash
+                ? '#f59e0b'
+                : isRare
+                  ? RARE_SPECIAL_COLOR
+                  : (RARITY_COLOR[drop.rarity] ?? '#8b92a5')
               return (
                 <div
                   key={`${drop.code}-${index}`}
@@ -116,11 +122,18 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                       <span className="font-display text-3xl font-bold sm:text-4xl" style={{ color }}>
                         $
                       </span>
+                    ) : isRare ? (
+                      <AssetImage
+                        kind="item"
+                        code="RARE_SPECIAL"
+                        alt={t('cases.rareSpecialName')}
+                        className="h-full w-full object-contain"
+                      />
                     ) : (
                       <AssetImage
                         kind="item"
                         code={drop.code}
-                        alt={t(itemNameKey(drop.code))}
+                        alt={resolveItemLabel(t, drop.code, drop.displayName)}
                         className="h-full w-full object-contain"
                       />
                     )}
@@ -129,12 +142,18 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
                     className="mt-2.5 max-w-full truncate text-center text-xs font-medium uppercase"
                     style={{ color }}
                   >
-                    {isCash ? t('daily.cashLabel') : t(rarityLabelKey(drop.rarity))}
+                    {isCash
+                      ? t('daily.cashLabel')
+                      : isRare
+                        ? t('cases.rareSpecialRarity')
+                        : t(rarityLabelKey(drop.rarity))}
                   </p>
                   <p className="max-w-full truncate text-center text-sm text-cd-text">
                     {isCash && cashAmount !== null
                       ? `${formatClickDollars(cashAmount, i18n.language)} CD`
-                      : t(itemNameKey(drop.code))}
+                      : isRare
+                        ? t('cases.rareSpecialName')
+                        : resolveItemLabel(t, drop.code, drop.displayName)}
                   </p>
                 </div>
               )

@@ -56,7 +56,8 @@ describe('InventoryPanel', () => {
       {
         inventoryItemId: 9,
         itemId: 3,
-        code: 'AK_REDLINE',
+        code: 'AK_47_SLATE',
+        displayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         exterior: 'FIELD_TESTED',
         suggestedSellPrice: 40,
@@ -67,10 +68,10 @@ describe('InventoryPanel', () => {
 
     renderWithProviders(<InventoryPanel />)
 
-    expect(await screen.findByText('AK-47 | Redline')).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: 'AK-47 | Redline' })).toHaveAttribute(
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'AK-47 | Slate' })).toHaveAttribute(
       'src',
-      '/items/AK_REDLINE.webp',
+      '/items/AK_47_SLATE.webp',
     )
     expect(screen.getByText('Restricted')).toBeInTheDocument()
 
@@ -78,7 +79,7 @@ describe('InventoryPanel', () => {
 
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
-      expect(screen.queryByText('AK-47 | Redline')).not.toBeInTheDocument()
+      expect(screen.queryByText('AK-47 | Slate')).not.toBeInTheDocument()
     })
   })
 })

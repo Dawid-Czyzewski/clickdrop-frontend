@@ -7,17 +7,29 @@ import {
 } from '../../src/lib/caseSpin'
 
 const drops: CaseDrop[] = [
-  { itemId: 1, code: 'GLOCK_WATER_ELEMENTAL', rarity: 'MIL_SPEC', weight: 50 },
-  { itemId: 3, code: 'AK_REDLINE', rarity: 'RESTRICTED', weight: 15 },
+  {
+    itemId: 1,
+    code: 'GLOCK_18_UMBRAL_RABBIT',
+    displayName: 'Glock-18 | Umbral Rabbit',
+    rarity: 'MIL_SPEC',
+    weight: 50,
+  },
+  {
+    itemId: 3,
+    code: 'AK_47_SLATE',
+    displayName: 'AK-47 | Slate',
+    rarity: 'RESTRICTED',
+    weight: 15,
+  },
 ]
 
 describe('caseSpin', () => {
   it('places the winner at the configured strip index', () => {
-    const strip = buildSpinStrip(drops, 'AK_REDLINE', {
+    const strip = buildSpinStrip(drops, 'AK_47_SLATE', {
       random: () => 0,
     })
 
-    expect(strip[SPIN_WINNER_INDEX]?.code).toBe('AK_REDLINE')
+    expect(strip[SPIN_WINNER_INDEX]?.code).toBe('AK_47_SLATE')
     expect(strip).toHaveLength(52)
   })
 

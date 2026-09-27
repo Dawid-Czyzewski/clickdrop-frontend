@@ -31,7 +31,35 @@ const getInventoryMock = vi.mocked(getInventory)
 const sellMock = vi.mocked(sellInventoryItem)
 const getBalanceMock = vi.mocked(getBalance)
 
-const anvil = { id: 1, code: 'ANVIL', price: 50, sortOrder: 1 }
+const anvil = {
+  id: 1,
+  code: 'REVOLUTION_CASE',
+  displayName: 'Revolution Case',
+  price: 50,
+  sortOrder: 1,
+}
+
+const slateInventory = {
+  inventoryItemId: 9,
+  itemId: 3,
+  code: 'AK_47_SLATE',
+  displayName: 'AK-47 | Slate',
+  rarity: 'RESTRICTED' as const,
+  exterior: 'FIELD_TESTED' as const,
+  suggestedSellPrice: 40,
+  createdAt: '2026-01-01T00:00:00Z',
+}
+
+const slateOpen = {
+  inventoryItemId: 9,
+  itemCode: 'AK_47_SLATE',
+  itemDisplayName: 'AK-47 | Slate',
+  rarity: 'RESTRICTED' as const,
+  exterior: 'FIELD_TESTED' as const,
+  balance: 50,
+  cost: 50,
+  suggestedSellPrice: 40,
+}
 
 describe('CaseDetailPanel', () => {
   beforeEach(() => {
@@ -52,10 +80,34 @@ describe('CaseDetailPanel', () => {
       dispatchEvent: vi.fn(),
     }))
     getCaseDropsMock.mockResolvedValue([
-      { itemId: 1, code: 'GLOCK_WATER_ELEMENTAL', rarity: 'MIL_SPEC', weight: 50 },
-      { itemId: 3, code: 'AK_REDLINE', rarity: 'RESTRICTED', weight: 15 },
-      { itemId: 6, code: 'AWP_ASIIMOV', rarity: 'COVERT', weight: 5 },
-      { itemId: 2, code: 'USP_GUARDIAN', rarity: 'MIL_SPEC', weight: 30 },
+      {
+        itemId: 1,
+        code: 'GLOCK_18_UMBRAL_RABBIT',
+        displayName: 'Glock-18 | Umbral Rabbit',
+        rarity: 'MIL_SPEC',
+        weight: 50,
+      },
+      {
+        itemId: 3,
+        code: 'AK_47_SLATE',
+        displayName: 'AK-47 | Slate',
+        rarity: 'RESTRICTED',
+        weight: 15,
+      },
+      {
+        itemId: 6,
+        code: 'AK_47_ASIIMOV',
+        displayName: 'AK-47 | Asiimov',
+        rarity: 'COVERT',
+        weight: 5,
+      },
+      {
+        itemId: 2,
+        code: 'USP_S_PRINTSTREAM',
+        displayName: 'USP-S | Printstream',
+        rarity: 'MIL_SPEC',
+        weight: 30,
+      },
     ])
     getInventoryMock.mockResolvedValue([])
   })
@@ -63,11 +115,14 @@ describe('CaseDetailPanel', () => {
   it('shows drop chances for each skin', async () => {
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
-    expect(await screen.findByText('Glock | Water Elemental')).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: 'Anvil' })).toHaveAttribute('src', '/cases/ANVIL.webp')
-    expect(screen.getByRole('img', { name: 'Glock | Water Elemental' })).toHaveAttribute(
+    expect(await screen.findByText('Glock-18 | Umbral Rabbit')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Revolution Case' })).toHaveAttribute(
       'src',
-      '/items/GLOCK_WATER_ELEMENTAL.webp',
+      '/cases/REVOLUTION_CASE.webp',
+    )
+    expect(screen.getByRole('img', { name: 'Glock-18 | Umbral Rabbit' })).toHaveAttribute(
+      'src',
+      '/items/GLOCK_18_UMBRAL_RABBIT.webp',
     )
     expect(screen.getByText('50%')).toBeInTheDocument()
     expect(screen.getByText('30%')).toBeInTheDocument()
@@ -85,28 +140,8 @@ describe('CaseDetailPanel', () => {
       role: 'USER',
     })
     getBalanceMock.mockResolvedValue({ balance: 100 })
-    openCaseMock.mockResolvedValue({
-      inventoryItemId: 9,
-      itemCode: 'AK_REDLINE',
-      rarity: 'RESTRICTED',
-      exterior: 'FIELD_TESTED',
-      balance: 50,
-      cost: 50,
-      suggestedSellPrice: 40,
-    })
-    getInventoryMock
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([
-        {
-          inventoryItemId: 9,
-          itemId: 3,
-          code: 'AK_REDLINE',
-          rarity: 'RESTRICTED',
-          exterior: 'FIELD_TESTED',
-          suggestedSellPrice: 40,
-          createdAt: '2026-01-01T00:00:00Z',
-        },
-      ])
+    openCaseMock.mockResolvedValue(slateOpen)
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
 
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
@@ -133,28 +168,8 @@ describe('CaseDetailPanel', () => {
       role: 'USER',
     })
     getBalanceMock.mockResolvedValue({ balance: 100 })
-    openCaseMock.mockResolvedValue({
-      inventoryItemId: 9,
-      itemCode: 'AK_REDLINE',
-      rarity: 'RESTRICTED',
-      exterior: 'FIELD_TESTED',
-      balance: 50,
-      cost: 50,
-      suggestedSellPrice: 40,
-    })
-    getInventoryMock
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([
-        {
-          inventoryItemId: 9,
-          itemId: 3,
-          code: 'AK_REDLINE',
-          rarity: 'RESTRICTED',
-          exterior: 'FIELD_TESTED',
-          suggestedSellPrice: 40,
-          createdAt: '2026-01-01T00:00:00Z',
-        },
-      ])
+    openCaseMock.mockResolvedValue(slateOpen)
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
     sellMock.mockResolvedValue({ balance: 90, soldFor: 40 })
 
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)

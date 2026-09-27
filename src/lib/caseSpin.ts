@@ -28,6 +28,7 @@ export function buildSpinStrip(
     ({
       itemId: -1,
       code: winnerCode,
+      displayName: winnerCode,
       rarity: 'MIL_SPEC',
       weight: 1,
     } satisfies CaseDrop)

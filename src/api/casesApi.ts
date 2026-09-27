@@ -12,6 +12,7 @@ export type ItemExterior =
 export type GameCase = {
   id: number
   code: string
+  displayName: string
   price: number
   sortOrder: number
 }
@@ -19,6 +20,7 @@ export type GameCase = {
 export type CaseDrop = {
   itemId: number
   code: string
+  displayName: string
   rarity: ItemRarity
   weight: number
 }
@@ -26,6 +28,7 @@ export type CaseDrop = {
 export type OpenCaseResponse = {
   inventoryItemId: number
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   balance: number
@@ -37,6 +40,7 @@ export type InventoryItem = {
   inventoryItemId: number
   itemId: number
   code: string
+  displayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   suggestedSellPrice: number

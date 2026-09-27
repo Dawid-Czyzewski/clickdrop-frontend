@@ -10,6 +10,7 @@ export type DailySkinDrop = {
   type: 'SKIN'
   itemId: number
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
   weight: number
 }
@@ -26,6 +27,7 @@ export type DailySkinClaim = {
   type: 'SKIN'
   inventoryItemId: number
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   suggestedSellPrice: number

@@ -24,7 +24,8 @@ function HookProviders({ children }: { children: ReactNode }) {
 
 const drop: OpenCaseResponse = {
   inventoryItemId: 9,
-  itemCode: 'AK_REDLINE',
+  itemCode: 'AK_47_SLATE',
+  itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED',
   exterior: 'FIELD_TESTED',
   balance: 50,
@@ -35,7 +36,8 @@ const drop: OpenCaseResponse = {
 const inventoryItem = {
   inventoryItemId: 9,
   itemId: 3,
-  code: 'AK_REDLINE',
+  code: 'AK_47_SLATE',
+  displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
   suggestedSellPrice: 40,
@@ -63,7 +65,7 @@ describe('useInventory', () => {
 
     const opened = await act(async () => result.current.openCase(1))
 
-    expect(opened?.itemCode).toBe('AK_REDLINE')
+    expect(opened?.itemCode).toBe('AK_47_SLATE')
     expect(result.current.items).toEqual([inventoryItem])
     expect(openCaseMock).toHaveBeenCalledWith(1)
   })

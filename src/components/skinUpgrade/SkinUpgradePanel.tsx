@@ -14,7 +14,6 @@ import {
   cdEyebrow,
   cdPageTitle,
 } from '../ui/uiStyles'
-import { SkinUpgradeAnim } from './SkinUpgradeAnim'
 import { SkinUpgradeFailView } from './SkinUpgradeFailView'
 import { SkinUpgradePreviewPanel } from './SkinUpgradePreviewPanel'
 import { SkinUpgradeSelect } from './SkinUpgradeSelect'
@@ -22,8 +21,13 @@ import { SkinUpgradeSelect } from './SkinUpgradeSelect'
 export function SkinUpgradePanel() {
   const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
-  const { items, isLoading, error: invError } = useInventory({ enabled: loggedIn })
-  const flow = useSkinUpgradeFlow(items, isLoading)
+  const { items, isLoading, error: invError, refresh, removeItem } = useInventory({
+    enabled: loggedIn,
+  })
+  const flow = useSkinUpgradeFlow(items, isLoading, {
+    refreshInventory: refresh,
+    removeInventoryItem: removeItem,
+  })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -62,35 +66,35 @@ export function SkinUpgradePanel() {
         <CatalogSkeleton count={6} colsClassName="grid-cols-2 sm:grid-cols-3 md:grid-cols-4" />
       ) : null}
 
-      {flow.phase === 'select' && !isLoading ? (
-        <SkinUpgradeSelect
-          items={items}
-          selectedId={flow.selectedId}
-          disabled={flow.busy}
-          onSelect={(id) => {
-            void flow.selectItem(id)
-          }}
-        />
-      ) : null}
-
-      {flow.phase === 'preview' && flow.preview ? (
+      {(flow.phase === 'preview' || flow.phase === 'animating') && flow.preview ? (
         <SkinUpgradePreviewPanel
           preview={flow.preview}
           confirming={flow.confirming}
           busy={flow.busy}
+          spinning={flow.phase === 'animating'}
+          outcome={flow.outcome?.result}
           onBack={flow.resetToSelect}
           onRequestUpgrade={() => flow.setConfirming(true)}
-          onConfirm={() => {
-            void flow.confirmUpgrade()
+          onConfirm={(choice) => {
+            void flow.confirmUpgrade(choice)
           }}
           onCancelConfirm={() => flow.setConfirming(false)}
+          onAnimDone={flow.finishAnim}
         />
       ) : null}
 
-      {flow.phase === 'animating' && flow.outcome ? (
-        <div className="flex justify-center py-10">
-          <SkinUpgradeAnim outcome={flow.outcome.result} onDone={flow.finishAnim} />
-        </div>
+      {!isLoading &&
+      (flow.phase === 'select' || flow.phase === 'preview' || flow.phase === 'animating') ? (
+        <SkinUpgradeSelect
+          items={items}
+          selectedId={flow.selectedId}
+          disabled={flow.busy || flow.phase === 'animating' || flow.confirming}
+          labelKey={flow.phase === 'select' ? 'selectLabel' : 'changeSkinLabel'}
+          variant={flow.phase === 'select' ? 'grid' : 'strip'}
+          onSelect={(id) => {
+            void flow.selectItem(id)
+          }}
+        />
       ) : null}
 
       {flow.phase === 'fail' ? (

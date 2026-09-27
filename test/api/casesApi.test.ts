@@ -24,12 +24,12 @@ describe('casesApi', () => {
 
   it('getCases calls GET /api/economy/cases without auth', async () => {
     requestMock.mockResolvedValue({
-      data: [{ id: 1, code: 'ANVIL', price: 50, sortOrder: 1 }],
+      data: [{ id: 1, code: 'REVOLUTION_CASE', displayName: 'Revolution Case', price: 50, sortOrder: 1 }],
     })
 
     const result = await getCases()
 
-    expect(result[0]?.code).toBe('ANVIL')
+    expect(result[0]?.code).toBe('REVOLUTION_CASE')
     expect(casesApi.getCases).toBe(getCases)
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/cases',
@@ -43,8 +43,20 @@ describe('casesApi', () => {
   it('getCaseDrops calls GET /api/economy/cases/{id}/drops without auth', async () => {
     requestMock.mockResolvedValue({
       data: [
-        { itemId: 1, code: 'GLOCK_WATER_ELEMENTAL', rarity: 'MIL_SPEC', weight: 50 },
-        { itemId: 6, code: 'AWP_ASIIMOV', rarity: 'COVERT', weight: 5 },
+        {
+          itemId: 1,
+          code: 'GLOCK_18_UMBRAL_RABBIT',
+          displayName: 'Glock-18 | Umbral Rabbit',
+          rarity: 'MIL_SPEC',
+          weight: 50,
+        },
+        {
+          itemId: 6,
+          code: 'AK_47_ASIIMOV',
+          displayName: 'AK-47 | Asiimov',
+          rarity: 'COVERT',
+          weight: 5,
+        },
       ],
     })
 
@@ -65,7 +77,8 @@ describe('casesApi', () => {
     requestMock.mockResolvedValue({
       data: {
         inventoryItemId: 9,
-        itemCode: 'AK_REDLINE',
+        itemCode: 'AK_47_SLATE',
+        itemDisplayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         exterior: 'FIELD_TESTED',
         balance: 50,
@@ -76,7 +89,7 @@ describe('casesApi', () => {
 
     const result = await openCase(1)
 
-    expect(result.itemCode).toBe('AK_REDLINE')
+    expect(result.itemCode).toBe('AK_47_SLATE')
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/cases/1/open',
       method: 'POST',
@@ -93,7 +106,8 @@ describe('casesApi', () => {
           {
             inventoryItemId: 9,
             itemId: 3,
-            code: 'AK_REDLINE',
+            code: 'AK_47_SLATE',
+            displayName: 'AK-47 | Slate',
             rarity: 'RESTRICTED',
             exterior: 'FIELD_TESTED',
             suggestedSellPrice: 40,

@@ -42,7 +42,8 @@ const dailyDrops = [
   {
     type: 'SKIN' as const,
     itemId: 3,
-    itemCode: 'AK_REDLINE',
+    itemCode: 'AK_47_SLATE',
+    itemDisplayName: 'AK-47 | Slate',
     rarity: 'RESTRICTED' as const,
     weight: 10,
   },
@@ -81,12 +82,12 @@ describe('DailyFreePanel', () => {
     )
     expect(screen.getByRole('img', { name: 'Daily Free' })).toHaveAttribute(
       'src',
-      '/cases/ANVIL.webp',
+      '/cases/REVOLUTION_CASE.webp',
     )
-    expect(screen.getByText('AK-47 | Redline')).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: 'AK-47 | Redline' })).toHaveAttribute(
+    expect(screen.getByText('AK-47 | Slate')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'AK-47 | Slate' })).toHaveAttribute(
       'src',
-      '/items/AK_REDLINE.webp',
+      '/items/AK_47_SLATE.webp',
     )
     expect(screen.getByText('ClickDollars')).toBeInTheDocument()
     expect(screen.getByText(/5\.00 CD/)).toBeInTheDocument()
@@ -107,11 +108,12 @@ describe('DailyFreePanel', () => {
     claimMock.mockResolvedValue({
       type: 'SKIN',
       inventoryItemId: 9,
-      itemCode: 'AK_REDLINE',
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
       suggestedSellPrice: 40,
-      nextClaimAt: '2026-09-26T15:00:00.000Z',
+      nextClaimAt: '2027-09-26T15:00:00.000Z',
     })
     sellMock.mockResolvedValue({ balance: 90, soldFor: 40 })
 
@@ -119,7 +121,7 @@ describe('DailyFreePanel', () => {
 
     await user.click(await screen.findByRole('button', { name: /^open$/i }))
 
-    expect(await screen.findByRole('dialog')).toHaveTextContent('AK-47 | Redline')
+    expect(await screen.findByRole('dialog')).toHaveTextContent('AK-47 | Slate')
     await user.click(screen.getByRole('button', { name: /sell for 40.00 cd/i }))
 
     await waitFor(() => {
@@ -142,7 +144,7 @@ describe('DailyFreePanel', () => {
       type: 'CASH',
       cashAmount: 12.5,
       balance: 62.5,
-      nextClaimAt: '2026-09-26T15:00:00.000Z',
+      nextClaimAt: '2027-09-26T15:00:00.000Z',
     })
 
     renderWithProviders(<DailyFreePanel />)
@@ -169,7 +171,7 @@ describe('DailyFreePanel', () => {
     renderWithProviders(<DailyFreePanel />)
 
     expect(await screen.findByText(/\d{2}:\d{2}:\d{2}/)).toBeInTheDocument()
-    expect(await screen.findByText('AK-47 | Redline')).toBeInTheDocument()
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /^open$/i })).not.toBeInTheDocument()
   })
 
@@ -186,11 +188,12 @@ describe('DailyFreePanel', () => {
     claimMock.mockResolvedValue({
       type: 'SKIN',
       inventoryItemId: 9,
-      itemCode: 'AK_REDLINE',
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
       suggestedSellPrice: 40,
-      nextClaimAt: '2026-09-26T15:00:00.000Z',
+      nextClaimAt: '2027-09-26T15:00:00.000Z',
     })
 
     renderWithProviders(<DailyFreePanel />)

@@ -62,15 +62,10 @@ export function InventoryPanel() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className={cdEyebrow}>{t('inventory.eyebrow')}</p>
-          <h1 className={cdPageTitle}>{t('inventory.title')}</h1>
-          <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('inventory.subtitle')}</p>
-        </div>
-        <Link href="/skin-upgrade" className={`${cdBtnPrimaryLink} cursor-pointer`}>
-          {t('inventory.upgradePage')}
-        </Link>
+      <div>
+        <p className={cdEyebrow}>{t('inventory.eyebrow')}</p>
+        <h1 className={cdPageTitle}>{t('inventory.title')}</h1>
+        <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('inventory.subtitle')}</p>
       </div>
 
       {error ? (

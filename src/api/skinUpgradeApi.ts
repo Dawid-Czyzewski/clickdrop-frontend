@@ -3,6 +3,7 @@ import { apiRequest } from './client'
 
 export type SkinUpgradeCurrent = {
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   suggestedSellPrice: number
@@ -11,7 +12,9 @@ export type SkinUpgradeCurrent = {
 export type SkinUpgradeTarget = {
   itemId: number
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
+  exterior: ItemExterior
   suggestedSellPrice: number
 }
 
@@ -26,6 +29,7 @@ export type SkinUpgradeSuccess = {
   result: 'SUCCESS'
   inventoryItemId: number
   itemCode: string
+  itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   suggestedSellPrice: number
@@ -37,15 +41,24 @@ export type SkinUpgradeFail = {
 
 export type SkinUpgradeResult = SkinUpgradeSuccess | SkinUpgradeFail
 
+export type SkinUpgradeChoice = {
+  targetItemId: number
+  targetExterior: ItemExterior
+}
+
 export function getSkinUpgradePreview(inventoryItemId: number): Promise<SkinUpgradePreview> {
   return apiRequest<SkinUpgradePreview>(
     `/api/economy/inventory/${inventoryItemId}/upgrade-preview`,
   )
 }
 
-export function upgradeSkin(inventoryItemId: number): Promise<SkinUpgradeResult> {
+export function upgradeSkin(
+  inventoryItemId: number,
+  choice: SkinUpgradeChoice,
+): Promise<SkinUpgradeResult> {
   return apiRequest<SkinUpgradeResult>(`/api/economy/inventory/${inventoryItemId}/upgrade`, {
     method: 'POST',
+    body: choice,
   })
 }
 

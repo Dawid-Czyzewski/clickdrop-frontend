@@ -6,18 +6,18 @@ import { renderWithProviders } from '../utils/render'
 
 describe('AssetImage', () => {
   it('renders case image for a known code', () => {
-    renderWithProviders(<AssetImage kind="case" code="ANVIL" alt="Anvil" />)
+    renderWithProviders(<AssetImage kind="case" code="REVOLUTION_CASE" alt="Revolution Case" />)
 
-    const img = screen.getByRole('img', { name: 'Anvil' })
-    expect(img).toHaveAttribute('src', '/cases/ANVIL.webp')
+    const img = screen.getByRole('img', { name: 'Revolution Case' })
+    expect(img).toHaveAttribute('src', '/cases/REVOLUTION_CASE.webp')
   })
 
   it('renders item image for a known code', () => {
-    renderWithProviders(<AssetImage kind="item" code="AK_REDLINE" alt="AK" />)
+    renderWithProviders(<AssetImage kind="item" code="AK_47_SLATE" alt="AK" />)
 
     expect(screen.getByRole('img', { name: 'AK' })).toHaveAttribute(
       'src',
-      '/items/AK_REDLINE.webp',
+      '/items/AK_47_SLATE.webp',
     )
   })
 
@@ -31,10 +31,10 @@ describe('AssetImage', () => {
   })
 
   it('switches to fallback on image error without crashing', () => {
-    renderWithProviders(<AssetImage kind="item" code="AK_REDLINE" alt="Broken" />)
+    renderWithProviders(<AssetImage kind="item" code="AK_47_SLATE" alt="Broken" />)
 
     const img = screen.getByRole('img', { name: 'Broken' })
-    expect(img).toHaveAttribute('src', '/items/AK_REDLINE.webp')
+    expect(img).toHaveAttribute('src', '/items/AK_47_SLATE.webp')
 
     fireEvent.error(img)
 

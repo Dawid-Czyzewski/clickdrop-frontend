@@ -43,7 +43,7 @@ describe('dailyApi', () => {
   it('getDailyDrops calls GET /api/economy/daily/drops without auth', async () => {
     requestMock.mockResolvedValue({
       data: [
-        { type: 'SKIN', itemId: 3, itemCode: 'AK_REDLINE', rarity: 'RESTRICTED', weight: 10 },
+        { type: 'SKIN', itemId: 3, itemCode: 'AK_47_SLATE', itemDisplayName: 'AK-47 | Slate', rarity: 'RESTRICTED', weight: 10 },
         { type: 'CASH', cashAmount: 5, weight: 40 },
       ],
     })
@@ -51,7 +51,7 @@ describe('dailyApi', () => {
     const result = await getDailyDrops()
 
     expect(result).toHaveLength(2)
-    expect(result[0]).toMatchObject({ type: 'SKIN', itemCode: 'AK_REDLINE' })
+    expect(result[0]).toMatchObject({ type: 'SKIN', itemCode: 'AK_47_SLATE' })
     expect(result[1]).toMatchObject({ type: 'CASH', cashAmount: 5 })
     expect(dailyApi.getDailyDrops).toBe(getDailyDrops)
     expect(requestMock).toHaveBeenCalledWith({
@@ -68,7 +68,8 @@ describe('dailyApi', () => {
       data: {
         type: 'SKIN',
         inventoryItemId: 9,
-        itemCode: 'AK_REDLINE',
+        itemCode: 'AK_47_SLATE',
+        itemDisplayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         exterior: 'FIELD_TESTED',
         suggestedSellPrice: 40,
@@ -81,7 +82,7 @@ describe('dailyApi', () => {
     expect(isDailySkinClaim(skin)).toBe(true)
     expect(isDailyCashClaim(skin)).toBe(false)
     if (isDailySkinClaim(skin)) {
-      expect(skin.itemCode).toBe('AK_REDLINE')
+      expect(skin.itemCode).toBe('AK_47_SLATE')
     }
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/daily/claim',

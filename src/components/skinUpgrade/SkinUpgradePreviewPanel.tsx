@@ -1,165 +1,189 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { SkinUpgradePreview } from '../../api/skinUpgradeApi'
-import { formatClickDollars } from '../../lib/formatClickDollars'
-import {
-  exteriorLabelKey,
-  itemNameKey,
-  RARITY_COLOR,
-  rarityLabelKey,
-} from '../../lib/caseI18n'
-import { AssetImage } from '../media/AssetImage'
-import {
-  cdBodyMuted,
-  cdBtnGhost,
-  cdBtnPrimary,
-  cdSectionLabel,
-} from '../ui/uiStyles'
+import type { SkinUpgradePreview, SkinUpgradeTarget } from '../../api/skinUpgradeApi'
+import { filterTargetsInPriceBand } from '../../lib/skinUpgradePricing'
+import { cdBodyMuted, cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
+import { SkinUpgradeAnim } from './SkinUpgradeAnim'
+import { SkinUpgradeSkinCard } from './SkinUpgradeSkinCard'
 
 type SkinUpgradePreviewPanelProps = {
   preview: SkinUpgradePreview
   confirming: boolean
   busy: boolean
+  spinning: boolean
+  outcome?: 'SUCCESS' | 'FAIL'
   onBack: () => void
   onRequestUpgrade: () => void
-  onConfirm: () => void
+  onConfirm: (choice: { targetItemId: number; targetExterior: SkinUpgradeTarget['exterior'] }) => void
   onCancelConfirm: () => void
+  onAnimDone: () => void
+}
+
+function pickRandomIndex(length: number) {
+  if (length <= 0) return 0
+  return Math.floor(Math.random() * length)
 }
 
 export function SkinUpgradePreviewPanel({
   preview,
   confirming,
   busy,
+  spinning,
+  outcome,
   onBack,
   onRequestUpgrade,
   onConfirm,
   onCancelConfirm,
+  onAnimDone,
 }: SkinUpgradePreviewPanelProps) {
-  const { t, i18n } = useTranslation()
-  const { current, successChance, possibleTargets } = preview
-  const color = RARITY_COLOR[current.rarity] ?? '#8b92a5'
-  const name = t(itemNameKey(current.itemCode))
+  const { t } = useTranslation()
+  const { current, successChance, possibleTargets: rawTargets } = preview
+  const possibleTargets = filterTargetsInPriceBand(
+    current.suggestedSellPrice,
+    rawTargets,
+  )
   const winPct = Math.round(successChance * 100)
   const losePct = 100 - winPct
   const canUpgrade = possibleTargets.length > 0
+  const locked = busy || spinning
+  const [targetIndex, setTargetIndex] = useState(0)
+
+  useEffect(() => {
+    setTargetIndex(pickRandomIndex(possibleTargets.length))
+  }, [preview.inventoryItemId, possibleTargets.length])
+
+  const target = possibleTargets[targetIndex % Math.max(possibleTargets.length, 1)] ?? null
+
+  function cycleTarget() {
+    if (possibleTargets.length < 2) return
+    setTargetIndex((i) => {
+      let next = pickRandomIndex(possibleTargets.length)
+      if (next === i % possibleTargets.length) {
+        next = (i + 1) % possibleTargets.length
+      }
+      return next
+    })
+  }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-8">
-        <div
-          className="flex aspect-[5/4] w-full max-w-[220px] items-center justify-center overflow-hidden rounded-xl border border-cd-border bg-cd-bg/70 p-3"
-          style={{
-            background: `radial-gradient(circle at 50% 40%, ${color}28, transparent 70%)`,
-          }}
-        >
-          <AssetImage
-            kind="item"
-            code={current.itemCode}
-            alt={name}
-            className="h-full w-full object-contain"
+    <div className="flex w-full flex-col items-center gap-6">
+      <p className={`w-full text-center ${cdBodyMuted}`}>
+        {t('skinUpgrade.riskCopy', { win: winPct, lose: losePct })}
+      </p>
+
+      <div className="flex w-full flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between sm:gap-6 lg:gap-10">
+        <div className="flex shrink-0 justify-center sm:justify-start">
+          <SkinUpgradeSkinCard
+            itemCode={current.itemCode}
+            itemDisplayName={current.itemDisplayName}
+            rarity={current.rarity}
+            exterior={current.exterior}
+            suggestedSellPrice={current.suggestedSellPrice}
+            label={t('skinUpgrade.currentLabel')}
+            size="lg"
           />
         </div>
-        <div className="flex flex-1 flex-col gap-2 text-center sm:text-left">
-          <p className="text-xs font-medium tracking-wide uppercase" style={{ color }}>
-            {t(rarityLabelKey(current.rarity))}
-          </p>
-          <h2 className="font-display text-xl font-semibold text-cd-text">{name}</h2>
-          <p className="text-sm text-cd-muted">{t(exteriorLabelKey(current.exterior))}</p>
-          <p className="font-display text-sm text-cd-accent">
-            {formatClickDollars(current.suggestedSellPrice, i18n.language)} CD
-          </p>
-          <p className={`mt-2 ${cdBodyMuted}`}>
-            {t('skinUpgrade.riskCopy', { win: winPct, lose: losePct })}
-          </p>
-        </div>
-      </div>
 
-      <div className="flex flex-col gap-3">
-        <p className={cdSectionLabel}>{t('skinUpgrade.targetsLabel')}</p>
-        {!canUpgrade ? (
-          <p className={cdBodyMuted}>{t('skinUpgrade.noTargets')}</p>
-        ) : (
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-            {possibleTargets.map((target) => {
-              const tColor = RARITY_COLOR[target.rarity] ?? '#8b92a5'
-              const tName = t(itemNameKey(target.itemCode))
-              return (
-                <div
-                  key={target.itemId}
-                  className="overflow-hidden rounded-lg border border-cd-border bg-cd-surface/60"
+        <div className="flex w-full min-w-0 flex-1 flex-col items-center gap-4">
+          <SkinUpgradeAnim
+            winPct={winPct}
+            mode={spinning ? 'spinning' : 'idle'}
+            outcome={outcome}
+            onDone={onAnimDone}
+          />
+
+          {spinning ? null : confirming ? (
+            <div
+              className="flex w-full max-w-md flex-col gap-3 rounded-lg border border-cd-danger/40 bg-cd-danger/10 p-4"
+              role="alertdialog"
+              aria-labelledby="upgrade-warn-title"
+            >
+              <p id="upgrade-warn-title" className="font-display text-sm font-semibold text-cd-text">
+                {t('skinUpgrade.confirmTitle')}
+              </p>
+              <p className={cdBodyMuted}>{t('skinUpgrade.confirmBody')}</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                <button
+                  type="button"
+                  disabled={locked || !target}
+                  onClick={() => {
+                    if (!target) return
+                    onConfirm({
+                      targetItemId: target.itemId,
+                      targetExterior: target.exterior,
+                    })
+                  }}
+                  className={`${cdBtnPrimary} cursor-pointer`}
                 >
-                  <div className="h-0.5 w-full" style={{ backgroundColor: tColor }} />
-                  <div className="flex aspect-[5/4] items-center justify-center p-1.5">
-                    <AssetImage
-                      kind="item"
-                      code={target.itemCode}
-                      alt={tName}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                  <div className="px-2 pb-2">
-                    <p className="truncate text-xs font-semibold text-cd-text">{tName}</p>
-                    <p className="text-[0.65rem] text-cd-muted">
-                      {formatClickDollars(target.suggestedSellPrice, i18n.language)} CD
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
+                  {t('skinUpgrade.confirmCta')}
+                </button>
+                <button
+                  type="button"
+                  disabled={locked}
+                  onClick={onCancelConfirm}
+                  className={`${cdBtnGhost} cursor-pointer`}
+                >
+                  {t('skinUpgrade.cancel')}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap justify-center gap-2">
+              <button
+                type="button"
+                disabled={locked || !canUpgrade}
+                onClick={onRequestUpgrade}
+                className={`${cdBtnPrimary} cursor-pointer`}
+              >
+                {t('skinUpgrade.upgradeFree')}
+              </button>
+              <button
+                type="button"
+                disabled={locked}
+                onClick={onBack}
+                className={`${cdBtnGhost} cursor-pointer`}
+              >
+                {t('skinUpgrade.back')}
+              </button>
+            </div>
+          )}
 
-      {confirming ? (
-        <div
-          className="flex flex-col gap-3 rounded-lg border border-cd-danger/40 bg-cd-danger/10 p-4"
-          role="alertdialog"
-          aria-labelledby="upgrade-warn-title"
-        >
-          <p id="upgrade-warn-title" className="font-display text-sm font-semibold text-cd-text">
-            {t('skinUpgrade.confirmTitle')}
-          </p>
-          <p className={cdBodyMuted}>{t('skinUpgrade.confirmBody')}</p>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              disabled={busy}
-              onClick={onConfirm}
-              className={`${cdBtnPrimary} cursor-pointer`}
-            >
-              {t('skinUpgrade.confirmCta')}
-            </button>
-            <button
-              type="button"
-              disabled={busy}
-              onClick={onCancelConfirm}
-              className={`${cdBtnGhost} cursor-pointer`}
-            >
-              {t('skinUpgrade.cancel')}
-            </button>
-          </div>
+          {!canUpgrade && !spinning ? (
+            <p className={cdBodyMuted}>{t('skinUpgrade.noTargets')}</p>
+          ) : null}
         </div>
-      ) : (
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            disabled={busy || !canUpgrade}
-            onClick={onRequestUpgrade}
-            className={`${cdBtnPrimary} cursor-pointer`}
-          >
-            {t('skinUpgrade.upgradeFree')}
-          </button>
-          <button
-            type="button"
-            disabled={busy}
-            onClick={onBack}
-            className={`${cdBtnGhost} cursor-pointer`}
-          >
-            {t('skinUpgrade.back')}
-          </button>
+
+        <div className="flex shrink-0 flex-col items-center gap-2 sm:items-end">
+          {target ? (
+            <>
+              <SkinUpgradeSkinCard
+                itemCode={target.itemCode}
+                itemDisplayName={target.itemDisplayName}
+                rarity={target.rarity}
+                exterior={target.exterior}
+                suggestedSellPrice={target.suggestedSellPrice}
+                label={t('skinUpgrade.targetsLabel')}
+                accent
+                size="lg"
+              />
+              {possibleTargets.length > 1 && !spinning ? (
+                <button
+                  type="button"
+                  disabled={locked}
+                  onClick={cycleTarget}
+                  className={`${cdBtnGhost} cursor-pointer text-sm`}
+                >
+                  {t('skinUpgrade.refreshTarget')}
+                </button>
+              ) : null}
+            </>
+          ) : (
+            <div className="w-[min(100%,20rem)]" />
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }

@@ -105,6 +105,18 @@ export function useInventory(options: UseInventoryOptions = {}) {
     error,
     openCase,
     sellItem,
+    refresh: async () => {
+      if (!enabled) return
+      try {
+        const data = await getInventory()
+        setItems(data)
+      } catch (err) {
+        setError(resolveCaseError(err, t))
+      }
+    },
+    removeItem: (inventoryItemId: number) => {
+      setItems((prev) => prev.filter((item) => item.inventoryItemId !== inventoryItemId))
+    },
     clearError: () => setError(''),
   }
 }

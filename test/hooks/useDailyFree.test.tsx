@@ -32,25 +32,33 @@ function HookProviders({ children }: { children: ReactNode }) {
 }
 
 const skinDrops = [
-  { type: 'SKIN' as const, itemId: 3, itemCode: 'AK_REDLINE', rarity: 'RESTRICTED' as const, weight: 10 },
+  {
+    type: 'SKIN' as const,
+    itemId: 3,
+    itemCode: 'AK_47_SLATE',
+    itemDisplayName: 'AK-47 | Slate',
+    rarity: 'RESTRICTED' as const,
+    weight: 10,
+  },
   { type: 'CASH' as const, cashAmount: 5, weight: 40 },
 ]
 
 const skinClaim = {
   type: 'SKIN' as const,
   inventoryItemId: 9,
-  itemCode: 'AK_REDLINE',
+  itemCode: 'AK_47_SLATE',
+  itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
   suggestedSellPrice: 40,
-  nextClaimAt: '2026-09-26T15:00:00.000Z',
+  nextClaimAt: '2027-09-26T15:00:00.000Z',
 }
 
 const cashClaim = {
   type: 'CASH' as const,
   cashAmount: 12.5,
   balance: 62.5,
-  nextClaimAt: '2026-09-26T15:00:00.000Z',
+  nextClaimAt: '2027-09-26T15:00:00.000Z',
 }
 
 describe('useDailyFree', () => {

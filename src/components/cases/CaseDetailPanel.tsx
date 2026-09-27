@@ -9,7 +9,7 @@ import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useCaseDrops } from '../../hooks/useCaseDrops'
 import { useInventory } from '../../hooks/useInventory'
-import { CASE_ACCENT, caseNameKey } from '../../lib/caseI18n'
+import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { AssetImage } from '../media/AssetImage'
 import { CatalogSkeleton } from '../ui/Skeleton'
@@ -50,7 +50,8 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
-  const accent = CASE_ACCENT[gameCase.code] ?? '#f59e0b'
+  const accent = caseAccent(gameCase.code)
+  const caseLabel = resolveCaseLabel(t, gameCase.code, gameCase.displayName)
   const canAfford = balance !== null && balance >= gameCase.price
   const isOpening = openingCaseId === gameCase.id || spinning
   const openDisabled =
@@ -99,11 +100,11 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
             <AssetImage
               kind="case"
               code={gameCase.code}
-              alt={t(caseNameKey(gameCase.code))}
+              alt={caseLabel}
               className="h-full w-full object-contain"
             />
           </div>
-          <h1 className={`${cdPageTitle} text-center`}>{t(caseNameKey(gameCase.code))}</h1>
+          <h1 className={`${cdPageTitle} text-center`}>{caseLabel}</h1>
           <p className={cdMoney}>{formatClickDollars(gameCase.price, i18n.language)} CD</p>
 
           {loggedIn ? (

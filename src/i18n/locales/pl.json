@@ -168,6 +168,8 @@
     "dropsSubtitle": "Przy każdym skinie widać szansę wylosowania go z tej skrzynki.",
     "dropsLoading": "Ładowanie dropów…",
     "dropsEmpty": "Ta skrzynka nie ma jeszcze skonfigurowanych dropów.",
+    "rareSpecialName": "★ Rzadki przedmiot specjalny",
+    "rareSpecialRarity": "Niezmiernie rzadki",
     "keep": "Do ekwipunku",
     "close": "Zamknij",
     "sellNow": "Sprzedaj za {{amount}} CD",
@@ -184,14 +186,42 @@
     "errorNotFound": "Nie znaleziono skrzynki.",
     "errorTooFast": "Za szybko otwierasz skrzynki. Zwolnij trochę.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
-    "ANVIL": { "name": "Anvil" },
-    "TEMPER": { "name": "Temper" },
-    "FORGEFIRE": { "name": "Forgefire" },
-    "EMBER": { "name": "Ember" },
-    "NOVA": { "name": "Nova" },
-    "RIFT": { "name": "Rift" },
-    "PULSE": { "name": "Pulse" },
-    "SHADOW": { "name": "Shadow" }
+    "CLUTCH_CASE": {
+      "name": "Skrzynka Clutch"
+    },
+    "CS20_CASE": {
+      "name": "Skrzynka CS20"
+    },
+    "DANGER_ZONE_CASE": {
+      "name": "Skrzynka Danger Zone"
+    },
+    "DREAMS_NIGHTMARES_CASE": {
+      "name": "Skrzynka Dreams & Nightmares"
+    },
+    "FRACTURE_CASE": {
+      "name": "Skrzynka Fracture"
+    },
+    "KILOWATT_CASE": {
+      "name": "Skrzynka Kilowatt"
+    },
+    "OPERATION_BROKEN_FANG_CASE": {
+      "name": "Skrzynka Operation Broken Fang"
+    },
+    "PRISMA_2_CASE": {
+      "name": "Skrzynka Prisma 2"
+    },
+    "RECOIL_CASE": {
+      "name": "Skrzynka Recoil"
+    },
+    "REVOLUTION_CASE": {
+      "name": "Skrzynka Revolution"
+    },
+    "SNAKEBITE_CASE": {
+      "name": "Skrzynka Snakebite"
+    },
+    "SPECTRUM_2_CASE": {
+      "name": "Skrzynka Spectrum 2"
+    }
   },
   "inventory": {
     "eyebrow": "Ekwipunek",
@@ -199,8 +229,6 @@
     "subtitle": "Skiny zostawione po otwarciu skrzynek. Sprzedaj je w dowolnym momencie.",
     "sell": "Sprzedaj za {{amount}} CD",
     "selling": "Sprzedawanie…",
-    "upgrade": "Ulepsz",
-    "upgradePage": "Ulepsz skiny",
     "balance": "{{amount}} ClickDollars",
     "loading": "Ładowanie ekwipunku…",
     "empty": "Ekwipunek jest pusty. Otwórz skrzynkę, aby zdobyć skiny.",
@@ -216,9 +244,12 @@
     "title": "Ulepsz swojego skina",
     "subtitle": "Wybierz skin i ryzykuj o lepszy. Za darmo — bez ClickDolarów. To nie to samo co ulepszenia klików.",
     "selectLabel": "Wybierz skina",
+    "changeSkinLabel": "Albo wybierz innego z ekwipunku",
     "emptyInventory": "Brak skinów do ulepszenia. Najpierw otwórz skrzynkę.",
     "riskCopy": "{{win}}% lepszy skin / {{lose}}% tracisz ten",
-    "targetsLabel": "Możliwe lepsze skiny",
+    "currentLabel": "Twój skin",
+    "targetsLabel": "Możliwy drop",
+    "refreshTarget": "Pokaż inny drop",
     "noTargets": "Brak droższych skinów dla tego przedmiotu.",
     "upgradeFree": "Ulepsz",
     "confirmTitle": "Ryzykujesz utratą skina?",
@@ -226,6 +257,7 @@
     "confirmCta": "Potwierdź ulepszenie",
     "cancel": "Anuluj",
     "back": "Wstecz",
+    "riskMeter": "Szansa wygrana / przegrana",
     "animating": "Ulepszanie…",
     "win": "Wygrana",
     "lose": "Przegrana",
@@ -242,12 +274,1419 @@
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
   },
   "items": {
-    "GLOCK_WATER_ELEMENTAL": { "name": "Glock | Water Elemental" },
-    "USP_GUARDIAN": { "name": "USP-S | Guardian" },
-    "AK_REDLINE": { "name": "AK-47 | Redline" },
-    "AWP_ELECTRIC_HIVE": { "name": "AWP | Electric Hive" },
-    "M4A4_DESERT_STRIKE": { "name": "M4A4 | Desert-Strike" },
-    "AWP_ASIIMOV": { "name": "AWP | Asiimov" }
+    "AK_47_ASIIMOV": {
+      "name": "AK-47 | Asiimov"
+    },
+    "AK_47_HEAD_SHOT": {
+      "name": "AK-47 | Head Shot"
+    },
+    "AK_47_ICE_COALED": {
+      "name": "AK-47 | Ice Coaled"
+    },
+    "AK_47_INHERITANCE": {
+      "name": "AK-47 | Inheritance"
+    },
+    "AK_47_LEGION_OF_ANUBIS": {
+      "name": "AK-47 | Legion of Anubis"
+    },
+    "AK_47_NIGHTWISH": {
+      "name": "AK-47 | Nightwish"
+    },
+    "AK_47_PHANTOM_DISRUPTOR": {
+      "name": "AK-47 | Phantom Disruptor"
+    },
+    "AK_47_SLATE": {
+      "name": "AK-47 | Slate"
+    },
+    "AK_47_THE_EMPRESS": {
+      "name": "AK-47 | The Empress"
+    },
+    "AK_REDLINE": {
+      "name": "AK-47 | Redline"
+    },
+    "AUG_DEATH_BY_PUPPY": {
+      "name": "AUG | Death by Puppy"
+    },
+    "AUG_STYMPHALIAN": {
+      "name": "AUG | Stymphalian"
+    },
+    "AUG_TOM_CAT": {
+      "name": "AUG | Tom Cat"
+    },
+    "AUG_TRIQUA": {
+      "name": "AUG | Triqua"
+    },
+    "AWP_ASIIMOV": {
+      "name": "AWP | Asiimov"
+    },
+    "AWP_CAPILLARY": {
+      "name": "AWP | Capillary"
+    },
+    "AWP_CHROMATIC_ABERRATION": {
+      "name": "AWP | Chromatic Aberration"
+    },
+    "AWP_CHROME_CANNON": {
+      "name": "AWP | Chrome Cannon"
+    },
+    "AWP_DUALITY": {
+      "name": "AWP | Duality"
+    },
+    "AWP_ELECTRIC_HIVE": {
+      "name": "AWP | Electric Hive"
+    },
+    "AWP_EXOSKELETON": {
+      "name": "AWP | Exoskeleton"
+    },
+    "AWP_MORTIS": {
+      "name": "AWP | Mortis"
+    },
+    "AWP_NEO_NOIR": {
+      "name": "AWP | Neo-Noir"
+    },
+    "AWP_WILDFIRE": {
+      "name": "AWP | Wildfire"
+    },
+    "BOWIE_KNIFE_AUTOTRONIC": {
+      "name": "★ Bowie Knife | Autotronic"
+    },
+    "BOWIE_KNIFE_BLACK_LAMINATE": {
+      "name": "★ Bowie Knife | Black Laminate"
+    },
+    "BOWIE_KNIFE_BRIGHT_WATER": {
+      "name": "★ Bowie Knife | Bright Water"
+    },
+    "BOWIE_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Bowie Knife | Damascus Steel"
+    },
+    "BOWIE_KNIFE_DOPPLER": {
+      "name": "★ Bowie Knife | Doppler"
+    },
+    "BOWIE_KNIFE_FREEHAND": {
+      "name": "★ Bowie Knife | Freehand"
+    },
+    "BOWIE_KNIFE_GAMMA_DOPPLER": {
+      "name": "★ Bowie Knife | Gamma Doppler"
+    },
+    "BOWIE_KNIFE_LORE": {
+      "name": "★ Bowie Knife | Lore"
+    },
+    "BOWIE_KNIFE_MARBLE_FADE": {
+      "name": "★ Bowie Knife | Marble Fade"
+    },
+    "BOWIE_KNIFE_RUST_COAT": {
+      "name": "★ Bowie Knife | Rust Coat"
+    },
+    "BOWIE_KNIFE_TIGER_TOOTH": {
+      "name": "★ Bowie Knife | Tiger Tooth"
+    },
+    "BOWIE_KNIFE_ULTRAVIOLET": {
+      "name": "★ Bowie Knife | Ultraviolet"
+    },
+    "BROKEN_FANG_GLOVES_JADE": {
+      "name": "★ Broken Fang Gloves | Jade"
+    },
+    "BROKEN_FANG_GLOVES_NEEDLE_POINT": {
+      "name": "★ Broken Fang Gloves | Needle Point"
+    },
+    "BROKEN_FANG_GLOVES_UNHINGED": {
+      "name": "★ Broken Fang Gloves | Unhinged"
+    },
+    "BROKEN_FANG_GLOVES_YELLOW_BANDED": {
+      "name": "★ Broken Fang Gloves | Yellow-banded"
+    },
+    "BUTTERFLY_KNIFE_AUTOTRONIC": {
+      "name": "★ Butterfly Knife | Autotronic"
+    },
+    "BUTTERFLY_KNIFE_BLACK_LAMINATE": {
+      "name": "★ Butterfly Knife | Black Laminate"
+    },
+    "BUTTERFLY_KNIFE_BRIGHT_WATER": {
+      "name": "★ Butterfly Knife | Bright Water"
+    },
+    "BUTTERFLY_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Butterfly Knife | Damascus Steel"
+    },
+    "BUTTERFLY_KNIFE_DOPPLER": {
+      "name": "★ Butterfly Knife | Doppler"
+    },
+    "BUTTERFLY_KNIFE_FREEHAND": {
+      "name": "★ Butterfly Knife | Freehand"
+    },
+    "BUTTERFLY_KNIFE_GAMMA_DOPPLER": {
+      "name": "★ Butterfly Knife | Gamma Doppler"
+    },
+    "BUTTERFLY_KNIFE_LORE": {
+      "name": "★ Butterfly Knife | Lore"
+    },
+    "BUTTERFLY_KNIFE_MARBLE_FADE": {
+      "name": "★ Butterfly Knife | Marble Fade"
+    },
+    "BUTTERFLY_KNIFE_RUST_COAT": {
+      "name": "★ Butterfly Knife | Rust Coat"
+    },
+    "BUTTERFLY_KNIFE_TIGER_TOOTH": {
+      "name": "★ Butterfly Knife | Tiger Tooth"
+    },
+    "BUTTERFLY_KNIFE_ULTRAVIOLET": {
+      "name": "★ Butterfly Knife | Ultraviolet"
+    },
+    "CLASSIC_KNIFE_BLUE_STEEL": {
+      "name": "★ Classic Knife | Blue Steel"
+    },
+    "CLASSIC_KNIFE_BOREAL_FOREST": {
+      "name": "★ Classic Knife | Boreal Forest"
+    },
+    "CLASSIC_KNIFE_CASE_HARDENED": {
+      "name": "★ Classic Knife | Case Hardened"
+    },
+    "CLASSIC_KNIFE_CLASSIC_KNIFE": {
+      "name": "★ Classic Knife"
+    },
+    "CLASSIC_KNIFE_CRIMSON_WEB": {
+      "name": "★ Classic Knife | Crimson Web"
+    },
+    "CLASSIC_KNIFE_FADE": {
+      "name": "★ Classic Knife | Fade"
+    },
+    "CLASSIC_KNIFE_FOREST_DDPAT": {
+      "name": "★ Classic Knife | Forest DDPAT"
+    },
+    "CLASSIC_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Classic Knife | Night Stripe"
+    },
+    "CLASSIC_KNIFE_SAFARI_MESH": {
+      "name": "★ Classic Knife | Safari Mesh"
+    },
+    "CLASSIC_KNIFE_SCORCHED": {
+      "name": "★ Classic Knife | Scorched"
+    },
+    "CLASSIC_KNIFE_SLAUGHTER": {
+      "name": "★ Classic Knife | Slaughter"
+    },
+    "CLASSIC_KNIFE_STAINED": {
+      "name": "★ Classic Knife | Stained"
+    },
+    "CLASSIC_KNIFE_URBAN_MASKED": {
+      "name": "★ Classic Knife | Urban Masked"
+    },
+    "CZ75_AUTO_CIRCAETUS": {
+      "name": "CZ75-Auto | Circaetus"
+    },
+    "CZ75_AUTO_DISTRESSED": {
+      "name": "CZ75-Auto | Distressed"
+    },
+    "CZ75_AUTO_TACTICAT": {
+      "name": "CZ75-Auto | Tacticat"
+    },
+    "CZ75_AUTO_VENDETTA": {
+      "name": "CZ75-Auto | Vendetta"
+    },
+    "DESERT_EAGLE_BLUE_PLY": {
+      "name": "Desert Eagle | Blue Ply"
+    },
+    "DESERT_EAGLE_MECHA_INDUSTRIES": {
+      "name": "Desert Eagle | Mecha Industries"
+    },
+    "DESERT_EAGLE_PRINTSTREAM": {
+      "name": "Desert Eagle | Printstream"
+    },
+    "DESERT_EAGLE_TRIGGER_DISCIPLINE": {
+      "name": "Desert Eagle | Trigger Discipline"
+    },
+    "DRIVER_GLOVES_BLACK_TIE": {
+      "name": "★ Driver Gloves | Black Tie"
+    },
+    "DRIVER_GLOVES_IMPERIAL_PLAID": {
+      "name": "★ Driver Gloves | Imperial Plaid"
+    },
+    "DRIVER_GLOVES_KING_SNAKE": {
+      "name": "★ Driver Gloves | King Snake"
+    },
+    "DRIVER_GLOVES_OVERTAKE": {
+      "name": "★ Driver Gloves | Overtake"
+    },
+    "DRIVER_GLOVES_QUEEN_JAGUAR": {
+      "name": "★ Driver Gloves | Queen Jaguar"
+    },
+    "DRIVER_GLOVES_RACING_GREEN": {
+      "name": "★ Driver Gloves | Racing Green"
+    },
+    "DRIVER_GLOVES_REZAN_THE_RED": {
+      "name": "★ Driver Gloves | Rezan the Red"
+    },
+    "DRIVER_GLOVES_SNOW_LEOPARD": {
+      "name": "★ Driver Gloves | Snow Leopard"
+    },
+    "DUAL_BERETTAS_DEZASTRE": {
+      "name": "Dual Berettas | Dezastre"
+    },
+    "DUAL_BERETTAS_ELITE_1_6": {
+      "name": "Dual Berettas | Elite 1.6"
+    },
+    "DUAL_BERETTAS_FLORA_CARNIVORA": {
+      "name": "Dual Berettas | Flora Carnivora"
+    },
+    "DUAL_BERETTAS_HIDEOUT": {
+      "name": "Dual Berettas | Hideout"
+    },
+    "DUAL_BERETTAS_MELONDRAMA": {
+      "name": "Dual Berettas | Melondrama"
+    },
+    "FALCHION_KNIFE_AUTOTRONIC": {
+      "name": "★ Falchion Knife | Autotronic"
+    },
+    "FALCHION_KNIFE_BLACK_LAMINATE": {
+      "name": "★ Falchion Knife | Black Laminate"
+    },
+    "FALCHION_KNIFE_BRIGHT_WATER": {
+      "name": "★ Falchion Knife | Bright Water"
+    },
+    "FALCHION_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Falchion Knife | Damascus Steel"
+    },
+    "FALCHION_KNIFE_DOPPLER": {
+      "name": "★ Falchion Knife | Doppler"
+    },
+    "FALCHION_KNIFE_FREEHAND": {
+      "name": "★ Falchion Knife | Freehand"
+    },
+    "FALCHION_KNIFE_GAMMA_DOPPLER": {
+      "name": "★ Falchion Knife | Gamma Doppler"
+    },
+    "FALCHION_KNIFE_LORE": {
+      "name": "★ Falchion Knife | Lore"
+    },
+    "FALCHION_KNIFE_MARBLE_FADE": {
+      "name": "★ Falchion Knife | Marble Fade"
+    },
+    "FALCHION_KNIFE_RUST_COAT": {
+      "name": "★ Falchion Knife | Rust Coat"
+    },
+    "FALCHION_KNIFE_TIGER_TOOTH": {
+      "name": "★ Falchion Knife | Tiger Tooth"
+    },
+    "FALCHION_KNIFE_ULTRAVIOLET": {
+      "name": "★ Falchion Knife | Ultraviolet"
+    },
+    "FAMAS_COMMEMORATION": {
+      "name": "FAMAS | Commemoration"
+    },
+    "FAMAS_DECOMMISSIONED": {
+      "name": "FAMAS | Decommissioned"
+    },
+    "FAMAS_MEOW_36": {
+      "name": "FAMAS | Meow 36"
+    },
+    "FAMAS_RAPID_EYE_MOVEMENT": {
+      "name": "FAMAS | Rapid Eye Movement"
+    },
+    "FIVE_SEVEN_BUDDY": {
+      "name": "Five-SeveN | Buddy"
+    },
+    "FIVE_SEVEN_FAIRY_TALE": {
+      "name": "Five-SeveN | Fairy Tale"
+    },
+    "FIVE_SEVEN_FLAME_TEST": {
+      "name": "Five-SeveN | Flame Test"
+    },
+    "FIVE_SEVEN_HYBRID": {
+      "name": "Five-SeveN | Hybrid"
+    },
+    "FIVE_SEVEN_SCRAWL": {
+      "name": "Five-SeveN | Scrawl"
+    },
+    "G3SG1_DIGITAL_MESH": {
+      "name": "G3SG1 | Digital Mesh"
+    },
+    "G3SG1_DREAM_GLADE": {
+      "name": "G3SG1 | Dream Glade"
+    },
+    "G3SG1_HUNTER": {
+      "name": "G3SG1 | Hunter"
+    },
+    "G3SG1_SCAVENGER": {
+      "name": "G3SG1 | Scavenger"
+    },
+    "GALIL_AR_CHROMATIC_ABERRATION": {
+      "name": "Galil AR | Chromatic Aberration"
+    },
+    "GALIL_AR_CONNEXION": {
+      "name": "Galil AR | Connexion"
+    },
+    "GALIL_AR_DESTROYER": {
+      "name": "Galil AR | Destroyer"
+    },
+    "GALIL_AR_SIGNAL": {
+      "name": "Galil AR | Signal"
+    },
+    "GALIL_AR_VANDAL": {
+      "name": "Galil AR | Vandal"
+    },
+    "GLOCK_18_BLOCK_18": {
+      "name": "Glock-18 | Block-18"
+    },
+    "GLOCK_18_BULLET_QUEEN": {
+      "name": "Glock-18 | Bullet Queen"
+    },
+    "GLOCK_18_CLEAR_POLYMER": {
+      "name": "Glock-18 | Clear Polymer"
+    },
+    "GLOCK_18_MOONRISE": {
+      "name": "Glock-18 | Moonrise"
+    },
+    "GLOCK_18_NEO_NOIR": {
+      "name": "Glock-18 | Neo-Noir"
+    },
+    "GLOCK_18_OFF_WORLD": {
+      "name": "Glock-18 | Off World"
+    },
+    "GLOCK_18_OXIDE_BLAZE": {
+      "name": "Glock-18 | Oxide Blaze"
+    },
+    "GLOCK_18_SACRIFICE": {
+      "name": "Glock-18 | Sacrifice"
+    },
+    "GLOCK_18_UMBRAL_RABBIT": {
+      "name": "Glock-18 | Umbral Rabbit"
+    },
+    "GLOCK_18_VOGUE": {
+      "name": "Glock-18 | Vogue"
+    },
+    "GLOCK_18_WINTERIZED": {
+      "name": "Glock-18 | Winterized"
+    },
+    "GLOCK_WATER_ELEMENTAL": {
+      "name": "Glock-18 | Water Elemental"
+    },
+    "HAND_WRAPS_ARBOREAL": {
+      "name": "★ Hand Wraps | Arboreal"
+    },
+    "HAND_WRAPS_CAUTION": {
+      "name": "★ Hand Wraps | CAUTION!"
+    },
+    "HAND_WRAPS_COBALT_SKULLS": {
+      "name": "★ Hand Wraps | Cobalt Skulls"
+    },
+    "HAND_WRAPS_CONSTRICTOR": {
+      "name": "★ Hand Wraps | Constrictor"
+    },
+    "HAND_WRAPS_DESERT_SHAMAGH": {
+      "name": "★ Hand Wraps | Desert Shamagh"
+    },
+    "HAND_WRAPS_DUCT_TAPE": {
+      "name": "★ Hand Wraps | Duct Tape"
+    },
+    "HAND_WRAPS_GIRAFFE": {
+      "name": "★ Hand Wraps | Giraffe"
+    },
+    "HAND_WRAPS_OVERPRINT": {
+      "name": "★ Hand Wraps | Overprint"
+    },
+    "HUNTSMAN_KNIFE_AUTOTRONIC": {
+      "name": "★ Huntsman Knife | Autotronic"
+    },
+    "HUNTSMAN_KNIFE_BLACK_LAMINATE": {
+      "name": "★ Huntsman Knife | Black Laminate"
+    },
+    "HUNTSMAN_KNIFE_BRIGHT_WATER": {
+      "name": "★ Huntsman Knife | Bright Water"
+    },
+    "HUNTSMAN_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Huntsman Knife | Damascus Steel"
+    },
+    "HUNTSMAN_KNIFE_DOPPLER": {
+      "name": "★ Huntsman Knife | Doppler"
+    },
+    "HUNTSMAN_KNIFE_FREEHAND": {
+      "name": "★ Huntsman Knife | Freehand"
+    },
+    "HUNTSMAN_KNIFE_GAMMA_DOPPLER": {
+      "name": "★ Huntsman Knife | Gamma Doppler"
+    },
+    "HUNTSMAN_KNIFE_LORE": {
+      "name": "★ Huntsman Knife | Lore"
+    },
+    "HUNTSMAN_KNIFE_MARBLE_FADE": {
+      "name": "★ Huntsman Knife | Marble Fade"
+    },
+    "HUNTSMAN_KNIFE_RUST_COAT": {
+      "name": "★ Huntsman Knife | Rust Coat"
+    },
+    "HUNTSMAN_KNIFE_TIGER_TOOTH": {
+      "name": "★ Huntsman Knife | Tiger Tooth"
+    },
+    "HUNTSMAN_KNIFE_ULTRAVIOLET": {
+      "name": "★ Huntsman Knife | Ultraviolet"
+    },
+    "HYDRA_GLOVES_CASE_HARDENED": {
+      "name": "★ Hydra Gloves | Case Hardened"
+    },
+    "HYDRA_GLOVES_EMERALD": {
+      "name": "★ Hydra Gloves | Emerald"
+    },
+    "HYDRA_GLOVES_MANGROVE": {
+      "name": "★ Hydra Gloves | Mangrove"
+    },
+    "HYDRA_GLOVES_RATTLER": {
+      "name": "★ Hydra Gloves | Rattler"
+    },
+    "KUKRI_KNIFE_BLUE_STEEL": {
+      "name": "★ Kukri Knife | Blue Steel"
+    },
+    "KUKRI_KNIFE_BOREAL_FOREST": {
+      "name": "★ Kukri Knife | Boreal Forest"
+    },
+    "KUKRI_KNIFE_CASE_HARDENED": {
+      "name": "★ Kukri Knife | Case Hardened"
+    },
+    "KUKRI_KNIFE_CRIMSON_WEB": {
+      "name": "★ Kukri Knife | Crimson Web"
+    },
+    "KUKRI_KNIFE_FADE": {
+      "name": "★ Kukri Knife | Fade"
+    },
+    "KUKRI_KNIFE_FOREST_DDPAT": {
+      "name": "★ Kukri Knife | Forest DDPAT"
+    },
+    "KUKRI_KNIFE_KUKRI_KNIFE": {
+      "name": "★ Kukri Knife"
+    },
+    "KUKRI_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Kukri Knife | Night Stripe"
+    },
+    "KUKRI_KNIFE_SAFARI_MESH": {
+      "name": "★ Kukri Knife | Safari Mesh"
+    },
+    "KUKRI_KNIFE_SCORCHED": {
+      "name": "★ Kukri Knife | Scorched"
+    },
+    "KUKRI_KNIFE_SLAUGHTER": {
+      "name": "★ Kukri Knife | Slaughter"
+    },
+    "KUKRI_KNIFE_STAINED": {
+      "name": "★ Kukri Knife | Stained"
+    },
+    "KUKRI_KNIFE_URBAN_MASKED": {
+      "name": "★ Kukri Knife | Urban Masked"
+    },
+    "M249_AZTEC": {
+      "name": "M249 | Aztec"
+    },
+    "M249_DEEP_RELIEF": {
+      "name": "M249 | Deep Relief"
+    },
+    "M249_DOWNTOWN": {
+      "name": "M249 | Downtown"
+    },
+    "M249_O_S_I_P_R": {
+      "name": "M249 | O.S.I.P.R."
+    },
+    "M4A1_S_BLACK_LOTUS": {
+      "name": "M4A1-S | Black Lotus"
+    },
+    "M4A1_S_EMPHOROSAUR_S": {
+      "name": "M4A1-S | Emphorosaur-S"
+    },
+    "M4A1_S_LEADED_GLASS": {
+      "name": "M4A1-S | Leaded Glass"
+    },
+    "M4A1_S_NIGHT_TERROR": {
+      "name": "M4A1-S | Night Terror"
+    },
+    "M4A1_S_PLAYER_TWO": {
+      "name": "M4A1-S | Player Two"
+    },
+    "M4A1_S_PRINTSTREAM": {
+      "name": "M4A1-S | Printstream"
+    },
+    "M4A4_CYBER_SECURITY": {
+      "name": "M4A4 | Cyber Security"
+    },
+    "M4A4_DESERT_STRIKE": {
+      "name": "M4A4 | Desert-Strike"
+    },
+    "M4A4_ETCH_LORD": {
+      "name": "M4A4 | Etch Lord"
+    },
+    "M4A4_IN_LIVING_COLOR": {
+      "name": "M4A4 | In Living Color"
+    },
+    "M4A4_MAGNESIUM": {
+      "name": "M4A4 | Magnesium"
+    },
+    "M4A4_NEO_NOIR": {
+      "name": "M4A4 | Neo-Noir"
+    },
+    "M4A4_POLY_MAG": {
+      "name": "M4A4 | Poly Mag"
+    },
+    "M4A4_TEMUKAU": {
+      "name": "M4A4 | Temukau"
+    },
+    "M4A4_TOOTH_FAIRY": {
+      "name": "M4A4 | Tooth Fairy"
+    },
+    "MAC_10_ALLURE": {
+      "name": "MAC-10 | Allure"
+    },
+    "MAC_10_BUTTON_MASHER": {
+      "name": "MAC-10 | Button Masher"
+    },
+    "MAC_10_CLASSIC_CRATE": {
+      "name": "MAC-10 | Classic Crate"
+    },
+    "MAC_10_DISCO_TECH": {
+      "name": "MAC-10 | Disco Tech"
+    },
+    "MAC_10_ENSNARED": {
+      "name": "MAC-10 | Ensnared"
+    },
+    "MAC_10_LIGHT_BOX": {
+      "name": "MAC-10 | Light Box"
+    },
+    "MAC_10_MONKEYFLAGE": {
+      "name": "MAC-10 | Monkeyflage"
+    },
+    "MAC_10_OCEANIC": {
+      "name": "MAC-10 | Oceanic"
+    },
+    "MAC_10_PIPE_DOWN": {
+      "name": "MAC-10 | Pipe Down"
+    },
+    "MAC_10_SAKKAKU": {
+      "name": "MAC-10 | Sakkaku"
+    },
+    "MAG_7_FORESIGHT": {
+      "name": "MAG-7 | Foresight"
+    },
+    "MAG_7_INSOMNIA": {
+      "name": "MAG-7 | Insomnia"
+    },
+    "MAG_7_JUSTICE": {
+      "name": "MAG-7 | Justice"
+    },
+    "MAG_7_MONSTER_CALL": {
+      "name": "MAG-7 | Monster Call"
+    },
+    "MAG_7_POPDOG": {
+      "name": "MAG-7 | Popdog"
+    },
+    "MAG_7_SWAG_7": {
+      "name": "MAG-7 | SWAG-7"
+    },
+    "MOTO_GLOVES_3RD_COMMANDO_COMPANY": {
+      "name": "★ Moto Gloves | 3rd Commando Company"
+    },
+    "MOTO_GLOVES_BLOOD_PRESSURE": {
+      "name": "★ Moto Gloves | Blood Pressure"
+    },
+    "MOTO_GLOVES_FINISH_LINE": {
+      "name": "★ Moto Gloves | Finish Line"
+    },
+    "MOTO_GLOVES_POLYGON": {
+      "name": "★ Moto Gloves | Polygon"
+    },
+    "MOTO_GLOVES_POW": {
+      "name": "★ Moto Gloves | POW!"
+    },
+    "MOTO_GLOVES_SMOKE_OUT": {
+      "name": "★ Moto Gloves | Smoke Out"
+    },
+    "MOTO_GLOVES_TRANSPORT": {
+      "name": "★ Moto Gloves | Transport"
+    },
+    "MOTO_GLOVES_TURTLE": {
+      "name": "★ Moto Gloves | Turtle"
+    },
+    "MP5_SD_AGENT": {
+      "name": "MP5-SD | Agent"
+    },
+    "MP5_SD_CONDITION_ZERO": {
+      "name": "MP5-SD | Condition Zero"
+    },
+    "MP5_SD_DESERT_STRIKE": {
+      "name": "MP5-SD | Desert Strike"
+    },
+    "MP5_SD_KITBASH": {
+      "name": "MP5-SD | Kitbash"
+    },
+    "MP5_SD_LIQUIDATION": {
+      "name": "MP5-SD | Liquidation"
+    },
+    "MP5_SD_NECRO_JR": {
+      "name": "MP5-SD | Necro Jr."
+    },
+    "MP5_SD_PHOSPHOR": {
+      "name": "MP5-SD | Phosphor"
+    },
+    "MP7_ABYSSAL_APPARITION": {
+      "name": "MP7 | Abyssal Apparition"
+    },
+    "MP7_BLOODSPORT": {
+      "name": "MP7 | Bloodsport"
+    },
+    "MP7_JUST_SMILE": {
+      "name": "MP7 | Just Smile"
+    },
+    "MP9_BLACK_SAND": {
+      "name": "MP9 | Black Sand"
+    },
+    "MP9_FEATHERWEIGHT": {
+      "name": "MP9 | Featherweight"
+    },
+    "MP9_FOOD_CHAIN": {
+      "name": "MP9 | Food Chain"
+    },
+    "MP9_GOO": {
+      "name": "MP9 | Goo"
+    },
+    "MP9_HYDRA": {
+      "name": "MP9 | Hydra"
+    },
+    "MP9_MODEST_THREAT": {
+      "name": "MP9 | Modest Threat"
+    },
+    "MP9_STARLIGHT_PROTECTOR": {
+      "name": "MP9 | Starlight Protector"
+    },
+    "NAVAJA_KNIFE_BLUE_STEEL": {
+      "name": "★ Navaja Knife | Blue Steel"
+    },
+    "NAVAJA_KNIFE_BOREAL_FOREST": {
+      "name": "★ Navaja Knife | Boreal Forest"
+    },
+    "NAVAJA_KNIFE_CASE_HARDENED": {
+      "name": "★ Navaja Knife | Case Hardened"
+    },
+    "NAVAJA_KNIFE_CRIMSON_WEB": {
+      "name": "★ Navaja Knife | Crimson Web"
+    },
+    "NAVAJA_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Navaja Knife | Damascus Steel"
+    },
+    "NAVAJA_KNIFE_DOPPLER": {
+      "name": "★ Navaja Knife | Doppler"
+    },
+    "NAVAJA_KNIFE_FADE": {
+      "name": "★ Navaja Knife | Fade"
+    },
+    "NAVAJA_KNIFE_FOREST_DDPAT": {
+      "name": "★ Navaja Knife | Forest DDPAT"
+    },
+    "NAVAJA_KNIFE_MARBLE_FADE": {
+      "name": "★ Navaja Knife | Marble Fade"
+    },
+    "NAVAJA_KNIFE_NAVAJA_KNIFE": {
+      "name": "★ Navaja Knife"
+    },
+    "NAVAJA_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Navaja Knife | Night Stripe"
+    },
+    "NAVAJA_KNIFE_RUST_COAT": {
+      "name": "★ Navaja Knife | Rust Coat"
+    },
+    "NAVAJA_KNIFE_SAFARI_MESH": {
+      "name": "★ Navaja Knife | Safari Mesh"
+    },
+    "NAVAJA_KNIFE_SCORCHED": {
+      "name": "★ Navaja Knife | Scorched"
+    },
+    "NAVAJA_KNIFE_SLAUGHTER": {
+      "name": "★ Navaja Knife | Slaughter"
+    },
+    "NAVAJA_KNIFE_STAINED": {
+      "name": "★ Navaja Knife | Stained"
+    },
+    "NAVAJA_KNIFE_TIGER_TOOTH": {
+      "name": "★ Navaja Knife | Tiger Tooth"
+    },
+    "NAVAJA_KNIFE_ULTRAVIOLET": {
+      "name": "★ Navaja Knife | Ultraviolet"
+    },
+    "NAVAJA_KNIFE_URBAN_MASKED": {
+      "name": "★ Navaja Knife | Urban Masked"
+    },
+    "NEGEV_DEV_TEXTURE": {
+      "name": "Negev | dev_texture"
+    },
+    "NEGEV_DROP_ME": {
+      "name": "Negev | Drop Me"
+    },
+    "NEGEV_LIONFISH": {
+      "name": "Negev | Lionfish"
+    },
+    "NEGEV_PROTOTYPE": {
+      "name": "Negev | Prototype"
+    },
+    "NEGEV_ULTRALIGHT": {
+      "name": "Negev | Ultralight"
+    },
+    "NOMAD_KNIFE_BLUE_STEEL": {
+      "name": "★ Nomad Knife | Blue Steel"
+    },
+    "NOMAD_KNIFE_BOREAL_FOREST": {
+      "name": "★ Nomad Knife | Boreal Forest"
+    },
+    "NOMAD_KNIFE_CASE_HARDENED": {
+      "name": "★ Nomad Knife | Case Hardened"
+    },
+    "NOMAD_KNIFE_CRIMSON_WEB": {
+      "name": "★ Nomad Knife | Crimson Web"
+    },
+    "NOMAD_KNIFE_FADE": {
+      "name": "★ Nomad Knife | Fade"
+    },
+    "NOMAD_KNIFE_FOREST_DDPAT": {
+      "name": "★ Nomad Knife | Forest DDPAT"
+    },
+    "NOMAD_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Nomad Knife | Night Stripe"
+    },
+    "NOMAD_KNIFE_NOMAD_KNIFE": {
+      "name": "★ Nomad Knife"
+    },
+    "NOMAD_KNIFE_SAFARI_MESH": {
+      "name": "★ Nomad Knife | Safari Mesh"
+    },
+    "NOMAD_KNIFE_SCORCHED": {
+      "name": "★ Nomad Knife | Scorched"
+    },
+    "NOMAD_KNIFE_SLAUGHTER": {
+      "name": "★ Nomad Knife | Slaughter"
+    },
+    "NOMAD_KNIFE_STAINED": {
+      "name": "★ Nomad Knife | Stained"
+    },
+    "NOMAD_KNIFE_URBAN_MASKED": {
+      "name": "★ Nomad Knife | Urban Masked"
+    },
+    "NOVA_CLEAR_POLYMER": {
+      "name": "Nova | Clear Polymer"
+    },
+    "NOVA_DARK_SIGIL": {
+      "name": "Nova | Dark Sigil"
+    },
+    "NOVA_WILD_SIX": {
+      "name": "Nova | Wild Six"
+    },
+    "NOVA_WINDBLOWN": {
+      "name": "Nova | Windblown"
+    },
+    "NOVA_WOOD_FIRED": {
+      "name": "Nova | Wood Fired"
+    },
+    "P2000_ACID_ETCHED": {
+      "name": "P2000 | Acid Etched"
+    },
+    "P2000_GNARLED": {
+      "name": "P2000 | Gnarled"
+    },
+    "P2000_LIFTED_SPIRITS": {
+      "name": "P2000 | Lifted Spirits"
+    },
+    "P2000_URBAN_HAZARD": {
+      "name": "P2000 | Urban Hazard"
+    },
+    "P2000_WICKED_SICK": {
+      "name": "P2000 | Wicked Sick"
+    },
+    "P250_CASSETTE": {
+      "name": "P250 | Cassette"
+    },
+    "P250_CONTAMINANT": {
+      "name": "P250 | Contaminant"
+    },
+    "P250_CYBER_SHELL": {
+      "name": "P250 | Cyber Shell"
+    },
+    "P250_INFERNO": {
+      "name": "P250 | Inferno"
+    },
+    "P250_NEVERMORE": {
+      "name": "P250 | Nevermore"
+    },
+    "P250_RE_BUILT": {
+      "name": "P250 | Re.built"
+    },
+    "P250_SEE_YA_LATER": {
+      "name": "P250 | See Ya Later"
+    },
+    "P250_VISIONS": {
+      "name": "P250 | Visions"
+    },
+    "P90_COCOA_RAMPAGE": {
+      "name": "P90 | Cocoa Rampage"
+    },
+    "P90_FREIGHT": {
+      "name": "P90 | Freight"
+    },
+    "P90_NEOQUEEN": {
+      "name": "P90 | Neoqueen"
+    },
+    "P90_NOSTALGIA": {
+      "name": "P90 | Nostalgia"
+    },
+    "P90_VENT_RUSH": {
+      "name": "P90 | Vent Rush"
+    },
+    "PARACORD_KNIFE_BLUE_STEEL": {
+      "name": "★ Paracord Knife | Blue Steel"
+    },
+    "PARACORD_KNIFE_BOREAL_FOREST": {
+      "name": "★ Paracord Knife | Boreal Forest"
+    },
+    "PARACORD_KNIFE_CASE_HARDENED": {
+      "name": "★ Paracord Knife | Case Hardened"
+    },
+    "PARACORD_KNIFE_CRIMSON_WEB": {
+      "name": "★ Paracord Knife | Crimson Web"
+    },
+    "PARACORD_KNIFE_FADE": {
+      "name": "★ Paracord Knife | Fade"
+    },
+    "PARACORD_KNIFE_FOREST_DDPAT": {
+      "name": "★ Paracord Knife | Forest DDPAT"
+    },
+    "PARACORD_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Paracord Knife | Night Stripe"
+    },
+    "PARACORD_KNIFE_PARACORD_KNIFE": {
+      "name": "★ Paracord Knife"
+    },
+    "PARACORD_KNIFE_SAFARI_MESH": {
+      "name": "★ Paracord Knife | Safari Mesh"
+    },
+    "PARACORD_KNIFE_SCORCHED": {
+      "name": "★ Paracord Knife | Scorched"
+    },
+    "PARACORD_KNIFE_SLAUGHTER": {
+      "name": "★ Paracord Knife | Slaughter"
+    },
+    "PARACORD_KNIFE_STAINED": {
+      "name": "★ Paracord Knife | Stained"
+    },
+    "PARACORD_KNIFE_URBAN_MASKED": {
+      "name": "★ Paracord Knife | Urban Masked"
+    },
+    "PP_BIZON_HIGH_ROLLER": {
+      "name": "PP-Bizon | High Roller"
+    },
+    "PP_BIZON_NIGHT_RIOT": {
+      "name": "PP-Bizon | Night Riot"
+    },
+    "PP_BIZON_RUNIC": {
+      "name": "PP-Bizon | Runic"
+    },
+    "PP_BIZON_SPACE_CAT": {
+      "name": "PP-Bizon | Space Cat"
+    },
+    "R8_REVOLVER_BANANA_CANNON": {
+      "name": "R8 Revolver | Banana Cannon"
+    },
+    "R8_REVOLVER_BONE_FORGED": {
+      "name": "R8 Revolver | Bone Forged"
+    },
+    "R8_REVOLVER_CRAZY_8": {
+      "name": "R8 Revolver | Crazy 8"
+    },
+    "R8_REVOLVER_GRIP": {
+      "name": "R8 Revolver | Grip"
+    },
+    "R8_REVOLVER_JUNK_YARD": {
+      "name": "R8 Revolver | Junk Yard"
+    },
+    "R8_REVOLVER_LLAMA_CANNON": {
+      "name": "R8 Revolver | Llama Cannon"
+    },
+    "SAWED_OFF_ANALOG_INPUT": {
+      "name": "Sawed-Off | Analog Input"
+    },
+    "SAWED_OFF_APOCALYPTO": {
+      "name": "Sawed-Off | Apocalypto"
+    },
+    "SAWED_OFF_BLACK_SAND": {
+      "name": "Sawed-Off | Black Sand"
+    },
+    "SAWED_OFF_KISS_LOVE": {
+      "name": "Sawed-Off | Kiss♥Love"
+    },
+    "SAWED_OFF_MORRIS": {
+      "name": "Sawed-Off | Morris"
+    },
+    "SAWED_OFF_SPIRIT_BOARD": {
+      "name": "Sawed-Off | Spirit Board"
+    },
+    "SCAR_20_ASSAULT": {
+      "name": "SCAR-20 | Assault"
+    },
+    "SCAR_20_ENFORCER": {
+      "name": "SCAR-20 | Enforcer"
+    },
+    "SCAR_20_FRAGMENTS": {
+      "name": "SCAR-20 | Fragments"
+    },
+    "SCAR_20_JUNGLE_SLIPSTREAM": {
+      "name": "SCAR-20 | Jungle Slipstream"
+    },
+    "SCAR_20_POULTRYGEIST": {
+      "name": "SCAR-20 | Poultrygeist"
+    },
+    "SG_553_ALOHA": {
+      "name": "SG 553 | Aloha"
+    },
+    "SG_553_CYBERFORCE": {
+      "name": "SG 553 | Cyberforce"
+    },
+    "SG_553_DANGER_CLOSE": {
+      "name": "SG 553 | Danger Close"
+    },
+    "SG_553_DARKWING": {
+      "name": "SG 553 | Darkwing"
+    },
+    "SG_553_DRAGON_TECH": {
+      "name": "SG 553 | Dragon Tech"
+    },
+    "SG_553_HEAVY_METAL": {
+      "name": "SG 553 | Heavy Metal"
+    },
+    "SG_553_OL_RUSTY": {
+      "name": "SG 553 | Ol' Rusty"
+    },
+    "SG_553_PHANTOM": {
+      "name": "SG 553 | Phantom"
+    },
+    "SHADOW_DAGGERS_AUTOTRONIC": {
+      "name": "★ Shadow Daggers | Autotronic"
+    },
+    "SHADOW_DAGGERS_BLACK_LAMINATE": {
+      "name": "★ Shadow Daggers | Black Laminate"
+    },
+    "SHADOW_DAGGERS_BRIGHT_WATER": {
+      "name": "★ Shadow Daggers | Bright Water"
+    },
+    "SHADOW_DAGGERS_DAMASCUS_STEEL": {
+      "name": "★ Shadow Daggers | Damascus Steel"
+    },
+    "SHADOW_DAGGERS_DOPPLER": {
+      "name": "★ Shadow Daggers | Doppler"
+    },
+    "SHADOW_DAGGERS_FREEHAND": {
+      "name": "★ Shadow Daggers | Freehand"
+    },
+    "SHADOW_DAGGERS_GAMMA_DOPPLER": {
+      "name": "★ Shadow Daggers | Gamma Doppler"
+    },
+    "SHADOW_DAGGERS_LORE": {
+      "name": "★ Shadow Daggers | Lore"
+    },
+    "SHADOW_DAGGERS_MARBLE_FADE": {
+      "name": "★ Shadow Daggers | Marble Fade"
+    },
+    "SHADOW_DAGGERS_RUST_COAT": {
+      "name": "★ Shadow Daggers | Rust Coat"
+    },
+    "SHADOW_DAGGERS_TIGER_TOOTH": {
+      "name": "★ Shadow Daggers | Tiger Tooth"
+    },
+    "SHADOW_DAGGERS_ULTRAVIOLET": {
+      "name": "★ Shadow Daggers | Ultraviolet"
+    },
+    "SKELETON_KNIFE_BLUE_STEEL": {
+      "name": "★ Skeleton Knife | Blue Steel"
+    },
+    "SKELETON_KNIFE_BOREAL_FOREST": {
+      "name": "★ Skeleton Knife | Boreal Forest"
+    },
+    "SKELETON_KNIFE_CASE_HARDENED": {
+      "name": "★ Skeleton Knife | Case Hardened"
+    },
+    "SKELETON_KNIFE_CRIMSON_WEB": {
+      "name": "★ Skeleton Knife | Crimson Web"
+    },
+    "SKELETON_KNIFE_FADE": {
+      "name": "★ Skeleton Knife | Fade"
+    },
+    "SKELETON_KNIFE_FOREST_DDPAT": {
+      "name": "★ Skeleton Knife | Forest DDPAT"
+    },
+    "SKELETON_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Skeleton Knife | Night Stripe"
+    },
+    "SKELETON_KNIFE_SAFARI_MESH": {
+      "name": "★ Skeleton Knife | Safari Mesh"
+    },
+    "SKELETON_KNIFE_SCORCHED": {
+      "name": "★ Skeleton Knife | Scorched"
+    },
+    "SKELETON_KNIFE_SKELETON_KNIFE": {
+      "name": "★ Skeleton Knife"
+    },
+    "SKELETON_KNIFE_SLAUGHTER": {
+      "name": "★ Skeleton Knife | Slaughter"
+    },
+    "SKELETON_KNIFE_STAINED": {
+      "name": "★ Skeleton Knife | Stained"
+    },
+    "SKELETON_KNIFE_URBAN_MASKED": {
+      "name": "★ Skeleton Knife | Urban Masked"
+    },
+    "SPECIALIST_GLOVES_BUCKSHOT": {
+      "name": "★ Specialist Gloves | Buckshot"
+    },
+    "SPECIALIST_GLOVES_CRIMSON_WEB": {
+      "name": "★ Specialist Gloves | Crimson Web"
+    },
+    "SPECIALIST_GLOVES_FADE": {
+      "name": "★ Specialist Gloves | Fade"
+    },
+    "SPECIALIST_GLOVES_FIELD_AGENT": {
+      "name": "★ Specialist Gloves | Field Agent"
+    },
+    "SPECIALIST_GLOVES_LT_COMMANDER": {
+      "name": "★ Specialist Gloves | Lt. Commander"
+    },
+    "SPECIALIST_GLOVES_MARBLE_FADE": {
+      "name": "★ Specialist Gloves | Marble Fade"
+    },
+    "SPECIALIST_GLOVES_MOGUL": {
+      "name": "★ Specialist Gloves | Mogul"
+    },
+    "SPECIALIST_GLOVES_TIGER_STRIKE": {
+      "name": "★ Specialist Gloves | Tiger Strike"
+    },
+    "SPORT_GLOVES_AMPHIBIOUS": {
+      "name": "★ Sport Gloves | Amphibious"
+    },
+    "SPORT_GLOVES_BIG_GAME": {
+      "name": "★ Sport Gloves | Big Game"
+    },
+    "SPORT_GLOVES_BRONZE_MORPH": {
+      "name": "★ Sport Gloves | Bronze Morph"
+    },
+    "SPORT_GLOVES_NOCTS": {
+      "name": "★ Sport Gloves | Nocts"
+    },
+    "SPORT_GLOVES_OMEGA": {
+      "name": "★ Sport Gloves | Omega"
+    },
+    "SPORT_GLOVES_SCARLET_SHAMAGH": {
+      "name": "★ Sport Gloves | Scarlet Shamagh"
+    },
+    "SPORT_GLOVES_SLINGSHOT": {
+      "name": "★ Sport Gloves | Slingshot"
+    },
+    "SPORT_GLOVES_VICE": {
+      "name": "★ Sport Gloves | Vice"
+    },
+    "SSG_08_DEZASTRE": {
+      "name": "SSG 08 | Dezastre"
+    },
+    "SSG_08_FEVER_DREAM": {
+      "name": "SSG 08 | Fever Dream"
+    },
+    "SSG_08_MAINFRAME_001": {
+      "name": "SSG 08 | Mainframe 001"
+    },
+    "SSG_08_PARALLAX": {
+      "name": "SSG 08 | Parallax"
+    },
+    "STILETTO_KNIFE_BLUE_STEEL": {
+      "name": "★ Stiletto Knife | Blue Steel"
+    },
+    "STILETTO_KNIFE_BOREAL_FOREST": {
+      "name": "★ Stiletto Knife | Boreal Forest"
+    },
+    "STILETTO_KNIFE_CASE_HARDENED": {
+      "name": "★ Stiletto Knife | Case Hardened"
+    },
+    "STILETTO_KNIFE_CRIMSON_WEB": {
+      "name": "★ Stiletto Knife | Crimson Web"
+    },
+    "STILETTO_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Stiletto Knife | Damascus Steel"
+    },
+    "STILETTO_KNIFE_DOPPLER": {
+      "name": "★ Stiletto Knife | Doppler"
+    },
+    "STILETTO_KNIFE_FADE": {
+      "name": "★ Stiletto Knife | Fade"
+    },
+    "STILETTO_KNIFE_FOREST_DDPAT": {
+      "name": "★ Stiletto Knife | Forest DDPAT"
+    },
+    "STILETTO_KNIFE_MARBLE_FADE": {
+      "name": "★ Stiletto Knife | Marble Fade"
+    },
+    "STILETTO_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Stiletto Knife | Night Stripe"
+    },
+    "STILETTO_KNIFE_RUST_COAT": {
+      "name": "★ Stiletto Knife | Rust Coat"
+    },
+    "STILETTO_KNIFE_SAFARI_MESH": {
+      "name": "★ Stiletto Knife | Safari Mesh"
+    },
+    "STILETTO_KNIFE_SCORCHED": {
+      "name": "★ Stiletto Knife | Scorched"
+    },
+    "STILETTO_KNIFE_SLAUGHTER": {
+      "name": "★ Stiletto Knife | Slaughter"
+    },
+    "STILETTO_KNIFE_STAINED": {
+      "name": "★ Stiletto Knife | Stained"
+    },
+    "STILETTO_KNIFE_STILETTO_KNIFE": {
+      "name": "★ Stiletto Knife"
+    },
+    "STILETTO_KNIFE_TIGER_TOOTH": {
+      "name": "★ Stiletto Knife | Tiger Tooth"
+    },
+    "STILETTO_KNIFE_ULTRAVIOLET": {
+      "name": "★ Stiletto Knife | Ultraviolet"
+    },
+    "STILETTO_KNIFE_URBAN_MASKED": {
+      "name": "★ Stiletto Knife | Urban Masked"
+    },
+    "SURVIVAL_KNIFE_BLUE_STEEL": {
+      "name": "★ Survival Knife | Blue Steel"
+    },
+    "SURVIVAL_KNIFE_BOREAL_FOREST": {
+      "name": "★ Survival Knife | Boreal Forest"
+    },
+    "SURVIVAL_KNIFE_CASE_HARDENED": {
+      "name": "★ Survival Knife | Case Hardened"
+    },
+    "SURVIVAL_KNIFE_CRIMSON_WEB": {
+      "name": "★ Survival Knife | Crimson Web"
+    },
+    "SURVIVAL_KNIFE_FADE": {
+      "name": "★ Survival Knife | Fade"
+    },
+    "SURVIVAL_KNIFE_FOREST_DDPAT": {
+      "name": "★ Survival Knife | Forest DDPAT"
+    },
+    "SURVIVAL_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Survival Knife | Night Stripe"
+    },
+    "SURVIVAL_KNIFE_SAFARI_MESH": {
+      "name": "★ Survival Knife | Safari Mesh"
+    },
+    "SURVIVAL_KNIFE_SCORCHED": {
+      "name": "★ Survival Knife | Scorched"
+    },
+    "SURVIVAL_KNIFE_SLAUGHTER": {
+      "name": "★ Survival Knife | Slaughter"
+    },
+    "SURVIVAL_KNIFE_STAINED": {
+      "name": "★ Survival Knife | Stained"
+    },
+    "SURVIVAL_KNIFE_SURVIVAL_KNIFE": {
+      "name": "★ Survival Knife"
+    },
+    "SURVIVAL_KNIFE_URBAN_MASKED": {
+      "name": "★ Survival Knife | Urban Masked"
+    },
+    "TALON_KNIFE_BLUE_STEEL": {
+      "name": "★ Talon Knife | Blue Steel"
+    },
+    "TALON_KNIFE_BOREAL_FOREST": {
+      "name": "★ Talon Knife | Boreal Forest"
+    },
+    "TALON_KNIFE_CASE_HARDENED": {
+      "name": "★ Talon Knife | Case Hardened"
+    },
+    "TALON_KNIFE_CRIMSON_WEB": {
+      "name": "★ Talon Knife | Crimson Web"
+    },
+    "TALON_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Talon Knife | Damascus Steel"
+    },
+    "TALON_KNIFE_DOPPLER": {
+      "name": "★ Talon Knife | Doppler"
+    },
+    "TALON_KNIFE_FADE": {
+      "name": "★ Talon Knife | Fade"
+    },
+    "TALON_KNIFE_FOREST_DDPAT": {
+      "name": "★ Talon Knife | Forest DDPAT"
+    },
+    "TALON_KNIFE_MARBLE_FADE": {
+      "name": "★ Talon Knife | Marble Fade"
+    },
+    "TALON_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Talon Knife | Night Stripe"
+    },
+    "TALON_KNIFE_RUST_COAT": {
+      "name": "★ Talon Knife | Rust Coat"
+    },
+    "TALON_KNIFE_SAFARI_MESH": {
+      "name": "★ Talon Knife | Safari Mesh"
+    },
+    "TALON_KNIFE_SCORCHED": {
+      "name": "★ Talon Knife | Scorched"
+    },
+    "TALON_KNIFE_SLAUGHTER": {
+      "name": "★ Talon Knife | Slaughter"
+    },
+    "TALON_KNIFE_STAINED": {
+      "name": "★ Talon Knife | Stained"
+    },
+    "TALON_KNIFE_TALON_KNIFE": {
+      "name": "★ Talon Knife"
+    },
+    "TALON_KNIFE_TIGER_TOOTH": {
+      "name": "★ Talon Knife | Tiger Tooth"
+    },
+    "TALON_KNIFE_ULTRAVIOLET": {
+      "name": "★ Talon Knife | Ultraviolet"
+    },
+    "TALON_KNIFE_URBAN_MASKED": {
+      "name": "★ Talon Knife | Urban Masked"
+    },
+    "TEC_9_BROTHER": {
+      "name": "Tec-9 | Brother"
+    },
+    "TEC_9_CRACKED_OPAL": {
+      "name": "Tec-9 | Cracked Opal"
+    },
+    "TEC_9_FLASH_OUT": {
+      "name": "Tec-9 | Flash Out"
+    },
+    "TEC_9_FUBAR": {
+      "name": "Tec-9 | Fubar"
+    },
+    "TEC_9_REBEL": {
+      "name": "Tec-9 | Rebel"
+    },
+    "TEC_9_SLAG": {
+      "name": "Tec-9 | Slag"
+    },
+    "UMP_45_ARCTIC_WOLF": {
+      "name": "UMP-45 | Arctic Wolf"
+    },
+    "UMP_45_EXPOSURE": {
+      "name": "UMP-45 | Exposure"
+    },
+    "UMP_45_GOLD_BISMUTH": {
+      "name": "UMP-45 | Gold Bismuth"
+    },
+    "UMP_45_MOMENTUM": {
+      "name": "UMP-45 | Momentum"
+    },
+    "UMP_45_MOTORIZED": {
+      "name": "UMP-45 | Motorized"
+    },
+    "UMP_45_OSCILLATOR": {
+      "name": "UMP-45 | Oscillator"
+    },
+    "UMP_45_PLASTIQUE": {
+      "name": "UMP-45 | Plastique"
+    },
+    "UMP_45_ROADBLOCK": {
+      "name": "UMP-45 | Roadblock"
+    },
+    "UMP_45_WILD_CHILD": {
+      "name": "UMP-45 | Wild Child"
+    },
+    "URSUS_KNIFE_BLUE_STEEL": {
+      "name": "★ Ursus Knife | Blue Steel"
+    },
+    "URSUS_KNIFE_BOREAL_FOREST": {
+      "name": "★ Ursus Knife | Boreal Forest"
+    },
+    "URSUS_KNIFE_CASE_HARDENED": {
+      "name": "★ Ursus Knife | Case Hardened"
+    },
+    "URSUS_KNIFE_CRIMSON_WEB": {
+      "name": "★ Ursus Knife | Crimson Web"
+    },
+    "URSUS_KNIFE_DAMASCUS_STEEL": {
+      "name": "★ Ursus Knife | Damascus Steel"
+    },
+    "URSUS_KNIFE_DOPPLER": {
+      "name": "★ Ursus Knife | Doppler"
+    },
+    "URSUS_KNIFE_FADE": {
+      "name": "★ Ursus Knife | Fade"
+    },
+    "URSUS_KNIFE_FOREST_DDPAT": {
+      "name": "★ Ursus Knife | Forest DDPAT"
+    },
+    "URSUS_KNIFE_MARBLE_FADE": {
+      "name": "★ Ursus Knife | Marble Fade"
+    },
+    "URSUS_KNIFE_NIGHT_STRIPE": {
+      "name": "★ Ursus Knife | Night Stripe"
+    },
+    "URSUS_KNIFE_RUST_COAT": {
+      "name": "★ Ursus Knife | Rust Coat"
+    },
+    "URSUS_KNIFE_SAFARI_MESH": {
+      "name": "★ Ursus Knife | Safari Mesh"
+    },
+    "URSUS_KNIFE_SCORCHED": {
+      "name": "★ Ursus Knife | Scorched"
+    },
+    "URSUS_KNIFE_SLAUGHTER": {
+      "name": "★ Ursus Knife | Slaughter"
+    },
+    "URSUS_KNIFE_STAINED": {
+      "name": "★ Ursus Knife | Stained"
+    },
+    "URSUS_KNIFE_TIGER_TOOTH": {
+      "name": "★ Ursus Knife | Tiger Tooth"
+    },
+    "URSUS_KNIFE_ULTRAVIOLET": {
+      "name": "★ Ursus Knife | Ultraviolet"
+    },
+    "URSUS_KNIFE_URBAN_MASKED": {
+      "name": "★ Ursus Knife | Urban Masked"
+    },
+    "URSUS_KNIFE_URSUS_KNIFE": {
+      "name": "★ Ursus Knife"
+    },
+    "USP_S_CORTEX": {
+      "name": "USP-S | Cortex"
+    },
+    "USP_S_FLASHBACK": {
+      "name": "USP-S | Flashback"
+    },
+    "USP_S_JAWBREAKER": {
+      "name": "USP-S | Jawbreaker"
+    },
+    "USP_S_MONSTER_MASHUP": {
+      "name": "USP-S | Monster Mashup"
+    },
+    "USP_S_PRINTSTREAM": {
+      "name": "USP-S | Printstream"
+    },
+    "USP_S_THE_TRAITOR": {
+      "name": "USP-S | The Traitor"
+    },
+    "USP_S_TICKET_TO_HELL": {
+      "name": "USP-S | Ticket to Hell"
+    },
+    "XM1014_ENTOMBED": {
+      "name": "XM1014 | Entombed"
+    },
+    "XM1014_IREZUMI": {
+      "name": "XM1014 | Irezumi"
+    },
+    "XM1014_OXIDE_BLAZE": {
+      "name": "XM1014 | Oxide Blaze"
+    },
+    "XM1014_XOXO": {
+      "name": "XM1014 | XOXO"
+    },
+    "XM1014_ZIGGY": {
+      "name": "XM1014 | Ziggy"
+    },
+    "XM1014_ZOMBIE_OFFENSIVE": {
+      "name": "XM1014 | Zombie Offensive"
+    },
+    "ZEUS_X27_OLYMPUS": {
+      "name": "Zeus x27 | Olympus"
+    }
   },
   "rarity": {
     "MIL_SPEC": "Mil-Spec",

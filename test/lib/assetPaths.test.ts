@@ -12,15 +12,17 @@ import {
 
 describe('assetPaths', () => {
   it('caseImageSrc returns path for known codes and fallback otherwise', () => {
-    expect(caseImageSrc('ANVIL')).toBe('/cases/ANVIL.webp')
-    expect(caseImageSrc('SHADOW')).toBe('/cases/SHADOW.webp')
+    expect(caseImageSrc('REVOLUTION_CASE')).toBe('/cases/REVOLUTION_CASE.webp')
+    expect(caseImageSrc('CLUTCH_CASE')).toBe('/cases/CLUTCH_CASE.webp')
+    expect(caseImageSrc('REVOLUTION_CASE')).toBe('/cases/REVOLUTION_CASE.webp')
     expect(caseImageSrc('UNKNOWN')).toBe(CASE_FALLBACK_SRC)
     expect(caseImageSrc('')).toBe(CASE_FALLBACK_SRC)
   })
 
   it('itemImageSrc returns path for known codes and fallback otherwise', () => {
-    expect(itemImageSrc('AK_REDLINE')).toBe('/items/AK_REDLINE.webp')
-    expect(itemImageSrc('AWP_ASIIMOV')).toBe('/items/AWP_ASIIMOV.webp')
+    expect(itemImageSrc('AK_47_SLATE')).toBe('/items/AK_47_SLATE.webp')
+    expect(itemImageSrc('AK_47_ASIIMOV')).toBe('/items/AK_47_ASIIMOV.webp')
+    expect(itemImageSrc('AK_47_ASIIMOV')).toBe('/items/AK_47_ASIIMOV.webp')
     expect(itemImageSrc('MISSING_SKIN')).toBe(ITEM_FALLBACK_SRC)
     expect(itemImageSrc('')).toBe(ITEM_FALLBACK_SRC)
   })

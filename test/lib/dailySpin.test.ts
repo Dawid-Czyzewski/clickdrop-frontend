@@ -13,11 +13,12 @@ describe('dailySpin', () => {
       dailyDropSpinCode({
         type: 'SKIN',
         itemId: 3,
-        itemCode: 'AK_REDLINE',
+        itemCode: 'AK_47_SLATE',
+        itemDisplayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         weight: 10,
       }),
-    ).toBe('AK_REDLINE')
+    ).toBe('AK_47_SLATE')
 
     expect(dailyDropSpinCode({ type: 'CASH', cashAmount: 5, weight: 40 })).toBe(
       dailyCashSpinCode(5),
@@ -30,19 +31,22 @@ describe('dailySpin', () => {
     const skin = toSpinCaseDrop({
       type: 'SKIN',
       itemId: 3,
-      itemCode: 'AK_REDLINE',
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       weight: 10,
     })
     expect(skin).toEqual({
       itemId: 3,
-      code: 'AK_REDLINE',
+      code: 'AK_47_SLATE',
+      displayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       weight: 10,
     })
 
     const cash = toSpinCaseDrop({ type: 'CASH', cashAmount: 5, weight: 40 })
     expect(cash.code).toBe('CASH:5')
+    expect(cash.displayName).toBe('')
     expect(cash.weight).toBe(40)
     expect(cash.itemId).toBeLessThan(0)
   })

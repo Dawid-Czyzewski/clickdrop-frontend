@@ -5,9 +5,9 @@ import type { InventoryItem } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import {
   exteriorLabelKey,
-  itemNameKey,
   RARITY_COLOR,
   rarityLabelKey,
+  resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
 import { cdBtnPrimary } from '../ui/uiStyles'
@@ -27,7 +27,7 @@ export function InventoryItemCard({
 }: InventoryItemCardProps) {
   const { t, i18n } = useTranslation()
   const color = RARITY_COLOR[item.rarity] ?? '#8b92a5'
-  const name = t(itemNameKey(item.code))
+  const name = resolveItemLabel(t, item.code, item.displayName)
 
   return (
     <article className="flex flex-col overflow-hidden rounded-lg border border-cd-border bg-cd-surface/80">
