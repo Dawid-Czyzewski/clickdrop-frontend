@@ -21,6 +21,7 @@ export type SkinDropResult = Pick<
   | 'rarity'
   | 'exterior'
   | 'suggestedSellPrice'
+  | 'experienceGained'
 >
 
 type CaseOpenResultModalProps = {
@@ -111,6 +112,14 @@ export function CaseOpenResultModal({
         <p className="relative z-10 mt-1 text-sm text-cd-muted sm:text-base">
           {t(exteriorLabelKey(drop.exterior))}
         </p>
+        {drop.experienceGained != null && drop.experienceGained > 0 ? (
+          <p
+            className="relative z-10 mt-2 font-display text-sm font-semibold text-cd-accent sm:text-base"
+            role="status"
+          >
+            {t('cases.experienceGained', { count: drop.experienceGained })}
+          </p>
+        ) : null}
 
         <div className="relative z-10 mt-6 flex w-full max-w-xl items-center justify-center sm:mt-8">
           <AssetImage

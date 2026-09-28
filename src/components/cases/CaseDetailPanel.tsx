@@ -8,9 +8,12 @@ import type { GameCase, OpenCaseResponse } from '../../api/casesApi'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useCaseDrops } from '../../hooks/useCaseDrops'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { useDeferredLevelUpModal } from '../../hooks/useDeferredLevelUpModal'
 import { useInventory } from '../../hooks/useInventory'
 import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { LevelUpModal } from '../home/LevelUpModal'
 import { AssetImage } from '../media/AssetImage'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
@@ -36,12 +39,15 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
   const [loggedIn, setLoggedIn] = useState(false)
   const [drop, setDrop] = useState<OpenCaseResponse | null>(null)
   const [spinning, setSpinning] = useState(false)
+  const { levelUpLevel, queueLevelUp, revealLevelUpAfterDrop, closeLevelUp } =
+    useDeferredLevelUpModal()
   const { drops, isLoading: dropsLoading, error: dropsError } = useCaseDrops({
     caseId: gameCase.id,
   })
   const { balance, isLoading: balanceLoading, applyBalance } = useBalance({
     enabled: loggedIn,
   })
+  const { user, applyLevelExperience } = useCurrentUser({ enabled: loggedIn })
   const { openingCaseId, sellingId, error, openCase, sellItem, clearError } = useInventory({
     enabled: loggedIn,
   })
@@ -57,11 +63,30 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
   const openDisabled =
     !loggedIn || isOpening || drop !== null || !canAfford || balanceLoading
 
+  function dismissDrop(options?: { thenInventory?: boolean }) {
+    setDrop(null)
+    if (revealLevelUpAfterDrop(options)) {
+      router.push('/inventory')
+    }
+  }
+
   async function handleOpen() {
     clearError()
     const result = await openCase(gameCase.id)
     if (!result) return
+    const previousLevel = user?.level
     applyBalance(result.balance)
+    applyLevelExperience(
+      { level: result.level, experience: result.experience },
+      { emitLevelUp: false },
+    )
+    if (
+      result.level != null &&
+      previousLevel != null &&
+      result.level > previousLevel
+    ) {
+      queueLevelUp(result.level)
+    }
     setDrop(result)
     const skipSpin = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     setSpinning(!skipSpin)
@@ -72,12 +97,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     const result = await sellItem(drop.inventoryItemId)
     if (!result) return
     applyBalance(result.balance)
-    setDrop(null)
-  }
-
-  function handleKeep() {
-    setDrop(null)
-    router.push('/inventory')
+    dismissDrop()
   }
 
   return (
@@ -162,12 +182,19 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         <CaseOpenResultModal
           drop={drop}
           isSelling={sellingId === drop.inventoryItemId}
-          onClose={() => setDrop(null)}
-          onKeep={handleKeep}
+          onClose={() => dismissDrop()}
+          onKeep={() => dismissDrop({ thenInventory: true })}
           onSell={() => {
             void handleSellNow()
           }}
           backdropCodes={drops.map((d) => d.code)}
+        />
+      ) : null}
+
+      {levelUpLevel != null ? (
+        <LevelUpModal
+          level={levelUpLevel}
+          onClose={() => closeLevelUp(() => router.push('/inventory'))}
         />
       ) : null}
     </div>

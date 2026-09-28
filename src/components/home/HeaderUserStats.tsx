@@ -1,21 +1,5 @@
 import { CurrencyBadge } from '../ui/CurrencyBadge'
-
-type HeaderStatProps = {
-  label: string
-  value: string
-}
-
-function HeaderStat({ label, value }: HeaderStatProps) {
-  return (
-    <div
-      className="flex items-center gap-1.5 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:px-2.5"
-      aria-label={`${label} ${value}`}
-    >
-      <span className="font-medium tracking-wider text-cd-muted uppercase">{label}</span>
-      <span className="font-display font-semibold tabular-nums text-cd-text">{value}</span>
-    </div>
-  )
-}
+import { levelProgress } from '../../lib/levelProgress'
 
 type HeaderUserStatsProps = {
   level: number
@@ -23,6 +7,7 @@ type HeaderUserStatsProps = {
   balance: string | null
   levelLabel: string
   xpLabel: string
+  xpProgressLabel: string
   balanceLabel: string
 }
 
@@ -32,12 +17,39 @@ export function HeaderUserStats({
   balance,
   levelLabel,
   xpLabel,
+  xpProgressLabel,
   balanceLabel,
 }: HeaderUserStatsProps) {
+  const { currentXp, xpForLevel, ratio } = levelProgress(experience)
+  const percent = Math.round(ratio * 100)
+
   return (
     <div className="hidden items-center gap-1.5 md:flex" aria-live="polite">
-      <HeaderStat label={levelLabel} value={String(level)} />
-      <HeaderStat label={xpLabel} value={String(experience)} />
+      <div
+        className="flex items-center gap-2 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:px-2.5"
+        aria-label={`${levelLabel} ${level}, ${currentXp} / ${xpForLevel} ${xpLabel}`}
+      >
+        <span className="font-medium tracking-wider text-cd-muted uppercase">
+          {levelLabel}{' '}
+          <span className="font-display font-semibold tabular-nums text-cd-text">{level}</span>
+        </span>
+        <div
+          className="h-1.5 w-16 overflow-hidden rounded-full bg-cd-border sm:w-20"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={xpForLevel}
+          aria-valuenow={currentXp}
+          aria-label={xpProgressLabel}
+        >
+          <div
+            className="h-full rounded-full bg-cd-accent transition-[width] duration-300 ease-out"
+            style={{ width: `${percent}%` }}
+          />
+        </div>
+        <span className="font-display font-semibold tabular-nums text-cd-muted">
+          {xpProgressLabel}
+        </span>
+      </div>
       {balance !== null ? (
         <div
           className="flex items-center gap-1.5 rounded-md border border-cd-accent/35 bg-cd-surface px-2 py-1 text-xs sm:px-2.5"

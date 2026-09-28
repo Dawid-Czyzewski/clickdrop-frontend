@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
-import { renderHook, waitFor } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { I18nextProvider } from 'react-i18next'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiError } from '../../src/api/client'
 import { useCurrentUser } from '../../src/hooks/useCurrentUser'
+import { resetSharedCurrentUser } from '../../src/lib/currentUserStore'
 import i18n from '../utils/i18n'
 
 vi.mock('../../src/api/usersApi', () => ({
@@ -21,6 +22,7 @@ function HookProviders({ children }: { children: ReactNode }) {
 describe('useCurrentUser', () => {
   beforeEach(() => {
     getCurrentUserMock.mockReset()
+    resetSharedCurrentUser()
   })
 
   it('loads current user profile', async () => {
@@ -74,5 +76,84 @@ describe('useCurrentUser', () => {
 
     expect(getCurrentUserMock).not.toHaveBeenCalled()
     expect(result.current.user).toBeNull()
+  })
+
+  it('applyLevelExperience patches shared level and XP', async () => {
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 12.5,
+    })
+
+    const { result } = renderHook(() => useCurrentUser(), { wrapper: HookProviders })
+
+    await waitFor(() => {
+      expect(result.current.user?.level).toBe(3)
+    })
+
+    act(() => {
+      result.current.applyLevelExperience({ level: 4, experience: 460 })
+    })
+
+    expect(result.current.user).toMatchObject({ level: 4, experience: 460 })
+  })
+
+  it('does not treat first profile load as a level-up', async () => {
+    const onLevelUp = vi.fn()
+    const { subscribeLevelUp } = await import('../../src/lib/levelUpStore')
+    const unsubscribe = subscribeLevelUp(onLevelUp)
+
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 5,
+      experience: 520,
+      clickDollars: 12.5,
+    })
+
+    renderHook(() => useCurrentUser(), { wrapper: HookProviders })
+
+    await waitFor(() => {
+      expect(getCurrentUserMock).toHaveBeenCalled()
+    })
+    await waitFor(() => {
+      expect(onLevelUp).not.toHaveBeenCalled()
+    })
+
+    unsubscribe()
+  })
+
+  it('emits level-up only when level increases after baseline', async () => {
+    const onLevelUp = vi.fn()
+    const { subscribeLevelUp } = await import('../../src/lib/levelUpStore')
+    const unsubscribe = subscribeLevelUp(onLevelUp)
+
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 12.5,
+    })
+
+    const { result } = renderHook(() => useCurrentUser(), { wrapper: HookProviders })
+
+    await waitFor(() => {
+      expect(result.current.user?.level).toBe(3)
+    })
+
+    act(() => {
+      result.current.applyLevelExperience({ level: 3, experience: 480 })
+    })
+    expect(onLevelUp).not.toHaveBeenCalled()
+
+    act(() => {
+      result.current.applyLevelExperience({ level: 4, experience: 500 })
+    })
+    expect(onLevelUp).toHaveBeenCalledExactlyOnceWith(4)
+
+    unsubscribe()
   })
 })

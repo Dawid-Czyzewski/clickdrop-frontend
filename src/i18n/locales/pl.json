@@ -48,6 +48,12 @@
       "logout": "Wyloguj",
       "level": "Lvl",
       "xp": "XP",
+      "xpProgress": "{{current}}/{{needed}}",
+      "levelUp": "Nowy poziom! Lvl {{level}}",
+      "levelUpEyebrow": "Nowy poziom",
+      "levelUpTitle": "Lvl {{level}}",
+      "levelUpMessage": "Osiągasz poziom {{level}}. Otwieraj skrzynki, żeby iść wyżej.",
+      "levelUpContinue": "Dalej",
       "cd": "CD",
       "loadingStats": "Ładowanie statystyk…"
     },
@@ -186,6 +192,7 @@
     "errorNotFound": "Nie znaleziono skrzynki.",
     "errorTooFast": "Za szybko otwierasz skrzynki. Zwolnij trochę.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
+    "experienceGained": "+{{count}} XP",
     "CLUTCH_CASE": {
       "name": "Skrzynka Clutch"
     },
@@ -1644,6 +1651,9 @@
     },
     "URSUS_KNIFE_URSUS_KNIFE": {
       "name": "★ Ursus Knife"
+    },
+    "USP_GUARDIAN": {
+      "name": "USP-S | Guardian"
     },
     "USP_S_CORTEX": {
       "name": "USP-S | Cortex"

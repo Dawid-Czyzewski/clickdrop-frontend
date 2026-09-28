@@ -50,10 +50,13 @@ describe('HeaderUserStatsPanel', () => {
     renderWithProviders(<HeaderUserStatsPanel />)
 
     await waitFor(() => {
-      expect(screen.getByLabelText('Lvl 8')).toBeInTheDocument()
+      expect(screen.getByLabelText('Lvl 8, 0 / 100 XP')).toBeInTheDocument()
     })
 
-    expect(screen.getByLabelText('XP 3200')).toBeInTheDocument()
+    expect(screen.getByRole('progressbar', { name: '0/100' })).toHaveAttribute(
+      'aria-valuenow',
+      '0',
+    )
     expect(await screen.findByLabelText('CD 42.25')).toBeInTheDocument()
     expect(screen.getByText('player')).toBeInTheDocument()
     expect(screen.queryByText('player@clickdrop.test')).not.toBeInTheDocument()

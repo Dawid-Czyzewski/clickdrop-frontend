@@ -22,14 +22,22 @@ vi.mock('../../src/api/economyApi', () => ({
   buyUpgrade: vi.fn(),
 }))
 
+vi.mock('../../src/api/usersApi', () => ({
+  getCurrentUser: vi.fn(),
+}))
+
 import { getCaseDrops, getInventory, openCase, sellInventoryItem } from '../../src/api/casesApi'
 import { getBalance } from '../../src/api/economyApi'
+import { getCurrentUser } from '../../src/api/usersApi'
+import { HeaderUserStatsPanel } from '../../src/components/home/HeaderUserStatsPanel'
+import { LevelUpToast } from '../../src/components/home/LevelUpToast'
 
 const getCaseDropsMock = vi.mocked(getCaseDrops)
 const openCaseMock = vi.mocked(openCase)
 const getInventoryMock = vi.mocked(getInventory)
 const sellMock = vi.mocked(sellInventoryItem)
 const getBalanceMock = vi.mocked(getBalance)
+const getCurrentUserMock = vi.mocked(getCurrentUser)
 
 const anvil = {
   id: 1,
@@ -59,6 +67,9 @@ const slateOpen = {
   balance: 50,
   cost: 50,
   suggestedSellPrice: 40,
+  experienceGained: 10,
+  level: 4,
+  experience: 460,
 }
 
 describe('CaseDetailPanel', () => {
@@ -69,6 +80,14 @@ describe('CaseDetailPanel', () => {
     getInventoryMock.mockReset()
     sellMock.mockReset()
     getBalanceMock.mockReset()
+    getCurrentUserMock.mockReset()
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 1,
+      experience: 0,
+      clickDollars: 100,
+    })
     window.matchMedia = vi.fn().mockImplementation((query: string) => ({
       matches: query.includes('prefers-reduced-motion'),
       media: query,
@@ -153,6 +172,9 @@ describe('CaseDetailPanel', () => {
 
     await user.click(screen.getByRole('button', { name: /keep in inventory/i }))
 
+    expect(await screen.findByRole('dialog', { name: /lvl 4/i })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^continue$/i }))
+
     await waitFor(() => {
       expect(getMockRouter().push).toHaveBeenCalledWith('/inventory')
     })
@@ -183,7 +205,202 @@ describe('CaseDetailPanel', () => {
 
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     })
+    expect(await screen.findByRole('dialog', { name: /lvl 4/i })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /^continue$/i }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('updates header level and XP after a successful open', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 100,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    openCaseMock.mockResolvedValue(slateOpen)
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
+
+    renderWithProviders(
+      <>
+        <HeaderUserStatsPanel />
+        <CaseDetailPanel gameCase={anvil} />
+      </>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
+    })
+
+    await screen.findByRole('button', { name: /^open$/i })
+    await user.click(screen.getByRole('button', { name: /^open$/i }))
+
+    expect(await screen.findByText('+10 XP')).toBeInTheDocument()
+    expect(screen.getByLabelText('Lvl 4, 60 / 100 XP')).toBeInTheDocument()
+  })
+
+  it('shows level-up modal after drop modal closes', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 100,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    openCaseMock.mockResolvedValue(slateOpen)
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
+
+    renderWithProviders(
+      <>
+        <HeaderUserStatsPanel />
+        <CaseDetailPanel gameCase={anvil} />
+      </>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
+    })
+
+    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+
+    expect(await screen.findByText('+10 XP')).toBeInTheDocument()
+    expect(screen.queryByRole('dialog', { name: /lvl 4/i })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /^close$/i }))
+
+    expect(await screen.findByRole('dialog', { name: /lvl 4/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /^continue$/i })).toBeInTheDocument()
+  })
+
+  it('does not show level-up toast while drop modal is open', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 100,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    openCaseMock.mockResolvedValue(slateOpen)
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
+
+    renderWithProviders(
+      <>
+        <LevelUpToast />
+        <HeaderUserStatsPanel />
+        <CaseDetailPanel gameCase={anvil} />
+      </>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
+    })
+
+    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+
+    expect(await screen.findByText('+10 XP')).toBeInTheDocument()
+    expect(screen.queryByText(/level up! lvl 4/i)).not.toBeInTheDocument()
+  })
+
+  it('does not show level-up modal when only XP increases', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 100,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    openCaseMock.mockResolvedValue({
+      ...slateOpen,
+      experienceGained: 10,
+      level: 3,
+      experience: 460,
+    })
+    getInventoryMock.mockResolvedValueOnce([]).mockResolvedValueOnce([slateInventory])
+
+    renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
+
+    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+    expect(await screen.findByText('+10 XP')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /^close$/i }))
+
+    expect(screen.queryByRole('dialog', { name: /lvl/i })).not.toBeInTheDocument()
+  })
+
+  it('does not change header XP when open is rate-limited', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 3,
+      experience: 450,
+      clickDollars: 100,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    const { ApiError } = await import('../../src/api/client')
+    openCaseMock.mockRejectedValue(new ApiError(429, 'Too fast'))
+
+    renderWithProviders(
+      <>
+        <HeaderUserStatsPanel />
+        <CaseDetailPanel gameCase={anvil} />
+      </>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
+    })
+
+    await screen.findByRole('button', { name: /^open$/i })
+    await user.click(screen.getByRole('button', { name: /^open$/i }))
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toBeInTheDocument()
+    })
+    expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
   })
 })

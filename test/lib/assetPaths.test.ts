@@ -21,7 +21,7 @@ describe('assetPaths', () => {
 
   it('itemImageSrc returns path for known codes and fallback otherwise', () => {
     expect(itemImageSrc('AK_47_SLATE')).toBe('/items/AK_47_SLATE.webp')
-    expect(itemImageSrc('AK_47_ASIIMOV')).toBe('/items/AK_47_ASIIMOV.webp')
+    expect(itemImageSrc('USP_GUARDIAN')).toBe('/items/USP_GUARDIAN.webp')
     expect(itemImageSrc('AK_47_ASIIMOV')).toBe('/items/AK_47_ASIIMOV.webp')
     expect(itemImageSrc('MISSING_SKIN')).toBe(ITEM_FALLBACK_SRC)
     expect(itemImageSrc('')).toBe(ITEM_FALLBACK_SRC)

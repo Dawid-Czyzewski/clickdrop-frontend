@@ -34,6 +34,9 @@ export type OpenCaseResponse = {
   balance: number
   cost: number
   suggestedSellPrice: number
+  experienceGained?: number
+  level?: number
+  experience?: number
 }
 
 export type InventoryItem = {

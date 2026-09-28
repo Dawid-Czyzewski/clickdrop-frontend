@@ -48,6 +48,12 @@
       "logout": "Log out",
       "level": "Lvl",
       "xp": "XP",
+      "xpProgress": "{{current}}/{{needed}}",
+      "levelUp": "Level up! Lvl {{level}}",
+      "levelUpEyebrow": "Level up",
+      "levelUpTitle": "Lvl {{level}}",
+      "levelUpMessage": "You reached level {{level}}. Keep opening cases to climb higher.",
+      "levelUpContinue": "Continue",
       "cd": "CD",
       "loadingStats": "Loading stats…"
     },
@@ -184,6 +190,7 @@
     "errorNotFound": "Case not found.",
     "errorTooFast": "You're opening cases too fast. Slow down a bit.",
     "errorServer": "The economy service is unavailable. Please try again later.",
+    "experienceGained": "+{{count}} XP",
     "CLUTCH_CASE": {
       "name": "Clutch Case"
     },
@@ -1642,6 +1649,9 @@
     },
     "URSUS_KNIFE_URSUS_KNIFE": {
       "name": "★ Ursus Knife"
+    },
+    "USP_GUARDIAN": {
+      "name": "USP-S | Guardian"
     },
     "USP_S_CORTEX": {
       "name": "USP-S | Cortex"
