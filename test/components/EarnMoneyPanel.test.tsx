@@ -12,14 +12,25 @@ vi.mock('../../src/api/economyApi', () => ({
   clickToEarn: vi.fn(),
   getMyUpgrades: vi.fn(),
   buyUpgrade: vi.fn(),
+  collectIdle: vi.fn(),
+  getIdleStatus: vi.fn(),
 }))
 
-import { clickToEarn, getBalance, getClickPower, getMyUpgrades } from '../../src/api/economyApi'
+import {
+  clickToEarn,
+  collectIdle,
+  getBalance,
+  getClickPower,
+  getIdleStatus,
+  getMyUpgrades,
+} from '../../src/api/economyApi'
 
 const getBalanceMock = vi.mocked(getBalance)
 const getClickPowerMock = vi.mocked(getClickPower)
 const clickToEarnMock = vi.mocked(clickToEarn)
 const getMyUpgradesMock = vi.mocked(getMyUpgrades)
+const collectIdleMock = vi.mocked(collectIdle)
+const getIdleStatusMock = vi.mocked(getIdleStatus)
 
 function setLoggedInSession() {
   authService.setSession({
@@ -38,8 +49,15 @@ describe('EarnMoneyPanel', () => {
     getClickPowerMock.mockReset()
     clickToEarnMock.mockReset()
     getMyUpgradesMock.mockReset()
+    collectIdleMock.mockReset()
+    getIdleStatusMock.mockReset()
     getMyUpgradesMock.mockResolvedValue([])
     getClickPowerMock.mockResolvedValue({ rewardPerClick: 1 })
+    getIdleStatusMock.mockResolvedValue({
+      pending: 0,
+      incomePerSecond: 0,
+      lastIdleCollectedAt: new Date().toISOString(),
+    })
   })
 
   it('shows guest preview with login CTA and teaser steps', () => {
@@ -161,5 +179,44 @@ describe('EarnMoneyPanel', () => {
       'The economy service is unavailable. Please try again later.',
     )
     expect(screen.getByText('14.00 ClickDollars')).toBeInTheDocument()
+  })
+
+  it('shows idle income on home and collect updates balance', async () => {
+    const user = userEvent.setup()
+    setLoggedInSession()
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    getMyUpgradesMock.mockResolvedValue([
+      {
+        id: 6,
+        code: 'BOT_FARM',
+        tier: 6,
+        price: 750,
+        clickPower: 0,
+        level: 1,
+        nextCost: 750,
+        incomePerSecond: 0.1,
+      },
+    ])
+    getIdleStatusMock.mockResolvedValue({
+      pending: 2.5,
+      incomePerSecond: 0.1,
+      lastIdleCollectedAt: new Date(Date.now() - 25_000).toISOString(),
+    })
+    collectIdleMock.mockResolvedValue({
+      earned: 2.5,
+      balance: 102.5,
+      incomePerSecond: 0.1,
+    })
+
+    renderWithProviders(<EarnMoneyPanel />)
+
+    expect(await screen.findByText('Pending: 2.50 CD')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /collect/i }))
+
+    await waitFor(() => {
+      expect(collectIdleMock).toHaveBeenCalledTimes(1)
+      expect(screen.getByText('102.50 ClickDollars')).toBeInTheDocument()
+      expect(screen.getByText('Pending: 0.00 CD')).toBeInTheDocument()
+    })
   })
 })

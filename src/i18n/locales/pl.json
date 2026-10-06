@@ -105,6 +105,10 @@
       "clickLabel": "CLICK TO EARN",
       "cta": "Zarabiaj",
       "loginCta": "Zaloguj się, by grać",
+      "yourIncome": "Twój income: {{amount}} CD/s",
+      "pendingIdle": "Uzbierane: {{amount}} CD",
+      "collect": "Zbierz",
+      "collecting": "Zbieranie…",
       "earned_one": "+{{count}} ClickDollar",
       "earned_few": "+{{count}} ClickDollary",
       "earned_many": "+{{count}} ClickDollarów",
@@ -119,13 +123,15 @@
   "upgrades": {
     "eyebrow": "Sklep",
     "title": "Ulepszenia",
-    "subtitle": "Wydawaj ClickDollary, aby zwiększać moc klika. Nazwy pochodzą z tłumaczeń.",
+    "subtitle": "Wydawaj ClickDollary na moc klika i pasywny income. Zbieraj CD, gdy Cię nie ma.",
     "buy": "Ulepsz",
     "buying": "Ulepszanie…",
     "level": "Poziom {{level}}",
     "levelLabel": "Poziom",
     "powerLabel": "Moc klika",
     "clickPower": "+{{power}} / klik",
+    "incomeLabel": "Income idle",
+    "incomePerSecond": "+{{amount}} CD/s",
     "nextCostLabel": "Koszt kolejnego poziomu",
     "balance": "{{amount}} ClickDollars",
     "perClick": "+{{amount}} / klik",
@@ -159,6 +165,18 @@
     "AI_AUTO_CLICKER": {
       "name": "Auto-kliker AI",
       "description": "+25 do mocy klika za każdy poziom"
+    },
+    "BOT_FARM": {
+      "name": "Farma botów",
+      "description": "+0.1 CD/s income idle za każdy poziom"
+    },
+    "AFK_SCRIPT": {
+      "name": "Skrypt AFK",
+      "description": "+0.5 CD/s income idle za każdy poziom"
+    },
+    "SERVER_RACK": {
+      "name": "Szafa serwerowa",
+      "description": "+2 CD/s income idle za każdy poziom"
     }
   },
   "cases": {

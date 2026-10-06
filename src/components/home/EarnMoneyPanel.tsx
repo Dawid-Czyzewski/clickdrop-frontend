@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useClickPower } from '../../hooks/useClickPower'
+import { useIdleCollect } from '../../hooks/useIdleCollect'
 import { useUpgrades } from '../../hooks/useUpgrades'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { ClickButton } from './ClickButton'
 import { EarnedFeedback, type EarnToast } from './EarnedFeedback'
 import { GuestEarnPreview } from './GuestEarnPreview'
+import { IdleIncomeBar } from './IdleIncomeBar'
 import { OwnedUpgradesFlank } from './OwnedUpgradesFlank'
 
 export function EarnMoneyPanel() {
@@ -18,11 +20,17 @@ export function EarnMoneyPanel() {
   const [earnToasts, setEarnToasts] = useState<EarnToast[]>([])
   const [earnPulseKey, setEarnPulseKey] = useState(0)
   const nextToastId = useRef(0)
-  const { balance, isLoading, isClicking, error, clickToEarn } = useBalance({
+  const { balance, isLoading, isClicking, error, clickToEarn, applyBalance } = useBalance({
     enabled: loggedIn,
   })
   const { rewardPerClick } = useClickPower({ enabled: loggedIn })
   const { upgrades } = useUpgrades({ enabled: loggedIn })
+  const {
+    pending,
+    collectIdle,
+    isCollecting,
+    error: collectError,
+  } = useIdleCollect({ enabled: loggedIn })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -30,6 +38,7 @@ export function EarnMoneyPanel() {
 
   const formattedBalance =
     balance === null ? null : formatClickDollars(balance, i18n.language)
+  const panelError = error || collectError
 
   async function handleClick() {
     const result = await clickToEarn()
@@ -42,6 +51,13 @@ export function EarnMoneyPanel() {
       ...prev,
       { id, amount: result.earned, drift: ((id * 17) % 5) * 16 - 32 },
     ])
+    setEarnPulseKey((key) => key + 1)
+  }
+
+  async function handleCollect() {
+    const result = await collectIdle()
+    if (!result) return
+    applyBalance(result.balance)
     setEarnPulseKey((key) => key + 1)
   }
 
@@ -85,61 +101,71 @@ export function EarnMoneyPanel() {
         </div>
 
         {loggedIn ? (
-          <>
-            <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
-              <OwnedUpgradesFlank upgrades={upgrades} side="left" />
-              <div className="relative flex shrink-0 flex-col items-center gap-3">
-                <div className="relative flex items-center justify-center">
-                  <ClickButton
-                    disabled={isLoading || isClicking}
-                    onClick={() => {
-                      void handleClick()
-                    }}
-                  />
-                  <EarnedFeedback
-                    toasts={earnToasts}
-                    onDismiss={(id) => {
-                      setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
-                    }}
-                  />
-                </div>
-
-                <div className="flex min-h-[2.75rem] flex-col items-center justify-center gap-0.5" aria-live="polite">
-                  {isLoading ? (
-                    <p role="status" className="text-sm text-cd-muted">
-                      {t('home.earn.loadingBalance')}
-                    </p>
-                  ) : null}
-
-                  {!isLoading && formattedBalance !== null ? (
-                    <>
-                      <p
-                        key={`balance-${balance}-${earnPulseKey}`}
-                        className={[
-                          'font-display text-xl font-semibold tabular-nums text-cd-accent sm:text-2xl',
-                          earnPulseKey > 0 ? 'cd-balance-bump' : '',
-                        ].join(' ')}
-                      >
-                        {t('home.earn.balanceValue', { amount: formattedBalance })}
-                      </p>
-                      {rewardPerClick !== null ? (
-                        <p className="font-display text-sm font-semibold tabular-nums text-cd-muted">
-                          {t('home.earn.perClick', { amount: rewardPerClick })}
-                        </p>
-                      ) : null}
-                    </>
-                  ) : null}
-
-                  {!isLoading && error ? (
-                    <p role="alert" className="text-sm text-cd-danger">
-                      {error}
-                    </p>
-                  ) : null}
-                </div>
+          <div className="relative flex w-full max-w-4xl items-center justify-center gap-3 sm:gap-6">
+            <OwnedUpgradesFlank upgrades={upgrades} side="left" />
+            <div className="relative flex shrink-0 flex-col items-center gap-3">
+              <div className="relative flex items-center justify-center">
+                <ClickButton
+                  disabled={isLoading || isClicking || isCollecting}
+                  onClick={() => {
+                    void handleClick()
+                  }}
+                />
+                <EarnedFeedback
+                  toasts={earnToasts}
+                  onDismiss={(id) => {
+                    setEarnToasts((prev) => prev.filter((toast) => toast.id !== id))
+                  }}
+                />
               </div>
-              <OwnedUpgradesFlank upgrades={upgrades} side="right" />
+
+              <div
+                className="flex min-h-[2.75rem] flex-col items-center justify-center gap-0.5"
+                aria-live="polite"
+              >
+                {isLoading ? (
+                  <p role="status" className="text-sm text-cd-muted">
+                    {t('home.earn.loadingBalance')}
+                  </p>
+                ) : null}
+
+                {!isLoading && formattedBalance !== null ? (
+                  <>
+                    <p
+                      key={`balance-${balance}-${earnPulseKey}`}
+                      className={[
+                        'font-display text-xl font-semibold tabular-nums text-cd-accent sm:text-2xl',
+                        earnPulseKey > 0 ? 'cd-balance-bump' : '',
+                      ].join(' ')}
+                    >
+                      {t('home.earn.balanceValue', { amount: formattedBalance })}
+                    </p>
+                    {rewardPerClick !== null ? (
+                      <p className="font-display text-sm font-semibold tabular-nums text-cd-muted">
+                        {t('home.earn.perClick', { amount: rewardPerClick })}
+                      </p>
+                    ) : null}
+                  </>
+                ) : null}
+
+                {!isLoading && panelError ? (
+                  <p role="alert" className="text-sm text-cd-danger">
+                    {panelError}
+                  </p>
+                ) : null}
+              </div>
+
+              <IdleIncomeBar
+                pending={pending}
+                isCollecting={isCollecting}
+                collectDisabled={isClicking}
+                onCollect={() => {
+                  void handleCollect()
+                }}
+              />
             </div>
-          </>
+            <OwnedUpgradesFlank upgrades={upgrades} side="right" />
+          </div>
         ) : (
           <GuestEarnPreview />
         )}

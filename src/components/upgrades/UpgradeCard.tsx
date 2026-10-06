@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next'
 import type { MyUpgrade } from '../../api/economyApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { formatIncomeRate } from '../../lib/idleIncome'
 import { upgradeDescriptionKey, upgradeNameKey } from '../../lib/upgradeI18n'
 import { cdBtnPrimary, cdTile } from '../ui/uiStyles'
 
@@ -25,6 +26,8 @@ export function UpgradeCard({
   const cost = upgrade.nextCost
   const canAfford = balance !== null && balance >= cost
   const buyDisabled = disabled || isBuying || !canAfford
+  const showClickPower = upgrade.clickPower > 0
+  const showIdleIncome = upgrade.incomePerSecond > 0
 
   return (
     <article className={`flex flex-col gap-3 p-4 text-left ${cdTile}`}>
@@ -42,12 +45,24 @@ export function UpgradeCard({
             {t('upgrades.level', { level: upgrade.level })}
           </dd>
         </div>
-        <div>
-          <dt className="text-cd-muted">{t('upgrades.powerLabel')}</dt>
-          <dd className="m-0 font-semibold tabular-nums text-cd-accent">
-            {t('upgrades.clickPower', { power: upgrade.clickPower })}
-          </dd>
-        </div>
+        {showClickPower ? (
+          <div>
+            <dt className="text-cd-muted">{t('upgrades.powerLabel')}</dt>
+            <dd className="m-0 font-semibold tabular-nums text-cd-accent">
+              {t('upgrades.clickPower', { power: upgrade.clickPower })}
+            </dd>
+          </div>
+        ) : null}
+        {showIdleIncome ? (
+          <div>
+            <dt className="text-cd-muted">{t('upgrades.incomeLabel')}</dt>
+            <dd className="m-0 font-semibold tabular-nums text-cd-accent">
+              {t('upgrades.incomePerSecond', {
+                amount: formatIncomeRate(upgrade.incomePerSecond, i18n.language),
+              })}
+            </dd>
+          </div>
+        ) : null}
         <div className="col-span-2">
           <dt className="text-cd-muted">{t('upgrades.nextCostLabel')}</dt>
           <dd className="m-0 font-semibold tabular-nums text-cd-accent">

@@ -28,6 +28,7 @@ const mouse = {
   clickPower: 1,
   level: 1,
   nextCost: 50,
+  incomePerSecond: 0,
 }
 
 describe('useUpgrades', () => {

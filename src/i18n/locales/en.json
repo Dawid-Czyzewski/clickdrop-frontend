@@ -105,6 +105,10 @@
       "clickLabel": "CLICK TO EARN",
       "cta": "Earn money",
       "loginCta": "Sign in to play",
+      "yourIncome": "Your income: {{amount}} CD/s",
+      "pendingIdle": "Pending: {{amount}} CD",
+      "collect": "Collect",
+      "collecting": "Collecting…",
       "earned_one": "+{{count}} ClickDollar",
       "earned_other": "+{{count}} ClickDollars",
       "error": "Could not process your request. Please try again.",
@@ -117,13 +121,15 @@
   "upgrades": {
     "eyebrow": "Shop",
     "title": "Upgrades",
-    "subtitle": "Spend ClickDollars to raise click power. Names come from your language pack.",
+    "subtitle": "Spend ClickDollars on click power and idle income. Collect CD while you are away.",
     "buy": "Upgrade",
     "buying": "Upgrading…",
     "level": "Level {{level}}",
     "levelLabel": "Level",
     "powerLabel": "Click power",
     "clickPower": "+{{power}} / click",
+    "incomeLabel": "Idle income",
+    "incomePerSecond": "+{{amount}} CD/s",
     "nextCostLabel": "Next upgrade cost",
     "balance": "{{amount}} ClickDollars",
     "perClick": "+{{amount}} / click",
@@ -157,6 +163,18 @@
     "AI_AUTO_CLICKER": {
       "name": "AI Auto Clicker",
       "description": "+25 click power per level"
+    },
+    "BOT_FARM": {
+      "name": "Bot Farm",
+      "description": "+0.1 CD/s idle income per level"
+    },
+    "AFK_SCRIPT": {
+      "name": "AFK Script",
+      "description": "+0.5 CD/s idle income per level"
+    },
+    "SERVER_RACK": {
+      "name": "Server Rack",
+      "description": "+2 CD/s idle income per level"
     }
   },
   "cases": {

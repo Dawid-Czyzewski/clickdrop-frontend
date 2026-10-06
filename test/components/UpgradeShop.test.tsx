@@ -11,6 +11,7 @@ vi.mock('../../src/api/economyApi', () => ({
   getMyUpgrades: vi.fn(),
   buyUpgrade: vi.fn(),
   clickToEarn: vi.fn(),
+  collectIdle: vi.fn(),
 }))
 
 import { buyUpgrade, getBalance, getClickPower, getMyUpgrades } from '../../src/api/economyApi'
@@ -28,6 +29,18 @@ const mouse = {
   clickPower: 1,
   level: 0,
   nextCost: 50,
+  incomePerSecond: 0,
+}
+
+const botFarm = {
+  id: 6,
+  code: 'BOT_FARM',
+  tier: 6,
+  price: 750,
+  clickPower: 0,
+  level: 2,
+  nextCost: 750,
+  incomePerSecond: 0.1,
 }
 
 describe('UpgradeShop', () => {
@@ -104,5 +117,25 @@ describe('UpgradeShop', () => {
     const button = await screen.findByRole('button', { name: /upgrade/i })
     expect(button).toBeDisabled()
     expect(screen.getAllByText('Not enough ClickDollars').length).toBeGreaterThan(0)
+  })
+
+  it('shows idle CD/s on idle cards and hides 0 CD/s on click upgrades', async () => {
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 1000 })
+    getClickPowerMock.mockResolvedValue({ rewardPerClick: 1 })
+    getMyUpgradesMock.mockResolvedValue([mouse, botFarm])
+
+    renderWithProviders(<UpgradeShop />)
+
+    expect(await screen.findByText('+0.10 CD/s')).toBeInTheDocument()
+    expect(screen.queryByText('+0 CD/s')).not.toBeInTheDocument()
+    expect(screen.queryByText(/your income/i)).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Bot Farm' })).toBeInTheDocument()
   })
 })

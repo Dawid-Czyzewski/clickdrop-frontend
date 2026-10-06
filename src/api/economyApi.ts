@@ -17,6 +17,7 @@ export type MyUpgrade = {
   clickPower: number
   level: number
   nextCost: number
+  incomePerSecond: number
 }
 
 export type BuyUpgradeResponse = {
@@ -29,6 +30,18 @@ export type BuyUpgradeResponse = {
 
 export type ClickPowerResponse = {
   rewardPerClick: number
+}
+
+export type IdleCollectResponse = {
+  earned: number
+  balance: number
+  incomePerSecond: number
+}
+
+export type IdleStatusResponse = {
+  pending: number
+  incomePerSecond: number
+  lastIdleCollectedAt: string
 }
 
 export function getBalance(): Promise<BalanceResponse> {
@@ -55,10 +68,22 @@ export function buyUpgrade(upgradeId: number): Promise<BuyUpgradeResponse> {
   })
 }
 
+export function getIdleStatus(): Promise<IdleStatusResponse> {
+  return apiRequest<IdleStatusResponse>('/api/economy/idle')
+}
+
+export function collectIdle(): Promise<IdleCollectResponse> {
+  return apiRequest<IdleCollectResponse>('/api/economy/idle/collect', {
+    method: 'POST',
+  })
+}
+
 export const economyApi = {
   getBalance,
   getClickPower,
   clickToEarn,
   getMyUpgrades,
   buyUpgrade,
+  getIdleStatus,
+  collectIdle,
 }

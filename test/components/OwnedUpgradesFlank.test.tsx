@@ -10,13 +10,16 @@ vi.mock('../../src/api/economyApi', () => ({
   clickToEarn: vi.fn(),
   getMyUpgrades: vi.fn(),
   buyUpgrade: vi.fn(),
+  collectIdle: vi.fn(),
+  getIdleStatus: vi.fn(),
 }))
 
-import { getBalance, getClickPower, getMyUpgrades } from '../../src/api/economyApi'
+import { getBalance, getClickPower, getIdleStatus, getMyUpgrades } from '../../src/api/economyApi'
 
 const getBalanceMock = vi.mocked(getBalance)
 const getClickPowerMock = vi.mocked(getClickPower)
 const getMyUpgradesMock = vi.mocked(getMyUpgrades)
+const getIdleStatusMock = vi.mocked(getIdleStatus)
 
 describe('EarnMoneyPanel owned upgrades', () => {
   beforeEach(() => {
@@ -24,6 +27,12 @@ describe('EarnMoneyPanel owned upgrades', () => {
     getBalanceMock.mockReset()
     getClickPowerMock.mockReset()
     getMyUpgradesMock.mockReset()
+    getIdleStatusMock.mockReset()
+    getIdleStatusMock.mockResolvedValue({
+      pending: 0,
+      incomePerSecond: 0,
+      lastIdleCollectedAt: new Date().toISOString(),
+    })
   })
 
   it('shows owned upgrades and rewardPerClick from API', async () => {
@@ -45,6 +54,7 @@ describe('EarnMoneyPanel owned upgrades', () => {
         clickPower: 1,
         level: 2,
         nextCost: 50,
+        incomePerSecond: 0,
       },
       {
         id: 2,
@@ -54,6 +64,7 @@ describe('EarnMoneyPanel owned upgrades', () => {
         clickPower: 2,
         level: 1,
         nextCost: 200,
+        incomePerSecond: 0,
       },
     ])
 
@@ -68,5 +79,35 @@ describe('EarnMoneyPanel owned upgrades', () => {
     expect(screen.getByText('+5 / click')).toBeInTheDocument()
     expect(getClickPowerMock).toHaveBeenCalled()
     expect(screen.getByRole('button', { name: /click to earn/i })).toBeInTheDocument()
+  })
+
+  it('shows CD/s on owned idle upgrades instead of +0 / click', async () => {
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 20 })
+    getClickPowerMock.mockResolvedValue({ rewardPerClick: 1 })
+    getMyUpgradesMock.mockResolvedValue([
+      {
+        id: 6,
+        code: 'BOT_FARM',
+        tier: 6,
+        price: 750,
+        clickPower: 0,
+        level: 1,
+        nextCost: 750,
+        incomePerSecond: 0.1,
+      },
+    ])
+
+    renderWithProviders(<EarnMoneyPanel />)
+
+    expect(await screen.findByText('Bot Farm')).toBeInTheDocument()
+    expect(screen.getByText('+0.10 CD/s')).toBeInTheDocument()
+    expect(screen.queryByText('+0 / click')).not.toBeInTheDocument()
   })
 })
