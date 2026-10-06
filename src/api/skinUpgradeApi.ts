@@ -6,6 +6,7 @@ export type SkinUpgradeCurrent = {
   itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
+  statTrack?: boolean
   suggestedSellPrice: number
 }
 
@@ -32,6 +33,7 @@ export type SkinUpgradeSuccess = {
   itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
+  statTrack?: boolean
   suggestedSellPrice: number
 }
 

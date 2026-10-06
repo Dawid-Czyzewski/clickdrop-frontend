@@ -299,6 +299,7 @@
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
   },
   "items": {
+    "statTrack": "StatTrack",
     "AK_47_ASIIMOV": {
       "name": "AK-47 | Asiimov"
     },

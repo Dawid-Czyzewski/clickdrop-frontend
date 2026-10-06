@@ -80,6 +80,7 @@ export function SkinUpgradePreviewPanel({
             itemDisplayName={current.itemDisplayName}
             rarity={current.rarity}
             exterior={current.exterior}
+            statTrack={current.statTrack}
             suggestedSellPrice={current.suggestedSellPrice}
             label={t('skinUpgrade.currentLabel')}
             size="lg"

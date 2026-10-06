@@ -10,12 +10,14 @@ import {
   resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { StatTrackBadge } from '../media/StatTrackBadge'
 
 type SkinUpgradeSkinCardProps = {
   itemCode: string
   itemDisplayName?: string
   rarity: ItemRarity
   exterior?: ItemExterior
+  statTrack?: boolean
   suggestedSellPrice: number
   label?: string
   accent?: boolean
@@ -28,6 +30,7 @@ export function SkinUpgradeSkinCard({
   itemDisplayName,
   rarity,
   exterior,
+  statTrack = false,
   suggestedSellPrice,
   label,
   accent = false,
@@ -97,6 +100,11 @@ export function SkinUpgradeSkinCard({
               <p className={`truncate text-cd-muted ${large ? 'text-sm' : 'text-xs'}`}>
                 {t(exteriorLabelKey(exterior))}
               </p>
+            ) : null}
+            {statTrack ? (
+              <div className="mt-1 flex justify-center">
+                <StatTrackBadge />
+              </div>
             ) : null}
             <p
               className={`mt-0.5 font-display text-cd-accent ${large ? 'text-base' : 'text-xs'}`}

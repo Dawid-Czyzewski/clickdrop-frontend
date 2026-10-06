@@ -11,6 +11,7 @@ import {
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
 import { CurrencyBadge } from '../ui/CurrencyBadge'
+import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
 
 export type SkinDropResult = Pick<
@@ -20,6 +21,7 @@ export type SkinDropResult = Pick<
   | 'itemDisplayName'
   | 'rarity'
   | 'exterior'
+  | 'statTrack'
   | 'suggestedSellPrice'
   | 'experienceGained'
 >
@@ -112,6 +114,11 @@ export function CaseOpenResultModal({
         <p className="relative z-10 mt-1 text-sm text-cd-muted sm:text-base">
           {t(exteriorLabelKey(drop.exterior))}
         </p>
+        {drop.statTrack ? (
+          <div className="relative z-10 mt-2">
+            <StatTrackBadge />
+          </div>
+        ) : null}
         {drop.experienceGained != null && drop.experienceGained > 0 ? (
           <p
             className="relative z-10 mt-2 font-display text-sm font-semibold text-cd-accent sm:text-base"

@@ -10,6 +10,7 @@ import {
   resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBtnPrimary } from '../ui/uiStyles'
 
 type InventoryItemCardProps = {
@@ -34,7 +35,7 @@ export function InventoryItemCard({
       <div className="h-0.5 w-full shrink-0" style={{ backgroundColor: color }} />
       <div className="flex flex-col gap-2 p-2.5">
         <div
-          className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1"
+          className="relative flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1"
           style={{
             background: `radial-gradient(circle at 50% 40%, ${color}22, transparent 70%)`,
           }}
@@ -45,6 +46,11 @@ export function InventoryItemCard({
             alt={name}
             className="h-full w-full object-contain"
           />
+          {item.statTrack ? (
+            <div className="pointer-events-none absolute top-1.5 left-1.5 z-20">
+              <StatTrackBadge />
+            </div>
+          ) : null}
         </div>
 
         <div className="min-w-0">

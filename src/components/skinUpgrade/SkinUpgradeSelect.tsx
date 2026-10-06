@@ -5,6 +5,7 @@ import type { InventoryItem } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { RARITY_COLOR, rarityLabelKey, resolveItemLabel } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
 
 type SkinUpgradeSelectProps = {
@@ -99,6 +100,11 @@ export function SkinUpgradeSelect({
                       <p className="text-xs text-cd-muted">
                         {formatClickDollars(item.suggestedSellPrice, i18n.language)} CD
                       </p>
+                      {item.statTrack ? (
+                        <div className="mt-1">
+                          <StatTrackBadge />
+                        </div>
+                      ) : null}
                     </>
                   ) : (
                     <p className="truncate text-[0.6rem] text-cd-muted">

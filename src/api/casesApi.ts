@@ -31,6 +31,7 @@ export type OpenCaseResponse = {
   itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
+  statTrack?: boolean
   balance: number
   cost: number
   suggestedSellPrice: number
@@ -46,6 +47,7 @@ export type InventoryItem = {
   displayName: string
   rarity: ItemRarity
   exterior: ItemExterior
+  statTrack?: boolean
   suggestedSellPrice: number
   createdAt: string
 }

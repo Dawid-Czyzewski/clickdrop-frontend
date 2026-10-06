@@ -30,6 +30,7 @@ export type DailySkinClaim = {
   itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
+  statTrack?: boolean
   suggestedSellPrice: number
   nextClaimAt: string
 }
