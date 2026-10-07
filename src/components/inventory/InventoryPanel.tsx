@@ -14,14 +14,23 @@ import {
   cdPageTitle,
 } from '../ui/uiStyles'
 import { InventoryItemCard } from './InventoryItemCard'
+import { InventorySelectionBar } from './InventorySelectionBar'
+import { InventorySellConfirmModal } from './InventorySellConfirmModal'
+import { InventorySoldToast } from './InventorySoldToast'
+
+type SoldToast = {
+  id: number
+  amount: number
+}
 
 export function InventoryPanel() {
   const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
-  const { applyBalance } = useBalance({
-    enabled: loggedIn,
-  })
-  const { items, isLoading, sellingId, error, sellItem } = useInventory({
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [soldToast, setSoldToast] = useState<SoldToast | null>(null)
+  const { applyBalance } = useBalance({ enabled: loggedIn })
+  const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } = useInventory({
     enabled: loggedIn,
   })
 
@@ -29,9 +38,50 @@ export function InventoryPanel() {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
+  useEffect(() => {
+    const valid = new Set(items.map((item) => item.inventoryItemId))
+    setSelectedIds((prev) => prev.filter((id) => valid.has(id)))
+  }, [items])
+
+  const selectedItems = items.filter((item) => selectedIds.includes(item.inventoryItemId))
+  const estimatedTotal = selectedItems.reduce((sum, item) => sum + item.suggestedSellPrice, 0)
+  const busy = sellingId !== null || isSellingBatch
+
+  function showSoldToast(amount: number) {
+    setSoldToast((prev) => ({ id: (prev?.id ?? 0) + 1, amount }))
+  }
+
   async function handleSell(inventoryItemId: number) {
     const result = await sellItem(inventoryItemId)
-    if (result) applyBalance(result.balance)
+    if (!result) return
+    applyBalance(result.balance)
+    showSoldToast(result.soldFor)
+  }
+
+  async function runBatchSell() {
+    setConfirmOpen(false)
+    const result = await sellBatch(selectedIds)
+    if (!result) return
+    applyBalance(result.balance)
+    setSelectedIds([])
+    showSoldToast(result.totalEarned)
+  }
+
+  function handleSellSelected() {
+    if (selectedIds.length === 0) return
+    if (selectedIds.length > 1) {
+      setConfirmOpen(true)
+      return
+    }
+    void runBatchSell()
+  }
+
+  function toggleSelect(inventoryItemId: number) {
+    setSelectedIds((prev) =>
+      prev.includes(inventoryItemId)
+        ? prev.filter((id) => id !== inventoryItemId)
+        : [...prev, inventoryItemId],
+    )
   }
 
   if (!loggedIn) {
@@ -68,6 +118,17 @@ export function InventoryPanel() {
         <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('inventory.subtitle')}</p>
       </div>
 
+      {items.length > 0 ? (
+        <InventorySelectionBar
+          selectedCount={selectedIds.length}
+          estimatedTotal={estimatedTotal}
+          isSelling={isSellingBatch}
+          onSelectAll={() => setSelectedIds(items.map((item) => item.inventoryItemId))}
+          onClear={() => setSelectedIds([])}
+          onSellSelected={handleSellSelected}
+        />
+      ) : null}
+
       {error ? (
         <p role="alert" className="text-sm text-cd-danger">
           {error}
@@ -82,8 +143,10 @@ export function InventoryPanel() {
             <InventoryItemCard
               key={item.inventoryItemId}
               item={item}
+              selected={selectedIds.includes(item.inventoryItemId)}
               isSelling={sellingId === item.inventoryItemId}
-              disabled={sellingId !== null}
+              disabled={busy}
+              onToggleSelect={toggleSelect}
               onSell={(id) => {
                 void handleSell(id)
               }}
@@ -91,6 +154,26 @@ export function InventoryPanel() {
           ))}
         </div>
       )}
+
+      {confirmOpen ? (
+        <InventorySellConfirmModal
+          count={selectedIds.length}
+          estimatedTotal={estimatedTotal}
+          isSelling={isSellingBatch}
+          onCancel={() => setConfirmOpen(false)}
+          onConfirm={() => {
+            void runBatchSell()
+          }}
+        />
+      ) : null}
+
+      {soldToast ? (
+        <InventorySoldToast
+          amount={soldToast.amount}
+          toastKey={soldToast.id}
+          onDismiss={() => setSoldToast(null)}
+        />
+      ) : null}
     </div>
   )
 }

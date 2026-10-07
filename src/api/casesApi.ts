@@ -57,6 +57,27 @@ export type SellInventoryItemResponse = {
   soldFor: number
 }
 
+export type SellSkipReason = 'NOT_FOUND' | 'NOT_OWNED'
+
+export type SoldInventoryItem = {
+  inventoryItemId: number
+  itemCode: string
+  earned: number
+}
+
+export type SkippedInventoryItem = {
+  inventoryItemId: number
+  reason: SellSkipReason
+}
+
+export type SellInventoryBatchResponse = {
+  soldCount: number
+  totalEarned: number
+  balance: number
+  sold: SoldInventoryItem[]
+  skipped: SkippedInventoryItem[]
+}
+
 export function getCases(): Promise<GameCase[]> {
   return apiRequest<GameCase[]>('/api/economy/cases', { auth: false })
 }
@@ -82,10 +103,20 @@ export function sellInventoryItem(inventoryItemId: number): Promise<SellInventor
   )
 }
 
+export function sellInventoryBatch(
+  inventoryItemIds: number[],
+): Promise<SellInventoryBatchResponse> {
+  return apiRequest<SellInventoryBatchResponse>('/api/economy/inventory/sell-batch', {
+    method: 'POST',
+    body: { inventoryItemIds },
+  })
+}
+
 export const casesApi = {
   getCases,
   getCaseDrops,
   openCase,
   getInventory,
   sellInventoryItem,
+  sellInventoryBatch,
 }

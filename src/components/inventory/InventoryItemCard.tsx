@@ -15,25 +15,52 @@ import { cdBtnPrimary } from '../ui/uiStyles'
 
 type InventoryItemCardProps = {
   item: InventoryItem
+  selected: boolean
   isSelling: boolean
   disabled: boolean
+  onToggleSelect: (inventoryItemId: number) => void
   onSell: (inventoryItemId: number) => void
 }
 
 export function InventoryItemCard({
   item,
+  selected,
   isSelling,
   disabled,
+  onToggleSelect,
   onSell,
 }: InventoryItemCardProps) {
   const { t, i18n } = useTranslation()
   const color = RARITY_COLOR[item.rarity] ?? '#8b92a5'
   const name = resolveItemLabel(t, item.code, item.displayName)
+  const checkboxId = `inv-select-${item.inventoryItemId}`
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-lg border border-cd-border bg-cd-surface/80">
+    <article
+      className={[
+        'flex flex-col overflow-hidden rounded-lg border bg-cd-surface/80',
+        selected ? 'border-cd-accent' : 'border-cd-border',
+      ].join(' ')}
+    >
       <div className="h-0.5 w-full shrink-0" style={{ backgroundColor: color }} />
       <div className="flex flex-col gap-2 p-2.5">
+        <div className="flex items-center justify-between gap-2">
+          <label
+            htmlFor={checkboxId}
+            className="flex cursor-pointer items-center gap-1.5 text-[0.65rem] text-cd-muted"
+          >
+            <input
+              id={checkboxId}
+              type="checkbox"
+              checked={selected}
+              disabled={disabled}
+              onChange={() => onToggleSelect(item.inventoryItemId)}
+              className="h-3.5 w-3.5 accent-cd-accent"
+            />
+            {t('inventory.select')}
+          </label>
+        </div>
+
         <div
           className="relative flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1"
           style={{

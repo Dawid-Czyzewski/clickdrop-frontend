@@ -14,15 +14,18 @@ const baseItem = {
   createdAt: '2026-01-01T00:00:00Z',
 }
 
+const cardProps = {
+  selected: false,
+  isSelling: false,
+  disabled: false,
+  onToggleSelect: () => {},
+  onSell: () => {},
+}
+
 describe('InventoryItemCard StatTrack', () => {
   it('shows StatTrack badge when statTrack is true', () => {
     renderWithProviders(
-      <InventoryItemCard
-        item={{ ...baseItem, statTrack: true }}
-        isSelling={false}
-        disabled={false}
-        onSell={() => {}}
-      />,
+      <InventoryItemCard item={{ ...baseItem, statTrack: true }} {...cardProps} />,
     )
 
     expect(screen.getByText('StatTrack')).toBeInTheDocument()
@@ -30,24 +33,12 @@ describe('InventoryItemCard StatTrack', () => {
 
   it('hides StatTrack badge when false or missing', () => {
     const { rerender } = renderWithProviders(
-      <InventoryItemCard
-        item={{ ...baseItem, statTrack: false }}
-        isSelling={false}
-        disabled={false}
-        onSell={() => {}}
-      />,
+      <InventoryItemCard item={{ ...baseItem, statTrack: false }} {...cardProps} />,
     )
 
     expect(screen.queryByText('StatTrack')).not.toBeInTheDocument()
 
-    rerender(
-      <InventoryItemCard
-        item={baseItem}
-        isSelling={false}
-        disabled={false}
-        onSell={() => {}}
-      />,
-    )
+    rerender(<InventoryItemCard item={baseItem} {...cardProps} />)
 
     expect(screen.queryByText('StatTrack')).not.toBeInTheDocument()
   })

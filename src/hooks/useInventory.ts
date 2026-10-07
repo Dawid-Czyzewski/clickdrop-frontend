@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next'
 import {
   getInventory,
   openCase as postOpenCase,
+  sellInventoryBatch as postSellBatch,
   sellInventoryItem as postSell,
   type InventoryItem,
   type OpenCaseResponse,
+  type SellInventoryBatchResponse,
   type SellInventoryItemResponse,
 } from '../api/casesApi'
 import { resolveCaseError } from '../api/resolveCaseError'
@@ -21,6 +23,7 @@ export function useInventory(options: UseInventoryOptions = {}) {
   const [isLoading, setIsLoading] = useState(enabled)
   const [openingCaseId, setOpeningCaseId] = useState<number | null>(null)
   const [sellingId, setSellingId] = useState<number | null>(null)
+  const [isSellingBatch, setIsSellingBatch] = useState(false)
   const [error, setError] = useState('')
   const busyRef = useRef(false)
 
@@ -29,6 +32,7 @@ export function useInventory(options: UseInventoryOptions = {}) {
       setItems([])
       setError('')
       setIsLoading(false)
+      setIsSellingBatch(false)
       busyRef.current = false
       return
     }
@@ -97,14 +101,39 @@ export function useInventory(options: UseInventoryOptions = {}) {
     }
   }
 
+  async function sellBatch(
+    inventoryItemIds: number[],
+  ): Promise<SellInventoryBatchResponse | null> {
+    if (!enabled || busyRef.current || inventoryItemIds.length === 0) return null
+
+    busyRef.current = true
+    setIsSellingBatch(true)
+    setError('')
+
+    try {
+      const result = await postSellBatch(inventoryItemIds)
+      const soldIds = new Set(result.sold.map((row) => row.inventoryItemId))
+      setItems((prev) => prev.filter((item) => !soldIds.has(item.inventoryItemId)))
+      return result
+    } catch (err) {
+      setError(resolveCaseError(err, t))
+      return null
+    } finally {
+      busyRef.current = false
+      setIsSellingBatch(false)
+    }
+  }
+
   return {
     items,
     isLoading,
     openingCaseId,
     sellingId,
+    isSellingBatch,
     error,
     openCase,
     sellItem,
+    sellBatch,
     refresh: async () => {
       if (!enabled) return
       try {

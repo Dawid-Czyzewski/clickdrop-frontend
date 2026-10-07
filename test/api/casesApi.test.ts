@@ -5,6 +5,7 @@ import {
   getCases,
   getInventory,
   openCase,
+  sellInventoryBatch,
   sellInventoryItem,
 } from '../../src/api/casesApi'
 
@@ -131,6 +132,34 @@ describe('casesApi', () => {
       url: '/api/economy/inventory/9/sell',
       method: 'POST',
       data: undefined,
+      headers: undefined,
+      skipAuth: false,
+    })
+  })
+
+  it('sellInventoryBatch posts ids to /api/economy/inventory/sell-batch', async () => {
+    requestMock.mockResolvedValue({
+      data: {
+        soldCount: 2,
+        totalEarned: 80,
+        balance: 130,
+        sold: [
+          { inventoryItemId: 9, itemCode: 'AK_47_SLATE', earned: 40 },
+          { inventoryItemId: 10, itemCode: 'GLOCK_18_UMBRAL_RABBIT', earned: 40 },
+        ],
+        skipped: [],
+      },
+    })
+
+    await expect(sellInventoryBatch([9, 10])).resolves.toMatchObject({
+      soldCount: 2,
+      totalEarned: 80,
+    })
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/economy/inventory/sell-batch',
+      method: 'POST',
+      data: { inventoryItemIds: [9, 10] },
       headers: undefined,
       skipAuth: false,
     })

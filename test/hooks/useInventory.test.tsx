@@ -10,13 +10,15 @@ vi.mock('../../src/api/casesApi', () => ({
   getInventory: vi.fn(),
   openCase: vi.fn(),
   sellInventoryItem: vi.fn(),
+  sellInventoryBatch: vi.fn(),
 }))
 
-import { getInventory, openCase, sellInventoryItem } from '../../src/api/casesApi'
+import { getInventory, openCase, sellInventoryBatch, sellInventoryItem } from '../../src/api/casesApi'
 
 const getInventoryMock = vi.mocked(getInventory)
 const openCaseMock = vi.mocked(openCase)
 const sellMock = vi.mocked(sellInventoryItem)
+const sellBatchMock = vi.mocked(sellInventoryBatch)
 
 function HookProviders({ children }: { children: ReactNode }) {
   return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
@@ -49,6 +51,7 @@ describe('useInventory', () => {
     getInventoryMock.mockReset()
     openCaseMock.mockReset()
     sellMock.mockReset()
+    sellBatchMock.mockReset()
   })
 
   it('openCase refreshes inventory with the dropped item', async () => {
@@ -84,5 +87,32 @@ describe('useInventory', () => {
 
     expect(sold).toEqual({ balance: 90, soldFor: 40 })
     expect(result.current.items).toEqual([])
+  })
+
+  it('sellBatch removes sold items and returns totalEarned', async () => {
+    const second = { ...inventoryItem, inventoryItemId: 10, code: 'GLOCK_18_UMBRAL_RABBIT' }
+    getInventoryMock.mockResolvedValue([inventoryItem, second])
+    sellBatchMock.mockResolvedValue({
+      soldCount: 2,
+      totalEarned: 60,
+      balance: 110,
+      sold: [
+        { inventoryItemId: 9, itemCode: 'AK_47_SLATE', earned: 40 },
+        { inventoryItemId: 10, itemCode: 'GLOCK_18_UMBRAL_RABBIT', earned: 20 },
+      ],
+      skipped: [],
+    })
+
+    const { result } = renderHook(() => useInventory(), { wrapper: HookProviders })
+
+    await waitFor(() => {
+      expect(result.current.items).toHaveLength(2)
+    })
+
+    const sold = await act(async () => result.current.sellBatch([9, 10]))
+
+    expect(sold?.totalEarned).toBe(60)
+    expect(result.current.items).toEqual([])
+    expect(sellBatchMock).toHaveBeenCalledWith([9, 10])
   })
 })

@@ -1,0 +1,70 @@
+'use client'
+
+import { useTranslation } from 'react-i18next'
+import { formatClickDollars } from '../../lib/formatClickDollars'
+import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
+
+type InventorySellConfirmModalProps = {
+  count: number
+  estimatedTotal: number
+  isSelling: boolean
+  onConfirm: () => void
+  onCancel: () => void
+}
+
+export function InventorySellConfirmModal({
+  count,
+  estimatedTotal,
+  isSelling,
+  onConfirm,
+  onCancel,
+}: InventorySellConfirmModalProps) {
+  const { t, i18n } = useTranslation()
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="inventory-sell-confirm-title"
+      onClick={onCancel}
+    >
+      <div
+        className="w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2
+          id="inventory-sell-confirm-title"
+          className="font-display text-lg font-semibold text-cd-text"
+        >
+          {t('inventory.sellConfirmTitle')}
+        </h2>
+        <p className="mt-2 text-sm text-cd-muted">
+          {t('inventory.sellConfirmBody', {
+            count,
+            amount: formatClickDollars(estimatedTotal, i18n.language),
+          })}
+        </p>
+        <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            disabled={isSelling}
+            onClick={onCancel}
+            className={`${cdBtnGhost} h-10 px-4`}
+          >
+            {t('inventory.sellConfirmCancel')}
+          </button>
+          <button
+            type="button"
+            disabled={isSelling}
+            aria-busy={isSelling || undefined}
+            onClick={onConfirm}
+            className={`${cdBtnPrimary} h-10 px-4`}
+          >
+            {isSelling ? t('inventory.sellingBatch') : t('inventory.sellConfirmCta')}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
