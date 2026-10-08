@@ -114,11 +114,6 @@ export function CaseOpenResultModal({
         <p className="relative z-10 mt-1 text-sm text-cd-muted sm:text-base">
           {t(exteriorLabelKey(drop.exterior))}
         </p>
-        {drop.statTrack ? (
-          <div className="relative z-10 mt-2">
-            <StatTrackBadge />
-          </div>
-        ) : null}
         {drop.experienceGained != null && drop.experienceGained > 0 ? (
           <p
             className="relative z-10 mt-2 font-display text-sm font-semibold text-cd-accent sm:text-base"
@@ -129,12 +124,19 @@ export function CaseOpenResultModal({
         ) : null}
 
         <div className="relative z-10 mt-6 flex w-full max-w-xl items-center justify-center sm:mt-8">
-          <AssetImage
-            kind="item"
-            code={drop.itemCode}
-            alt={name}
-            className="h-auto max-h-[42vh] w-full max-w-lg object-contain drop-shadow-2xl"
-          />
+          <div className="relative flex w-full max-w-lg items-center justify-center">
+            <AssetImage
+              kind="item"
+              code={drop.itemCode}
+              alt={name}
+              className="h-auto max-h-[42vh] w-full object-contain drop-shadow-2xl"
+            />
+            {drop.statTrack ? (
+              <div className="pointer-events-none absolute top-2 left-2 z-20 sm:top-3 sm:left-3">
+                <StatTrackBadge />
+              </div>
+            ) : null}
+          </div>
         </div>
 
         <p className="relative z-10 mt-6 flex items-center gap-2 text-sm text-cd-muted sm:text-base">

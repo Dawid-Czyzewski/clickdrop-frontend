@@ -116,6 +116,14 @@
       "errorNotFound": "Wallet not found. Please contact support.",
       "errorTooFast": "You're clicking too fast. Slow down a bit.",
       "errorServer": "The economy service is unavailable. Please try again later."
+    },
+    "recentDrops": {
+      "eyebrow": "Live",
+      "title": "Recent drops",
+      "subtitle": "Latest skins from cases and daily rewards across ClickDrop.",
+      "empty": "No drops yet. Open a case to get the feed started.",
+      "error": "Could not load recent drops. Please try again.",
+      "errorServer": "The drops feed is unavailable. Please try again later."
     }
   },
   "upgrades": {

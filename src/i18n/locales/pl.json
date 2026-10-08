@@ -118,6 +118,14 @@
       "errorNotFound": "Nie znaleziono portfela. Skontaktuj się z supportem.",
       "errorTooFast": "Za szybko klikasz. Zwolnij trochę.",
       "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
+    },
+    "recentDrops": {
+      "eyebrow": "Na żywo",
+      "title": "Ostatnie dropy",
+      "subtitle": "Najnowsze skiny ze skrzynek i daily w ClickDrop.",
+      "empty": "Brak dropów. Otwórz skrzynkę, żeby zasilić feed.",
+      "error": "Nie udało się wczytać ostatnich dropów. Spróbuj ponownie.",
+      "errorServer": "Feed dropów jest niedostępny. Spróbuj ponownie później."
     }
   },
   "upgrades": {
