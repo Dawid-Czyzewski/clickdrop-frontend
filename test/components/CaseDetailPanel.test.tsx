@@ -105,6 +105,7 @@ describe('CaseDetailPanel', () => {
         displayName: 'Glock-18 | Umbral Rabbit',
         rarity: 'MIL_SPEC',
         weight: 50,
+        chancePercent: 50,
       },
       {
         itemId: 3,
@@ -112,6 +113,7 @@ describe('CaseDetailPanel', () => {
         displayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         weight: 15,
+        chancePercent: 15,
       },
       {
         itemId: 6,
@@ -119,6 +121,7 @@ describe('CaseDetailPanel', () => {
         displayName: 'AK-47 | Asiimov',
         rarity: 'COVERT',
         weight: 5,
+        chancePercent: 5,
       },
       {
         itemId: 2,
@@ -126,6 +129,7 @@ describe('CaseDetailPanel', () => {
         displayName: 'USP-S | Printstream',
         rarity: 'MIL_SPEC',
         weight: 30,
+        chancePercent: 30,
       },
     ])
     getInventoryMock.mockResolvedValue([])

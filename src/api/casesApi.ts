@@ -23,6 +23,7 @@ export type CaseDrop = {
   displayName: string
   rarity: ItemRarity
   weight: number
+  chancePercent?: number
 }
 
 export type OpenCaseResponse = {

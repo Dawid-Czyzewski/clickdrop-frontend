@@ -203,6 +203,7 @@
     "dropsSubtitle": "Each skin shows your chance to get it from this case.",
     "dropsLoading": "Loading drops…",
     "dropsEmpty": "No drops configured for this case yet.",
+    "dropChance": "{{percent}}%",
     "rareSpecialName": "★ Rare Special Item",
     "rareSpecialRarity": "Exceedingly Rare",
     "keep": "Keep in inventory",

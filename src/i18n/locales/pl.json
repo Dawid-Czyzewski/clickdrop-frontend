@@ -205,6 +205,7 @@
     "dropsSubtitle": "Przy każdym skinie widać szansę wylosowania go z tej skrzynki.",
     "dropsLoading": "Ładowanie dropów…",
     "dropsEmpty": "Ta skrzynka nie ma jeszcze skonfigurowanych dropów.",
+    "dropChance": "{{percent}}%",
     "rareSpecialName": "★ Rzadki przedmiot specjalny",
     "rareSpecialRarity": "Niezmiernie rzadki",
     "keep": "Do ekwipunku",

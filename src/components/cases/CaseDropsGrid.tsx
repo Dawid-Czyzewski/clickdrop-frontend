@@ -3,8 +3,8 @@
 import { useTranslation } from 'react-i18next'
 import type { CaseDrop } from '../../api/casesApi'
 import {
-  dropChancePercent,
-  formatDropChance,
+  formatDropChanceNumber,
+  resolveDropChancePercent,
   totalDropWeight,
 } from '../../lib/dropChance'
 import { RARITY_COLOR, rarityLabelKey, resolveItemLabel } from '../../lib/caseI18n'
@@ -31,10 +31,10 @@ export function CaseDropsGrid({ drops }: CaseDropsGridProps) {
     <ul className="m-0 grid list-none grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
       {views.map((view) => {
         if (view.kind === 'rareSpecial') {
-          const chance = formatDropChance(
-            dropChancePercent(view.weight, total),
-            i18n.language,
-          )
+          const percent = resolveDropChancePercent(view, total)
+          const chance = t('cases.dropChance', {
+            percent: formatDropChanceNumber(percent, i18n.language),
+          })
           const name = t('cases.rareSpecialName')
           return (
             <li
@@ -46,19 +46,19 @@ export function CaseDropsGrid({ drops }: CaseDropsGridProps) {
                 style={{ backgroundColor: RARE_SPECIAL_COLOR }}
               />
               <div className="flex flex-col p-2.5">
-                  <div
-                    className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md p-1.5"
-                    style={{
-                      background: `radial-gradient(circle at 50% 40%, ${RARE_SPECIAL_COLOR}33, transparent 70%)`,
-                    }}
-                  >
-                    <AssetImage
-                      kind="item"
-                      code="RARE_SPECIAL"
-                      alt={name}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
+                <div
+                  className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-md p-1.5"
+                  style={{
+                    background: `radial-gradient(circle at 50% 40%, ${RARE_SPECIAL_COLOR}33, transparent 70%)`,
+                  }}
+                >
+                  <AssetImage
+                    kind="item"
+                    code="RARE_SPECIAL"
+                    alt={name}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
                 <p
                   className="mt-2 text-[0.6rem] font-medium tracking-wide uppercase"
                   style={{ color: RARE_SPECIAL_COLOR }}
@@ -76,7 +76,10 @@ export function CaseDropsGrid({ drops }: CaseDropsGridProps) {
 
         const { drop } = view
         const color = RARITY_COLOR[drop.rarity] ?? '#8b92a5'
-        const chance = formatDropChance(dropChancePercent(drop.weight, total), i18n.language)
+        const percent = resolveDropChancePercent(drop, total)
+        const chance = t('cases.dropChance', {
+          percent: formatDropChanceNumber(percent, i18n.language),
+        })
         const name = resolveItemLabel(t, drop.code, drop.displayName)
 
         return (

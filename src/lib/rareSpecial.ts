@@ -14,18 +14,26 @@ export type CaseDropView =
   | {
       kind: 'rareSpecial'
       weight: number
+      chancePercent?: number
       count: number
     }
 
 export function collapseRareSpecialDrops(drops: CaseDrop[]): CaseDropView[] {
   const normal: CaseDropView[] = []
   let rareWeight = 0
+  let rareChanceSum = 0
+  let rareChanceKnown = true
   let rareCount = 0
 
   for (const drop of drops) {
     if (isRareSpecialItem(drop.code, drop.displayName)) {
       rareWeight += drop.weight
       rareCount += 1
+      if (drop.chancePercent != null && Number.isFinite(Number(drop.chancePercent))) {
+        rareChanceSum += Number(drop.chancePercent)
+      } else {
+        rareChanceKnown = false
+      }
     } else {
       normal.push({ kind: 'item', drop })
     }
@@ -33,7 +41,12 @@ export function collapseRareSpecialDrops(drops: CaseDrop[]): CaseDropView[] {
 
   const views = [...normal]
   if (rareCount > 0) {
-    views.push({ kind: 'rareSpecial', weight: rareWeight, count: rareCount })
+    views.push({
+      kind: 'rareSpecial',
+      weight: rareWeight,
+      count: rareCount,
+      ...(rareChanceKnown ? { chancePercent: rareChanceSum } : {}),
+    })
   }
 
   return views.sort((a, b) => {

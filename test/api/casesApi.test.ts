@@ -51,6 +51,7 @@ describe('casesApi', () => {
           displayName: 'Glock-18 | Umbral Rabbit',
           rarity: 'MIL_SPEC',
           weight: 50,
+          chancePercent: 50,
         },
         {
           itemId: 6,
@@ -58,6 +59,7 @@ describe('casesApi', () => {
           displayName: 'AK-47 | Asiimov',
           rarity: 'COVERT',
           weight: 5,
+          chancePercent: 5,
         },
       ],
     })
@@ -65,6 +67,7 @@ describe('casesApi', () => {
     const result = await getCaseDrops(1)
 
     expect(result).toHaveLength(2)
+    expect(result[0]?.chancePercent).toBe(50)
     expect(casesApi.getCaseDrops).toBe(getCaseDrops)
     expect(requestMock).toHaveBeenCalledWith({
       url: '/api/economy/cases/1/drops',
