@@ -4,6 +4,7 @@ import {
   getCaseDrops,
   getCases,
   getInventory,
+  getMyCaseOpens,
   openCase,
   sellInventoryBatch,
   sellInventoryItem,
@@ -131,6 +132,33 @@ describe('casesApi', () => {
     expect(requestMock).toHaveBeenNthCalledWith(2, {
       url: '/api/economy/inventory/9/sell',
       method: 'POST',
+      data: undefined,
+      headers: undefined,
+      skipAuth: false,
+    })
+  })
+
+  it('getMyCaseOpens calls GET /api/economy/cases/opens/me', async () => {
+    requestMock.mockResolvedValue({
+      data: [
+        {
+          itemCode: 'AK_47_SLATE',
+          displayName: 'AK-47 | Slate',
+          rarity: 'RESTRICTED',
+          exterior: 'FIELD_TESTED',
+          statTrack: false,
+          createdAt: '2026-04-01T12:00:00Z',
+        },
+      ],
+    })
+
+    const result = await getMyCaseOpens()
+
+    expect(result).toHaveLength(1)
+    expect(casesApi.getMyCaseOpens).toBe(getMyCaseOpens)
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/economy/cases/opens/me?limit=20',
+      method: 'GET',
       data: undefined,
       headers: undefined,
       skipAuth: false,

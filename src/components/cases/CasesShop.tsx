@@ -8,6 +8,7 @@ import { useCases } from '../../hooks/useCases'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
   cdBodyMuted,
+  cdBtnGhost,
   cdBtnPrimaryLink,
   cdEyebrow,
   cdPageTitle,
@@ -47,7 +48,11 @@ export function CasesShop() {
           <Link href="/login" className={cdBtnPrimaryLink}>
             {t('cases.loginCta')}
           </Link>
-        ) : null}
+        ) : (
+          <Link href="/cases/opens" className={cdBtnGhost}>
+            {t('cases.opens.historyLink')}
+          </Link>
+        )}
       </div>
 
       {casesError ? (

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 const NAV_LINKS = [
   { href: '/#cases', key: 'cases' as const, match: '/' },
+  { href: '/cases/opens', key: 'caseOpens' as const, match: '/cases/opens' },
   { href: '/upgrades', key: 'upgrades' as const, match: '/upgrades' },
   { href: '/skin-upgrade', key: 'skinUpgrade' as const, match: '/skin-upgrade' },
   { href: '/inventory', key: 'inventory' as const, match: '/inventory' },

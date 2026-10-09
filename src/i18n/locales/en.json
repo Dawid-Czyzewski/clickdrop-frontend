@@ -36,6 +36,10 @@
     "skinUpgrade": {
       "title": "Skin upgrade | ClickDrop",
       "description": "Risk your skin for a chance at a better one. Free upgrade — no ClickDollars."
+    },
+    "caseOpens": {
+      "title": "Case history | ClickDrop",
+      "description": "See your recent case opens — item, rarity, exterior, and date."
     }
   },
   "home": {
@@ -62,6 +66,7 @@
       "upgrades": "Upgrades shop",
       "skinUpgrade": "Skin upgrade",
       "cases": "Cases",
+      "caseOpens": "History",
       "inventory": "Inventory",
       "daily": "Daily Free"
     },
@@ -217,6 +222,16 @@
     "errorTooFast": "You're opening cases too fast. Slow down a bit.",
     "errorServer": "The economy service is unavailable. Please try again later.",
     "experienceGained": "+{{count}} XP",
+    "opens": {
+      "eyebrow": "History",
+      "title": "Case history",
+      "subtitle": "Recent skins you unboxed from cases.",
+      "empty": "No history yet. Open a case to get started.",
+      "loginHint": "Sign in to see your case history.",
+      "loginCta": "Sign in",
+      "backToCases": "Browse cases",
+      "historyLink": "History"
+    },
     "CLUTCH_CASE": {
       "name": "Clutch Case"
     },

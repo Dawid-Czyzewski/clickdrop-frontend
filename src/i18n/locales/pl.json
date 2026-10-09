@@ -36,6 +36,10 @@
     "skinUpgrade": {
       "title": "Ulepszanie skinów | ClickDrop",
       "description": "Ryzykuj skinem o szansę na lepszy. Darmowe ulepszenie — bez ClickDolarów."
+    },
+    "caseOpens": {
+      "title": "Historia skrzynek | ClickDrop",
+      "description": "Twoja historia openów skrzynek — item, rarity, exterior i data."
     }
   },
   "home": {
@@ -62,6 +66,7 @@
       "upgrades": "Sklep ulepszeń",
       "skinUpgrade": "Ulepsz skiny",
       "cases": "Skrzynki",
+      "caseOpens": "Historia",
       "inventory": "Ekwipunek",
       "daily": "Daily Free"
     },
@@ -219,6 +224,16 @@
     "errorTooFast": "Za szybko otwierasz skrzynki. Zwolnij trochę.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
     "experienceGained": "+{{count}} XP",
+    "opens": {
+      "eyebrow": "Historia",
+      "title": "Historia skrzynek",
+      "subtitle": "Ostatnie skiny, które wylosowałeś ze skrzynek.",
+      "empty": "Brak historii. Otwórz skrzynkę, żeby zacząć.",
+      "loginHint": "Zaloguj się, żeby zobaczyć historię skrzynek.",
+      "loginCta": "Zaloguj się",
+      "backToCases": "Skrzynki",
+      "historyLink": "Historia"
+    },
     "CLUTCH_CASE": {
       "name": "Skrzynka Clutch"
     },

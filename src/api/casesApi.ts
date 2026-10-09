@@ -78,6 +78,15 @@ export type SellInventoryBatchResponse = {
   skipped: SkippedInventoryItem[]
 }
 
+export type CaseOpenHistoryItem = {
+  itemCode: string
+  displayName: string
+  rarity: ItemRarity
+  exterior: ItemExterior
+  statTrack: boolean
+  createdAt: string
+}
+
 export function getCases(): Promise<GameCase[]> {
   return apiRequest<GameCase[]>('/api/economy/cases', { auth: false })
 }
@@ -112,6 +121,11 @@ export function sellInventoryBatch(
   })
 }
 
+export function getMyCaseOpens(limit = 20): Promise<CaseOpenHistoryItem[]> {
+  const query = limit > 0 ? `?limit=${limit}` : ''
+  return apiRequest<CaseOpenHistoryItem[]>(`/api/economy/cases/opens/me${query}`)
+}
+
 export const casesApi = {
   getCases,
   getCaseDrops,
@@ -119,4 +133,5 @@ export const casesApi = {
   getInventory,
   sellInventoryItem,
   sellInventoryBatch,
+  getMyCaseOpens,
 }
