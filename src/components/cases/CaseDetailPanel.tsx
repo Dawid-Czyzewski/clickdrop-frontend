@@ -4,40 +4,31 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { GameCase, OpenCaseResponse } from '../../api/casesApi'
+import type { GameCase, OpenCasesResponse } from '../../api/casesApi'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useCaseDrops } from '../../hooks/useCaseDrops'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { useDeferredLevelUpModal } from '../../hooks/useDeferredLevelUpModal'
 import { useInventory } from '../../hooks/useInventory'
-import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
-import { formatClickDollars } from '../../lib/formatClickDollars'
 import { LevelUpModal } from '../home/LevelUpModal'
-import { AssetImage } from '../media/AssetImage'
 import { CatalogSkeleton } from '../ui/Skeleton'
-import {
-  cdBodyMuted,
-  cdBtnPrimaryBlock,
-  cdBtnPrimaryLink,
-  cdHeroFrame,
-  cdMoney,
-  cdPageTitle,
-  cdSectionLabel,
-} from '../ui/uiStyles'
+import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
 import { CaseDropsGrid } from './CaseDropsGrid'
-import { CaseOpenResultModal } from './CaseOpenResultModal'
-import { CaseOpenSpinner } from './CaseOpenSpinner'
+import type { CaseOpenCount } from './CaseOpenCountPicker'
+import { CaseOpenHero } from './CaseOpenHero'
+import { CaseOpenResultLayer } from './CaseOpenResultLayer'
 
 type CaseDetailPanelProps = {
   gameCase: GameCase
 }
 
 export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState(false)
-  const [drop, setDrop] = useState<OpenCaseResponse | null>(null)
+  const [openCount, setOpenCount] = useState<CaseOpenCount>(1)
+  const [openResult, setOpenResult] = useState<OpenCasesResponse | null>(null)
   const [spinning, setSpinning] = useState(false)
   const { levelUpLevel, queueLevelUp, revealLevelUpAfterDrop, closeLevelUp } =
     useDeferredLevelUpModal()
@@ -48,31 +39,38 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     enabled: loggedIn,
   })
   const { user, applyLevelExperience } = useCurrentUser({ enabled: loggedIn })
-  const { openingCaseId, sellingId, error, openCase, sellItem, clearError } = useInventory({
-    enabled: loggedIn,
-  })
+  const {
+    openingCaseId,
+    sellingId,
+    isSellingBatch,
+    error,
+    openCase,
+    sellItem,
+    sellBatch,
+    clearError,
+  } = useInventory({ enabled: loggedIn })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
-  const accent = caseAccent(gameCase.code)
-  const caseLabel = resolveCaseLabel(t, gameCase.code, gameCase.displayName)
-  const canAfford = balance !== null && balance >= gameCase.price
+  const totalCost = gameCase.price * openCount
+  const canAfford = balance !== null && balance >= totalCost
   const isOpening = openingCaseId === gameCase.id || spinning
+  const resultOpen = openResult !== null
   const openDisabled =
-    !loggedIn || isOpening || drop !== null || !canAfford || balanceLoading
+    !loggedIn || isOpening || resultOpen || !canAfford || balanceLoading
+  const singleDrop = openResult?.count === 1 ? openResult.drops[0] : null
+  const multiDrops = openResult && openResult.count > 1 ? openResult.drops : null
 
-  function dismissDrop(options?: { thenInventory?: boolean }) {
-    setDrop(null)
-    if (revealLevelUpAfterDrop(options)) {
-      router.push('/inventory')
-    }
+  function dismissResult(options?: { thenInventory?: boolean }) {
+    setOpenResult(null)
+    if (revealLevelUpAfterDrop(options)) router.push('/inventory')
   }
 
   async function handleOpen() {
     clearError()
-    const result = await openCase(gameCase.id)
+    const result = await openCase(gameCase.id, openCount)
     if (!result) return
     const previousLevel = user?.level
     applyBalance(result.balance)
@@ -80,24 +78,27 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       { level: result.level, experience: result.experience },
       { emitLevelUp: false },
     )
-    if (
-      result.level != null &&
-      previousLevel != null &&
-      result.level > previousLevel
-    ) {
+    if (result.level != null && previousLevel != null && result.level > previousLevel) {
       queueLevelUp(result.level)
     }
-    setDrop(result)
-    const skipSpin = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setSpinning(!skipSpin)
+    setOpenResult(result)
+    setSpinning(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }
 
   async function handleSellNow() {
-    if (!drop) return
-    const result = await sellItem(drop.inventoryItemId)
+    if (!singleDrop) return
+    const result = await sellItem(singleDrop.inventoryItemId)
     if (!result) return
     applyBalance(result.balance)
-    dismissDrop()
+    dismissResult()
+  }
+
+  async function handleSellAll() {
+    if (!multiDrops) return
+    const result = await sellBatch(multiDrops.map((drop) => drop.inventoryItemId))
+    if (!result) return
+    applyBalance(result.balance)
+    dismissResult()
   }
 
   return (
@@ -110,50 +111,20 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       </Link>
 
       <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:gap-12">
-        <div className="flex w-full max-w-md flex-col items-center gap-4">
-          <div
-            className={cdHeroFrame}
-            style={{
-              background: `radial-gradient(circle at 50% 40%, ${accent}20, transparent 65%)`,
-            }}
-          >
-            <AssetImage
-              kind="case"
-              code={gameCase.code}
-              alt={caseLabel}
-              className="h-full w-full object-contain"
-            />
-          </div>
-          <h1 className={`${cdPageTitle} text-center`}>{caseLabel}</h1>
-          <p className={cdMoney}>{formatClickDollars(gameCase.price, i18n.language)} CD</p>
-
-          {loggedIn ? (
-            <button
-              type="button"
-              disabled={openDisabled}
-              aria-busy={isOpening || undefined}
-              onClick={() => {
-                void handleOpen()
-              }}
-              className={cdBtnPrimaryBlock}
-            >
-              {isOpening ? t('cases.opening') : t('cases.open')}
-            </button>
-          ) : (
-            <Link href="/login" className={`${cdBtnPrimaryLink} w-full`}>
-              {t('cases.loginCta')}
-            </Link>
-          )}
-
-          {!canAfford && loggedIn && balance !== null ? (
-            <p className="text-sm text-cd-danger">{t('cases.insufficientFunds')}</p>
-          ) : null}
-          {error ? (
-            <p role="alert" className="text-sm text-cd-danger">
-              {error}
-            </p>
-          ) : null}
-        </div>
+        <CaseOpenHero
+          gameCase={gameCase}
+          loggedIn={loggedIn}
+          openCount={openCount}
+          totalCost={totalCost}
+          canAfford={canAfford}
+          balance={balance}
+          isOpening={isOpening}
+          openDisabled={openDisabled}
+          resultOpen={resultOpen}
+          error={error}
+          onCountChange={setOpenCount}
+          onOpen={() => void handleOpen()}
+        />
 
         <div className="min-w-0 flex-1">
           <h2 className={cdSectionLabel}>{t('cases.dropsHeading')}</h2>
@@ -170,26 +141,19 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         </div>
       </div>
 
-      {spinning && drop ? (
-        <CaseOpenSpinner
-          drops={drops}
-          winnerCode={drop.itemCode}
-          onComplete={() => setSpinning(false)}
-        />
-      ) : null}
-
-      {!spinning && drop ? (
-        <CaseOpenResultModal
-          drop={drop}
-          isSelling={sellingId === drop.inventoryItemId}
-          onClose={() => dismissDrop()}
-          onKeep={() => dismissDrop({ thenInventory: true })}
-          onSell={() => {
-            void handleSellNow()
-          }}
-          backdropCodes={drops.map((d) => d.code)}
-        />
-      ) : null}
+      <CaseOpenResultLayer
+        drops={drops}
+        openResult={openResult}
+        spinning={spinning}
+        singleDrop={singleDrop}
+        multiDrops={multiDrops}
+        sellingId={sellingId}
+        isSellingBatch={isSellingBatch}
+        onSpinComplete={() => setSpinning(false)}
+        onDismiss={dismissResult}
+        onSellNow={() => void handleSellNow()}
+        onSellAll={() => void handleSellAll()}
+      />
 
       {levelUpLevel != null ? (
         <LevelUpModal

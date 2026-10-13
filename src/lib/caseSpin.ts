@@ -5,6 +5,10 @@ export const SPIN_STRIP_LENGTH = 52
 export const SPIN_WINNER_INDEX = 44
 export const SPIN_DURATION_MS = 5500
 
+export const MULTI_SPIN_ITEM_WIDTH = 104
+export const MULTI_SPIN_DURATION_MS = 4200
+export const MULTI_SPIN_STAGGER_MS = 260
+
 function pickWeighted(drops: CaseDrop[], random = Math.random): CaseDrop {
   const total = drops.reduce((sum, drop) => sum + drop.weight, 0)
   let roll = random() * total

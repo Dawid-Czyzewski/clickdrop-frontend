@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import type { OpenCaseResponse } from '../../api/casesApi'
+import type { OpenedCaseDrop } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import {
   exteriorLabelKey,
@@ -14,17 +14,9 @@ import { CurrencyBadge } from '../ui/CurrencyBadge'
 import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
 
-export type SkinDropResult = Pick<
-  OpenCaseResponse,
-  | 'inventoryItemId'
-  | 'itemCode'
-  | 'itemDisplayName'
-  | 'rarity'
-  | 'exterior'
-  | 'statTrack'
-  | 'suggestedSellPrice'
-  | 'experienceGained'
->
+export type SkinDropResult = OpenedCaseDrop & {
+  experienceGained?: number
+}
 
 type CaseOpenResultModalProps = {
   drop: SkinDropResult

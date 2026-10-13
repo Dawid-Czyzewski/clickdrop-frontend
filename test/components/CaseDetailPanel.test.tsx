@@ -12,6 +12,7 @@ vi.mock('../../src/api/casesApi', () => ({
   openCase: vi.fn(),
   getInventory: vi.fn(),
   sellInventoryItem: vi.fn(),
+  sellInventoryBatch: vi.fn(),
 }))
 
 vi.mock('../../src/api/economyApi', () => ({
@@ -26,7 +27,13 @@ vi.mock('../../src/api/usersApi', () => ({
   getCurrentUser: vi.fn(),
 }))
 
-import { getCaseDrops, getInventory, openCase, sellInventoryItem } from '../../src/api/casesApi'
+import {
+  getCaseDrops,
+  getInventory,
+  openCase,
+  sellInventoryBatch,
+  sellInventoryItem,
+} from '../../src/api/casesApi'
 import { getBalance } from '../../src/api/economyApi'
 import { getCurrentUser } from '../../src/api/usersApi'
 import { HeaderUserStatsPanel } from '../../src/components/home/HeaderUserStatsPanel'
@@ -36,6 +43,7 @@ const getCaseDropsMock = vi.mocked(getCaseDrops)
 const openCaseMock = vi.mocked(openCase)
 const getInventoryMock = vi.mocked(getInventory)
 const sellMock = vi.mocked(sellInventoryItem)
+const sellBatchMock = vi.mocked(sellInventoryBatch)
 const getBalanceMock = vi.mocked(getBalance)
 const getCurrentUserMock = vi.mocked(getCurrentUser)
 
@@ -58,15 +66,20 @@ const slateInventory = {
   createdAt: '2026-01-01T00:00:00Z',
 }
 
-const slateOpen = {
+const slateDrop = {
   inventoryItemId: 9,
   itemCode: 'AK_47_SLATE',
   itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
-  balance: 50,
-  cost: 50,
   suggestedSellPrice: 40,
+}
+
+const slateOpen = {
+  count: 1,
+  totalCost: 50,
+  balance: 50,
+  drops: [slateDrop],
   experienceGained: 10,
   level: 4,
   experience: 460,
@@ -79,6 +92,7 @@ describe('CaseDetailPanel', () => {
     openCaseMock.mockReset()
     getInventoryMock.mockReset()
     sellMock.mockReset()
+    sellBatchMock.mockReset()
     getBalanceMock.mockReset()
     getCurrentUserMock.mockReset()
     getCurrentUserMock.mockResolvedValue({
@@ -168,8 +182,8 @@ describe('CaseDetailPanel', () => {
 
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
-    await screen.findByRole('button', { name: /^open$/i })
-    await user.click(screen.getByRole('button', { name: /^open$/i }))
+    await screen.findByRole('button', { name: /open ×1/i })
+    await user.click(screen.getByRole('button', { name: /open ×1/i }))
 
     expect(await screen.findByRole('button', { name: /keep in inventory/i })).toBeInTheDocument()
     expect(screen.getByRole('dialog')).toHaveTextContent('Field-Tested')
@@ -200,8 +214,8 @@ describe('CaseDetailPanel', () => {
 
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
-    await screen.findByRole('button', { name: /^open$/i })
-    await user.click(screen.getByRole('button', { name: /^open$/i }))
+    await screen.findByRole('button', { name: /open ×1/i })
+    await user.click(screen.getByRole('button', { name: /open ×1/i }))
 
     expect(await screen.findByRole('button', { name: /sell for 40.00 cd/i })).toBeInTheDocument()
 
@@ -246,8 +260,8 @@ describe('CaseDetailPanel', () => {
       expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
     })
 
-    await screen.findByRole('button', { name: /^open$/i })
-    await user.click(screen.getByRole('button', { name: /^open$/i }))
+    await screen.findByRole('button', { name: /open ×1/i })
+    await user.click(screen.getByRole('button', { name: /open ×1/i }))
 
     expect(await screen.findByText('+10 XP')).toBeInTheDocument()
     expect(screen.getByLabelText('Lvl 4, 60 / 100 XP')).toBeInTheDocument()
@@ -284,7 +298,7 @@ describe('CaseDetailPanel', () => {
       expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
     })
 
-    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+    await user.click(await screen.findByRole('button', { name: /open ×1/i }))
 
     expect(await screen.findByText('+10 XP')).toBeInTheDocument()
     expect(screen.queryByRole('dialog', { name: /lvl 4/i })).not.toBeInTheDocument()
@@ -327,7 +341,7 @@ describe('CaseDetailPanel', () => {
       expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
     })
 
-    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+    await user.click(await screen.findByRole('button', { name: /open ×1/i }))
 
     expect(await screen.findByText('+10 XP')).toBeInTheDocument()
     expect(screen.queryByText(/level up! lvl 4/i)).not.toBeInTheDocument()
@@ -360,12 +374,86 @@ describe('CaseDetailPanel', () => {
 
     renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
 
-    await user.click(await screen.findByRole('button', { name: /^open$/i }))
+    await user.click(await screen.findByRole('button', { name: /open ×1/i }))
     expect(await screen.findByText('+10 XP')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /^close$/i }))
 
     expect(screen.queryByRole('dialog', { name: /lvl/i })).not.toBeInTheDocument()
+  })
+
+  it('blocks ×5 when balance is too low', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+
+    renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
+
+    await user.click(await screen.findByRole('button', { name: /^×5$/i }))
+
+    expect(screen.getByRole('button', { name: /open ×5/i })).toBeDisabled()
+    expect(screen.getByText(/not enough clickdollars for ×5/i)).toBeInTheDocument()
+    expect(openCaseMock).not.toHaveBeenCalled()
+  })
+
+  it('opens ×5, shows all drops, updates balance and inventory', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 300 })
+    const multiDrops = Array.from({ length: 5 }, (_, index) => ({
+      ...slateDrop,
+      inventoryItemId: 20 + index,
+      itemCode: index === 0 ? 'AK_47_SLATE' : `DROP_${index}`,
+      itemDisplayName: index === 0 ? 'AK-47 | Slate' : `Drop ${index}`,
+    }))
+    openCaseMock.mockResolvedValue({
+      count: 5,
+      totalCost: 250,
+      balance: 50,
+      drops: multiDrops,
+      experienceGained: 50,
+      level: 2,
+      experience: 50,
+    })
+    getInventoryMock
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce(
+        multiDrops.map((drop, index) => ({
+          inventoryItemId: drop.inventoryItemId,
+          itemId: index + 1,
+          code: drop.itemCode,
+          displayName: drop.itemDisplayName,
+          rarity: drop.rarity,
+          exterior: drop.exterior,
+          suggestedSellPrice: drop.suggestedSellPrice,
+          createdAt: '2026-01-01T00:00:00Z',
+        })),
+      )
+
+    renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
+
+    await user.click(await screen.findByRole('button', { name: /^×5$/i }))
+    await user.click(screen.getByRole('button', { name: /open ×5/i }))
+
+    expect(openCaseMock).toHaveBeenCalledWith(1, 5)
+    const results = await screen.findByRole('dialog')
+    expect(screen.getByRole('heading', { name: /your drops \(5\)/i })).toBeInTheDocument()
+    expect(results).toHaveTextContent('AK-47 | Slate')
+    expect(results).toHaveTextContent('Drop 1')
+    expect(results).toHaveTextContent('+50 XP')
+    expect(getInventoryMock).toHaveBeenCalledTimes(2)
   })
 
   it('does not change header XP when open is rate-limited', async () => {
@@ -399,8 +487,8 @@ describe('CaseDetailPanel', () => {
       expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
     })
 
-    await screen.findByRole('button', { name: /^open$/i })
-    await user.click(screen.getByRole('button', { name: /^open$/i }))
+    await screen.findByRole('button', { name: /open ×1/i })
+    await user.click(screen.getByRole('button', { name: /open ×1/i }))
 
     await waitFor(() => {
       expect(screen.getByRole('alert')).toBeInTheDocument()

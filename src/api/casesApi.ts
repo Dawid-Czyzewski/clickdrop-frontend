@@ -26,16 +26,21 @@ export type CaseDrop = {
   chancePercent?: number
 }
 
-export type OpenCaseResponse = {
+export type OpenedCaseDrop = {
   inventoryItemId: number
   itemCode: string
   itemDisplayName: string
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack?: boolean
-  balance: number
-  cost: number
   suggestedSellPrice: number
+}
+
+export type OpenCasesResponse = {
+  count: number
+  totalCost: number
+  balance: number
+  drops: OpenedCaseDrop[]
   experienceGained?: number
   level?: number
   experience?: number
@@ -96,10 +101,11 @@ export function getCaseDrops(caseId: number): Promise<CaseDrop[]> {
   return apiRequest<CaseDrop[]>(`/api/economy/cases/${caseId}/drops`, { auth: false })
 }
 
-export function openCase(caseId: number): Promise<OpenCaseResponse> {
-  return apiRequest<OpenCaseResponse>(`/api/economy/cases/${caseId}/open`, {
-    method: 'POST',
-  })
+export function openCase(caseId: number, count = 1): Promise<OpenCasesResponse> {
+  return apiRequest<OpenCasesResponse>(
+    `/api/economy/cases/${caseId}/open?count=${count}`,
+    { method: 'POST' },
+  )
 }
 
 export function getInventory(): Promise<InventoryItem[]> {

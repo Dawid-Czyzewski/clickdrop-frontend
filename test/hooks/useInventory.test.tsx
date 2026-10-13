@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { I18nextProvider } from 'react-i18next'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import type { OpenCaseResponse } from '../../src/api/casesApi'
+import type { OpenCasesResponse } from '../../src/api/casesApi'
 import { useInventory } from '../../src/hooks/useInventory'
 import i18n from '../utils/i18n'
 
@@ -24,15 +24,20 @@ function HookProviders({ children }: { children: ReactNode }) {
   return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
 }
 
-const drop: OpenCaseResponse = {
-  inventoryItemId: 9,
-  itemCode: 'AK_47_SLATE',
-  itemDisplayName: 'AK-47 | Slate',
-  rarity: 'RESTRICTED',
-  exterior: 'FIELD_TESTED',
+const drop: OpenCasesResponse = {
+  count: 1,
+  totalCost: 50,
   balance: 50,
-  cost: 50,
-  suggestedSellPrice: 40,
+  drops: [
+    {
+      inventoryItemId: 9,
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
+      rarity: 'RESTRICTED',
+      exterior: 'FIELD_TESTED',
+      suggestedSellPrice: 40,
+    },
+  ],
 }
 
 const inventoryItem = {
@@ -66,11 +71,11 @@ describe('useInventory', () => {
       expect(result.current.isLoading).toBe(false)
     })
 
-    const opened = await act(async () => result.current.openCase(1))
+    const opened = await act(async () => result.current.openCase(1, 5))
 
-    expect(opened?.itemCode).toBe('AK_47_SLATE')
+    expect(opened?.drops[0]?.itemCode).toBe('AK_47_SLATE')
     expect(result.current.items).toEqual([inventoryItem])
-    expect(openCaseMock).toHaveBeenCalledWith(1)
+    expect(openCaseMock).toHaveBeenCalledWith(1, 5)
   })
 
   it('sellItem removes the item and returns sold amount', async () => {

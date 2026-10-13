@@ -78,25 +78,31 @@ describe('casesApi', () => {
     })
   })
 
-  it('openCase posts to /api/economy/cases/{id}/open without body', async () => {
+  it('openCase posts to /api/economy/cases/{id}/open with count', async () => {
     requestMock.mockResolvedValue({
       data: {
-        inventoryItemId: 9,
-        itemCode: 'AK_47_SLATE',
-        itemDisplayName: 'AK-47 | Slate',
-        rarity: 'RESTRICTED',
-        exterior: 'FIELD_TESTED',
+        count: 5,
+        totalCost: 250,
         balance: 50,
-        cost: 50,
-        suggestedSellPrice: 40,
+        drops: [
+          {
+            inventoryItemId: 9,
+            itemCode: 'AK_47_SLATE',
+            itemDisplayName: 'AK-47 | Slate',
+            rarity: 'RESTRICTED',
+            exterior: 'FIELD_TESTED',
+            suggestedSellPrice: 40,
+          },
+        ],
       },
     })
 
-    const result = await openCase(1)
+    const result = await openCase(1, 5)
 
-    expect(result.itemCode).toBe('AK_47_SLATE')
+    expect(result.count).toBe(5)
+    expect(result.drops[0]?.itemCode).toBe('AK_47_SLATE')
     expect(requestMock).toHaveBeenCalledWith({
-      url: '/api/economy/cases/1/open',
+      url: '/api/economy/cases/1/open?count=5',
       method: 'POST',
       data: undefined,
       headers: undefined,

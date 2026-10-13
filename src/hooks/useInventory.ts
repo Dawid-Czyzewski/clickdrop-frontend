@@ -6,7 +6,7 @@ import {
   sellInventoryBatch as postSellBatch,
   sellInventoryItem as postSell,
   type InventoryItem,
-  type OpenCaseResponse,
+  type OpenCasesResponse,
   type SellInventoryBatchResponse,
   type SellInventoryItemResponse,
 } from '../api/casesApi'
@@ -60,7 +60,10 @@ export function useInventory(options: UseInventoryOptions = {}) {
     }
   }, [enabled, t])
 
-  async function openCase(caseId: number): Promise<OpenCaseResponse | null> {
+  async function openCase(
+    caseId: number,
+    count = 1,
+  ): Promise<OpenCasesResponse | null> {
     if (!enabled || busyRef.current) return null
 
     busyRef.current = true
@@ -68,7 +71,7 @@ export function useInventory(options: UseInventoryOptions = {}) {
     setError('')
 
     try {
-      const result = await postOpenCase(caseId)
+      const result = await postOpenCase(caseId, count)
       const refreshed = await getInventory()
       setItems(refreshed)
       return result
