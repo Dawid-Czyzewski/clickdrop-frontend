@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: '/skin-upgrade', key: 'skinUpgrade' as const, match: '/skin-upgrade' },
   { href: '/inventory', key: 'inventory' as const, match: '/inventory' },
   { href: '/daily', key: 'daily' as const, match: '/daily' },
+  { href: '/leaderboard', key: 'leaderboard' as const, match: '/leaderboard' },
 ]
 
 export function NavStatsBar() {

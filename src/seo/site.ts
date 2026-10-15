@@ -12,6 +12,7 @@ export type SeoPageKey =
   | 'daily'
   | 'skinUpgrade'
   | 'caseOpens'
+  | 'leaderboard'
 
 const seoPages: Record<
   SeoPageKey,
@@ -23,6 +24,7 @@ const seoPages: Record<
   inventory: { path: '/inventory' },
   skinUpgrade: { path: '/skin-upgrade' },
   caseOpens: { path: '/cases/opens' },
+  leaderboard: { path: '/leaderboard' },
   login: { path: '/login', noIndex: true },
   register: { path: '/register', noIndex: true },
   verifyEmail: { path: '/verify-email', noIndex: true },

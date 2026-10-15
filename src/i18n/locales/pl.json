@@ -40,6 +40,10 @@
     "caseOpens": {
       "title": "Historia skrzynek | ClickDrop",
       "description": "Twoja historia openów skrzynek — item, rarity, exterior i data."
+    },
+    "leaderboard": {
+      "title": "Ranking | ClickDrop",
+      "description": "Top gracze ClickDrop według poziomu i XP."
     }
   },
   "home": {
@@ -68,7 +72,8 @@
       "cases": "Skrzynki",
       "caseOpens": "Historia",
       "inventory": "Ekwipunek",
-      "daily": "Daily Free"
+      "daily": "Daily Free",
+      "leaderboard": "Ranking"
     },
     "stats": {
       "cases": "otwartych skrzynek",
@@ -283,6 +288,23 @@
     },
     "SPECTRUM_2_CASE": {
       "name": "Skrzynka Spectrum 2"
+    }
+  },
+  "leaderboard": {
+    "eyebrow": "Ranking",
+    "title": "Ranking graczy",
+    "subtitle": "Top gracze według poziomu i XP. Goście też mogą przeglądać ranking.",
+    "empty": "Brak graczy w rankingu.",
+    "error": "Nie udało się wczytać rankingu. Spróbuj ponownie.",
+    "errorServer": "Ranking jest niedostępny. Spróbuj ponownie później.",
+    "anonymous": "Gracz",
+    "levelValue": "Lvl {{level}}",
+    "xpValue": "{{xp}} XP",
+    "columns": {
+      "rank": "Poz.",
+      "player": "Gracz",
+      "level": "Poziom",
+      "xp": "XP"
     }
   },
   "inventory": {
