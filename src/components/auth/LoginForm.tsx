@@ -60,9 +60,20 @@ export function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-2 text-left">
-        <label htmlFor="login-password" className="text-sm font-medium uppercase tracking-wider text-cd-muted">
-          {t('login.password')}
-        </label>
+        <div className="flex items-center justify-between gap-2">
+          <label
+            htmlFor="login-password"
+            className="text-sm font-medium tracking-wider text-cd-muted uppercase"
+          >
+            {t('login.password')}
+          </label>
+          <Link
+            href="/forgot-password"
+            className="cursor-pointer text-sm text-cd-muted transition hover:text-cd-accent hover:underline"
+          >
+            {t('login.forgotPassword')}
+          </Link>
+        </div>
         <input
           id="login-password"
           name="password"

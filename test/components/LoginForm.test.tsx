@@ -18,6 +18,15 @@ import { authApi } from '../../src/api/authApi'
 const loginMock = vi.mocked(authApi.login)
 
 describe('LoginForm', () => {
+  it('links to forgot password', () => {
+    renderWithProviders(<LoginForm />)
+
+    expect(screen.getByRole('link', { name: /forgot password/i })).toHaveAttribute(
+      'href',
+      '/forgot-password',
+    )
+  })
+
   it('logs in, stores user and redirects to home', async () => {
     const user = userEvent.setup()
     loginMock.mockResolvedValue({

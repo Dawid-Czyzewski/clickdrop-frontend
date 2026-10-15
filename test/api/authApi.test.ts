@@ -58,4 +58,35 @@ describe('authApi', () => {
       skipAuth: true,
     })
   })
+
+  it('posts email to /api/auth/forgot-password', async () => {
+    requestMock.mockResolvedValue({ data: undefined })
+
+    await authApi.forgotPassword({ email: 'player@clickdrop.test' })
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/forgot-password',
+      method: 'POST',
+      data: { email: 'player@clickdrop.test' },
+      headers: undefined,
+      skipAuth: true,
+    })
+  })
+
+  it('posts token and password to /api/auth/reset-password', async () => {
+    requestMock.mockResolvedValue({ data: undefined })
+
+    await authApi.resetPassword({
+      token: 'reset-token',
+      newPassword: 'newsecret1',
+    })
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/reset-password',
+      method: 'POST',
+      data: { token: 'reset-token', newPassword: 'newsecret1' },
+      headers: undefined,
+      skipAuth: true,
+    })
+  })
 })

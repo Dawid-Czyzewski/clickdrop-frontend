@@ -21,6 +21,14 @@
       "title": "Weryfikacja e-mail | ClickDrop",
       "description": "Potwierdź adres e-mail konta ClickDrop, aby dokończyć rejestrację."
     },
+    "forgotPassword": {
+      "title": "Odzyskiwanie hasła | ClickDrop",
+      "description": "Poproś o link do resetu hasła konta ClickDrop."
+    },
+    "resetPassword": {
+      "title": "Nowe hasło | ClickDrop",
+      "description": "Ustaw nowe hasło do konta ClickDrop."
+    },
     "upgrades": {
       "title": "Sklep ulepszeń | ClickDrop",
       "description": "Kupuj ulepszenia kliknięcia za ClickDollary i zwiększaj moc zarabiania."
@@ -1837,6 +1845,7 @@
     "emailPlaceholder": "ty@przyklad.pl",
     "password": "Hasło",
     "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Nie pamiętam hasła",
     "submit": "Zaloguj",
     "submitting": "Logowanie…",
     "registerPrompt": "Nie masz konta?",
@@ -1844,6 +1853,39 @@
     "error": "Logowanie nie powiodło się. Spróbuj ponownie.",
     "invalidCredentials": "Nieprawidłowy email lub hasło.",
     "validationError": "Sprawdź email i hasło.",
+    "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+  },
+  "forgotPassword": {
+    "title": "Nie pamiętam hasła",
+    "subtitle": "Podaj email — wyślemy link do resetu, jeśli konto istnieje.",
+    "email": "Email",
+    "emailPlaceholder": "ty@przyklad.pl",
+    "submit": "Wyślij link",
+    "submitting": "Wysyłanie…",
+    "success": "Jeśli konto z tym emailem istnieje, wysłaliśmy link do resetu hasła.",
+    "loginLink": "Wróć do logowania",
+    "error": "Nie udało się wysłać linku. Spróbuj ponownie.",
+    "errorServer": "Usługa auth jest niedostępna. Spróbuj ponownie później.",
+    "validationError": "Podaj poprawny adres email.",
+    "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+  },
+  "resetPassword": {
+    "title": "Ustaw nowe hasło",
+    "subtitle": "Wybierz nowe hasło do konta.",
+    "password": "Nowe hasło",
+    "passwordPlaceholder": "••••••••",
+    "confirmPassword": "Powtórz hasło",
+    "confirmPasswordPlaceholder": "••••••••",
+    "submit": "Zapisz hasło",
+    "submitting": "Zapisywanie…",
+    "passwordMismatch": "Hasła nie są takie same.",
+    "missingToken": "Ten link resetu jest niekompletny.",
+    "requestNewLink": "Poproś o nowy link",
+    "loginLink": "Wróć do logowania",
+    "invalid": "Ten link resetu jest nieprawidłowy.",
+    "expired": "Ten link resetu wygasł.",
+    "error": "Nie udało się zresetować hasła. Spróbuj ponownie.",
+    "errorServer": "Usługa auth jest niedostępna. Spróbuj ponownie później.",
     "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
   },
   "register": {

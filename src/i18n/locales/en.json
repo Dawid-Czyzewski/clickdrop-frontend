@@ -21,6 +21,14 @@
       "title": "Verify email | ClickDrop",
       "description": "Confirm your ClickDrop account email to finish registration."
     },
+    "forgotPassword": {
+      "title": "Forgot password | ClickDrop",
+      "description": "Request a password reset link for your ClickDrop account."
+    },
+    "resetPassword": {
+      "title": "Reset password | ClickDrop",
+      "description": "Choose a new password for your ClickDrop account."
+    },
     "upgrades": {
       "title": "Upgrades shop | ClickDrop",
       "description": "Buy click upgrades with ClickDollars and boost your earn power."
@@ -1835,6 +1843,7 @@
     "emailPlaceholder": "you@example.com",
     "password": "Password",
     "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Forgot password?",
     "submit": "Login",
     "submitting": "Signing in…",
     "registerPrompt": "Don't have an account?",
@@ -1842,6 +1851,39 @@
     "error": "Login failed. Please try again.",
     "invalidCredentials": "Invalid email or password.",
     "validationError": "Please check your email and password.",
+    "networkError": "Could not reach the server. Please try again."
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "subtitle": "Enter your email and we will send a reset link if an account exists.",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "submit": "Send reset link",
+    "submitting": "Sending…",
+    "success": "If an account exists for that email, a reset link has been sent.",
+    "loginLink": "Back to login",
+    "error": "Could not send the reset link. Please try again.",
+    "errorServer": "The auth service is unavailable. Please try again later.",
+    "validationError": "Please enter a valid email address.",
+    "networkError": "Could not reach the server. Please try again."
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "subtitle": "Choose a new password for your account.",
+    "password": "New password",
+    "passwordPlaceholder": "••••••••",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "••••••••",
+    "submit": "Save new password",
+    "submitting": "Saving…",
+    "passwordMismatch": "Passwords do not match.",
+    "missingToken": "This reset link is missing or incomplete.",
+    "requestNewLink": "Request a new reset link",
+    "loginLink": "Back to login",
+    "invalid": "This reset link is invalid.",
+    "expired": "This reset link has expired.",
+    "error": "Could not reset your password. Please try again.",
+    "errorServer": "The auth service is unavailable. Please try again later.",
     "networkError": "Could not reach the server. Please try again."
   },
   "register": {

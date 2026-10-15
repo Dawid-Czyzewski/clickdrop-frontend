@@ -7,6 +7,8 @@ export type SeoPageKey =
   | 'login'
   | 'register'
   | 'verifyEmail'
+  | 'forgotPassword'
+  | 'resetPassword'
   | 'upgrades'
   | 'inventory'
   | 'daily'
@@ -28,6 +30,8 @@ const seoPages: Record<
   login: { path: '/login', noIndex: true },
   register: { path: '/register', noIndex: true },
   verifyEmail: { path: '/verify-email', noIndex: true },
+  forgotPassword: { path: '/forgot-password', noIndex: true },
+  resetPassword: { path: '/reset-password', noIndex: true },
 }
 
 export function getSiteOrigin(): string {

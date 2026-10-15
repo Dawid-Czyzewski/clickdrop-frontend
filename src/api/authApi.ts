@@ -45,6 +45,15 @@ export type VerifyEmailResponse = {
   message: string
 }
 
+export type ForgotPasswordRequest = {
+  email: string
+}
+
+export type ResetPasswordRequest = {
+  token: string
+  newPassword: string
+}
+
 export const authApi = {
   login(payload: LoginRequest): Promise<LoginResponse> {
     return apiRequest<LoginResponse>('/api/auth/login', {
@@ -82,6 +91,22 @@ export const authApi = {
     const query = new URLSearchParams({ token }).toString()
     return apiRequest<VerifyEmailResponse>(`/api/auth/verify-email?${query}`, {
       method: 'GET',
+      auth: false,
+    })
+  },
+
+  forgotPassword(payload: ForgotPasswordRequest): Promise<void> {
+    return apiRequest<void>('/api/auth/forgot-password', {
+      method: 'POST',
+      body: payload,
+      auth: false,
+    })
+  },
+
+  resetPassword(payload: ResetPasswordRequest): Promise<void> {
+    return apiRequest<void>('/api/auth/reset-password', {
+      method: 'POST',
+      body: payload,
       auth: false,
     })
   },
