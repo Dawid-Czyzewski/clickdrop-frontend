@@ -52,6 +52,10 @@
     "leaderboard": {
       "title": "Ranking | ClickDrop",
       "description": "Top gracze ClickDrop według poziomu i XP."
+    },
+    "settings": {
+      "title": "Ustawienia | ClickDrop",
+      "description": "Zarządzaj ustawieniami konta ClickDrop i hasłem."
     }
   },
   "home": {
@@ -62,6 +66,7 @@
       "online": "online",
       "login": "Zaloguj",
       "logout": "Wyloguj",
+      "settings": "Ustawienia",
       "level": "Lvl",
       "xp": "XP",
       "xpProgress": "{{current}}/{{needed}}",
@@ -81,7 +86,8 @@
       "caseOpens": "Historia",
       "inventory": "Ekwipunek",
       "daily": "Daily Free",
-      "leaderboard": "Ranking"
+      "leaderboard": "Ranking",
+      "settings": "Ustawienia"
     },
     "stats": {
       "cases": "otwartych skrzynek",
@@ -313,6 +319,34 @@
       "player": "Gracz",
       "level": "Poziom",
       "xp": "XP"
+    }
+  },
+  "settings": {
+    "eyebrow": "Konto",
+    "title": "Ustawienia",
+    "subtitle": "Zarządzaj ustawieniami konta.",
+    "loginHint": "Zaloguj się, żeby zarządzać ustawieniami.",
+    "loginCta": "Zaloguj się",
+    "changePassword": {
+      "heading": "Zmiana hasła",
+      "subtitle": "Zaktualizuj hasło do logowania.",
+      "current": "Obecne hasło",
+      "currentPlaceholder": "••••••••",
+      "new": "Nowe hasło",
+      "newPlaceholder": "••••••••",
+      "confirm": "Potwierdź nowe hasło",
+      "confirmPlaceholder": "••••••••",
+      "submit": "Zapisz hasło",
+      "submitting": "Zapisywanie…",
+      "success": "Hasło zostało zmienione.",
+      "passwordMismatch": "Nowe hasła nie są takie same.",
+      "samePassword": "Nowe hasło musi być inne niż obecne.",
+      "wrongCurrent": "Obecne hasło jest nieprawidłowe.",
+      "validationError": "Sprawdź dane hasła.",
+      "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "errorServer": "Usługa auth jest niedostępna. Spróbuj ponownie później.",
+      "error": "Nie udało się zmienić hasła. Spróbuj ponownie.",
+      "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
     }
   },
   "inventory": {

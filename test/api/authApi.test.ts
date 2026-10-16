@@ -89,4 +89,24 @@ describe('authApi', () => {
       skipAuth: true,
     })
   })
+
+  it('posts change-password with auth', async () => {
+    requestMock.mockResolvedValue({ data: undefined })
+
+    await authApi.changePassword({
+      currentPassword: 'OldPass123!',
+      newPassword: 'NewPass123!',
+    })
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/change-password',
+      method: 'POST',
+      data: {
+        currentPassword: 'OldPass123!',
+        newPassword: 'NewPass123!',
+      },
+      headers: undefined,
+      skipAuth: false,
+    })
+  })
 })

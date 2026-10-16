@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/inventory', key: 'inventory' as const, match: '/inventory' },
   { href: '/daily', key: 'daily' as const, match: '/daily' },
   { href: '/leaderboard', key: 'leaderboard' as const, match: '/leaderboard' },
+  { href: '/settings', key: 'settings' as const, match: '/settings' },
 ]
 
 export function NavStatsBar() {

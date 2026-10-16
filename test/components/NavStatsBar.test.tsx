@@ -5,7 +5,7 @@ import { setMockPathname } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 describe('NavStatsBar', () => {
-  it('shows cases, history, upgrades, skin upgrade, inventory, daily, and leaderboard links', () => {
+  it('shows cases, history, upgrades, skin upgrade, inventory, daily, leaderboard, and settings links', () => {
     setMockPathname('/')
     renderWithProviders(<NavStatsBar />)
 
@@ -30,6 +30,10 @@ describe('NavStatsBar', () => {
     expect(screen.getByRole('link', { name: /^leaderboard$/i })).toHaveAttribute(
       'href',
       '/leaderboard',
+    )
+    expect(screen.getByRole('link', { name: /^settings$/i })).toHaveAttribute(
+      'href',
+      '/settings',
     )
   })
 

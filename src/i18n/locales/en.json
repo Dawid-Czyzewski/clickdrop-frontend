@@ -52,6 +52,10 @@
     "leaderboard": {
       "title": "Leaderboard | ClickDrop",
       "description": "Top ClickDrop players ranked by level and XP."
+    },
+    "settings": {
+      "title": "Settings | ClickDrop",
+      "description": "Manage your ClickDrop account settings and password."
     }
   },
   "home": {
@@ -62,6 +66,7 @@
       "online": "online",
       "login": "Login",
       "logout": "Log out",
+      "settings": "Settings",
       "level": "Lvl",
       "xp": "XP",
       "xpProgress": "{{current}}/{{needed}}",
@@ -81,7 +86,8 @@
       "caseOpens": "History",
       "inventory": "Inventory",
       "daily": "Daily Free",
-      "leaderboard": "Leaderboard"
+      "leaderboard": "Leaderboard",
+      "settings": "Settings"
     },
     "stats": {
       "cases": "cases opened",
@@ -311,6 +317,34 @@
       "player": "Player",
       "level": "Level",
       "xp": "XP"
+    }
+  },
+  "settings": {
+    "eyebrow": "Account",
+    "title": "Settings",
+    "subtitle": "Manage your account preferences.",
+    "loginHint": "Sign in to manage your settings.",
+    "loginCta": "Sign in",
+    "changePassword": {
+      "heading": "Change password",
+      "subtitle": "Update the password you use to sign in.",
+      "current": "Current password",
+      "currentPlaceholder": "••••••••",
+      "new": "New password",
+      "newPlaceholder": "••••••••",
+      "confirm": "Confirm new password",
+      "confirmPlaceholder": "••••••••",
+      "submit": "Save password",
+      "submitting": "Saving…",
+      "success": "Password updated.",
+      "passwordMismatch": "New passwords do not match.",
+      "samePassword": "New password must be different from the current one.",
+      "wrongCurrent": "Current password is incorrect.",
+      "validationError": "Please check your password details.",
+      "errorUnauthorized": "Your session has expired. Please sign in again.",
+      "errorServer": "The auth service is unavailable. Please try again later.",
+      "error": "Could not change your password. Please try again.",
+      "networkError": "Could not reach the server. Please try again."
     }
   },
   "inventory": {

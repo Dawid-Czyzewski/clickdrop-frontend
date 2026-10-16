@@ -54,6 +54,11 @@ export type ResetPasswordRequest = {
   newPassword: string
 }
 
+export type ChangePasswordRequest = {
+  currentPassword: string
+  newPassword: string
+}
+
 export const authApi = {
   login(payload: LoginRequest): Promise<LoginResponse> {
     return apiRequest<LoginResponse>('/api/auth/login', {
@@ -108,6 +113,13 @@ export const authApi = {
       method: 'POST',
       body: payload,
       auth: false,
+    })
+  },
+
+  changePassword(payload: ChangePasswordRequest): Promise<void> {
+    return apiRequest<void>('/api/auth/change-password', {
+      method: 'POST',
+      body: payload,
     })
   },
 }

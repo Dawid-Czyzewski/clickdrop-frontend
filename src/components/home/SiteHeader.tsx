@@ -75,6 +75,12 @@ export function SiteHeader() {
           {loggedIn ? (
             <div className="flex items-center gap-2 sm:gap-3">
               <HeaderUserStatsPanel />
+              <Link
+                href="/settings"
+                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover"
+              >
+                {t('home.header.settings')}
+              </Link>
               <button
                 type="button"
                 onClick={handleLogout}

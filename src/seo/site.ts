@@ -15,6 +15,7 @@ export type SeoPageKey =
   | 'skinUpgrade'
   | 'caseOpens'
   | 'leaderboard'
+  | 'settings'
 
 const seoPages: Record<
   SeoPageKey,
@@ -27,6 +28,7 @@ const seoPages: Record<
   skinUpgrade: { path: '/skin-upgrade' },
   caseOpens: { path: '/cases/opens' },
   leaderboard: { path: '/leaderboard' },
+  settings: { path: '/settings', noIndex: true },
   login: { path: '/login', noIndex: true },
   register: { path: '/register', noIndex: true },
   verifyEmail: { path: '/verify-email', noIndex: true },
