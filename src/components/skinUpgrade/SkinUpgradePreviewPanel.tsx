@@ -55,6 +55,7 @@ export function SkinUpgradePreviewPanel({
   }, [preview.inventoryItemId, possibleTargets.length])
 
   const target = possibleTargets[targetIndex % Math.max(possibleTargets.length, 1)] ?? null
+  const playsForStatTrack = Boolean(current.statTrack)
 
   function cycleTarget() {
     if (possibleTargets.length < 2) return
@@ -105,6 +106,9 @@ export function SkinUpgradePreviewPanel({
                 {t('skinUpgrade.confirmTitle')}
               </p>
               <p className={cdBodyMuted}>{t('skinUpgrade.confirmBody')}</p>
+              {playsForStatTrack ? (
+                <p className={cdBodyMuted}>{t('skinUpgrade.confirmStatTrack')}</p>
+              ) : null}
               <div className="flex flex-wrap justify-center gap-2">
                 <button
                   type="button"
@@ -164,8 +168,12 @@ export function SkinUpgradePreviewPanel({
                 itemDisplayName={target.itemDisplayName}
                 rarity={target.rarity}
                 exterior={target.exterior}
+                statTrack={playsForStatTrack}
                 suggestedSellPrice={target.suggestedSellPrice}
                 label={t('skinUpgrade.targetsLabel')}
+                footnote={
+                  playsForStatTrack ? t('skinUpgrade.statTrackOnWin') : undefined
+                }
                 accent
                 size="lg"
               />

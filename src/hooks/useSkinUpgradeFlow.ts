@@ -87,7 +87,10 @@ export function useSkinUpgradeFlow(
     void refreshInventory()
 
     if (isSkinUpgradeSuccess(result)) {
-      setSuccessDrop(result)
+      setSuccessDrop({
+        ...result,
+        statTrack: result.statTrack ?? preview?.current.statTrack,
+      })
       setPhase('select')
       clearPreview()
       setSelectedId(null)

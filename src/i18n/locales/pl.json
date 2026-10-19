@@ -405,6 +405,8 @@
     "upgradeFree": "Ulepsz",
     "confirmTitle": "Ryzykujesz utratą skina?",
     "confirmBody": "Przy porażce skin znika z ekwipunku. Ulepszenie nie kosztuje ClickDolarów.",
+    "confirmStatTrack": "Ten skin jest StatTrack. Przy wygranej ulepszony drop zostaje StatTrack. Przy przegranej skin StatTrack znika.",
+    "statTrackOnWin": "StatTrack przechodzi przy wygranej",
     "confirmCta": "Potwierdź ulepszenie",
     "cancel": "Anuluj",
     "back": "Wstecz",

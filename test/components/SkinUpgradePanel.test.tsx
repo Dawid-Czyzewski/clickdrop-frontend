@@ -170,4 +170,39 @@ describe('SkinUpgradePanel', () => {
       })
     })
   })
+
+  it('shows StatTrack on preview, confirm, and success when input is ST', async () => {
+    const user = userEvent.setup()
+    login()
+    getInventoryMock.mockResolvedValue([{ ...inventoryItem, statTrack: true }])
+    previewMock.mockResolvedValue({
+      ...preview,
+      current: { ...preview.current, statTrack: true },
+    })
+    upgradeMock.mockResolvedValue({
+      result: 'SUCCESS',
+      inventoryItemId: 12,
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
+      rarity: 'RESTRICTED',
+      exterior: 'MINIMAL_WEAR',
+      suggestedSellPrice: 48,
+      statTrack: true,
+    })
+
+    renderWithProviders(<SkinUpgradePanel />)
+
+    await user.click(await screen.findByRole('button', { name: /ak-47 \| slate/i }))
+
+    expect(await screen.findByText(/stattrack carries over on a win/i)).toBeInTheDocument()
+    expect(screen.getAllByText('StatTrack').length).toBeGreaterThanOrEqual(2)
+
+    await user.click(screen.getByRole('button', { name: /^upgrade$/i }))
+    expect(screen.getByText(/upgraded drop stays StatTrack/i)).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /confirm upgrade/i }))
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    expect(screen.getAllByText('StatTrack').length).toBeGreaterThanOrEqual(1)
+  })
 })

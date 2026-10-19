@@ -107,9 +107,16 @@ export function SkinUpgradeSelect({
                       ) : null}
                     </>
                   ) : (
-                    <p className="truncate text-[0.6rem] text-cd-muted">
-                      {formatClickDollars(item.suggestedSellPrice, i18n.language)} CD
-                    </p>
+                    <>
+                      <p className="truncate text-[0.6rem] text-cd-muted">
+                        {formatClickDollars(item.suggestedSellPrice, i18n.language)} CD
+                      </p>
+                      {item.statTrack ? (
+                        <div className="mt-0.5">
+                          <StatTrackBadge />
+                        </div>
+                      ) : null}
+                    </>
                   )}
                 </div>
               </div>

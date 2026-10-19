@@ -403,6 +403,8 @@
     "upgradeFree": "Upgrade",
     "confirmTitle": "Risk losing this skin?",
     "confirmBody": "On failure your skin is destroyed and removed from inventory. There is no ClickDollar cost.",
+    "confirmStatTrack": "This skin is StatTrack. On a win, the upgraded drop stays StatTrack. On a loss, the StatTrack skin is destroyed.",
+    "statTrackOnWin": "StatTrack carries over on a win",
     "confirmCta": "Confirm upgrade",
     "cancel": "Cancel",
     "back": "Back",
