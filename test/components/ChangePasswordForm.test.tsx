@@ -10,12 +10,14 @@ import { renderWithProviders } from '../utils/render'
 vi.mock('../../src/api/authApi', () => ({
   authApi: {
     changePassword: vi.fn(),
+    logoutAll: vi.fn(),
   },
 }))
 
 import { authApi } from '../../src/api/authApi'
 
 const changeMock = vi.mocked(authApi.changePassword)
+const logoutAllMock = vi.mocked(authApi.logoutAll)
 
 function login() {
   authService.setSession({
@@ -31,6 +33,7 @@ describe('SettingsPanel', () => {
   beforeEach(() => {
     authService.logout()
     changeMock.mockReset()
+    logoutAllMock.mockReset()
   })
 
   it('asks guests to sign in', () => {

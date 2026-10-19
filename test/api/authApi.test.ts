@@ -109,4 +109,18 @@ describe('authApi', () => {
       skipAuth: false,
     })
   })
+
+  it('posts logout-all with auth', async () => {
+    requestMock.mockResolvedValue({ data: undefined })
+
+    await authApi.logoutAll()
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/logout-all',
+      method: 'POST',
+      data: undefined,
+      headers: undefined,
+      skipAuth: false,
+    })
+  })
 })

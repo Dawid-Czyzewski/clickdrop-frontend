@@ -122,4 +122,10 @@ export const authApi = {
       body: payload,
     })
   },
+
+  logoutAll(): Promise<void> {
+    return apiRequest<void>('/api/auth/logout-all', {
+      method: 'POST',
+    })
+  },
 }

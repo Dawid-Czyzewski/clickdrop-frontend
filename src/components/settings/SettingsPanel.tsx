@@ -12,6 +12,7 @@ import {
   cdSectionLabel,
 } from '../ui/uiStyles'
 import { ChangePasswordForm } from './ChangePasswordForm'
+import { LogoutAllSection } from './LogoutAllSection'
 
 export function SettingsPanel() {
   const { t } = useTranslation()
@@ -49,6 +50,8 @@ export function SettingsPanel() {
         </div>
         <ChangePasswordForm />
       </section>
+
+      <LogoutAllSection />
     </div>
   )
 }

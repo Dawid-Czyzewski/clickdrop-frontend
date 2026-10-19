@@ -345,6 +345,20 @@
       "errorServer": "The auth service is unavailable. Please try again later.",
       "error": "Could not change your password. Please try again.",
       "networkError": "Could not reach the server. Please try again."
+    },
+    "logoutAll": {
+      "heading": "Sessions",
+      "subtitle": "Sign out everywhere. This invalidates all active sessions on every device.",
+      "cta": "Log out everywhere",
+      "confirmTitle": "Log out everywhere?",
+      "confirmBody": "All sessions will be revoked. You will need to sign in again on this device and any others.",
+      "confirmCta": "Log out everywhere",
+      "confirmCancel": "Cancel",
+      "submitting": "Signing out…",
+      "errorUnauthorized": "Your session has expired. Please sign in again.",
+      "errorServer": "The auth service is unavailable. Please try again later.",
+      "error": "Could not revoke sessions. Please try again.",
+      "networkError": "Could not reach the server. Please try again."
     }
   },
   "inventory": {

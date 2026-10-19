@@ -347,6 +347,20 @@
       "errorServer": "Usługa auth jest niedostępna. Spróbuj ponownie później.",
       "error": "Nie udało się zmienić hasła. Spróbuj ponownie.",
       "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
+    },
+    "logoutAll": {
+      "heading": "Sesje",
+      "subtitle": "Wyloguj wszędzie. Unieważnia wszystkie aktywne sesje na każdym urządzeniu.",
+      "cta": "Wyloguj wszędzie",
+      "confirmTitle": "Wylogować wszędzie?",
+      "confirmBody": "Wszystkie sesje zostaną unieważnione. Na tym i innych urządzeniach trzeba będzie zalogować się ponownie.",
+      "confirmCta": "Wyloguj wszędzie",
+      "confirmCancel": "Anuluj",
+      "submitting": "Wylogowywanie…",
+      "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "errorServer": "Usługa auth jest niedostępna. Spróbuj ponownie później.",
+      "error": "Nie udało się unieważnić sesji. Spróbuj ponownie.",
+      "networkError": "Brak połączenia z serwerem. Spróbuj ponownie."
     }
   },
   "inventory": {
