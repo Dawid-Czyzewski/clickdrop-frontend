@@ -110,6 +110,20 @@ describe('authApi', () => {
     })
   })
 
+  it('posts logout with refresh token and skips auth', async () => {
+    requestMock.mockResolvedValue({ data: undefined })
+
+    await authApi.logout({ refreshToken: 'jwt-refresh-to-revoke' })
+
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/auth/logout',
+      method: 'POST',
+      data: { refreshToken: 'jwt-refresh-to-revoke' },
+      headers: undefined,
+      skipAuth: true,
+    })
+  })
+
   it('posts logout-all with auth', async () => {
     requestMock.mockResolvedValue({ data: undefined })
 

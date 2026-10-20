@@ -123,6 +123,14 @@ export const authApi = {
     })
   },
 
+  logout(payload: RefreshTokenRequest): Promise<void> {
+    return apiRequest<void>('/api/auth/logout', {
+      method: 'POST',
+      body: payload,
+      auth: false,
+    })
+  },
+
   logoutAll(): Promise<void> {
     return apiRequest<void>('/api/auth/logout-all', {
       method: 'POST',
