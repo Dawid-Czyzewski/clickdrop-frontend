@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CaseDrop } from '../../api/casesApi'
+import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import {
   MULTI_SPIN_DURATION_MS,
   MULTI_SPIN_ITEM_WIDTH,
@@ -31,8 +32,7 @@ export function CaseOpenMultiSpinner({
       onComplete()
     }
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced || winners.length === 0) {
+    if (shouldSkipCaseSpin() || winners.length === 0) {
       finish()
       return
     }

@@ -14,6 +14,7 @@ import {
   cdPageTitle,
 } from '../ui/uiStyles'
 import { CaseOpenCountPicker, type CaseOpenCount } from './CaseOpenCountPicker'
+import { SkipCaseAnimationToggle } from './SkipCaseAnimationToggle'
 
 type CaseOpenHeroProps = {
   gameCase: GameCase
@@ -80,6 +81,7 @@ export function CaseOpenHero({
             disabled={isOpening || resultOpen}
             onChange={onCountChange}
           />
+          <SkipCaseAnimationToggle disabled={isOpening || resultOpen} />
           <button
             type="button"
             disabled={openDisabled}

@@ -7,6 +7,7 @@ import {
   type SkinUpgradeResult,
   type SkinUpgradeSuccess,
 } from '../api/skinUpgradeApi'
+import { prefersReducedMotion } from '../lib/caseAnimationPreference'
 import { useSkinUpgrade } from './useSkinUpgrade'
 
 export type SkinUpgradePhase = 'select' | 'preview' | 'animating' | 'fail'
@@ -14,10 +15,6 @@ export type SkinUpgradePhase = 'select' | 'preview' | 'animating' | 'fail'
 type SkinUpgradeFlowOptions = {
   refreshInventory: () => Promise<void>
   removeInventoryItem: (inventoryItemId: number) => void
-}
-
-function prefersReducedMotion(): boolean {
-  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 export function useSkinUpgradeFlow(

@@ -8,10 +8,12 @@ import { isDailyCashClaim, isDailySkinClaim } from '../../api/dailyApi'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useDailyFree } from '../../hooks/useDailyFree'
+import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { dailyDropSpinCode, toSpinCaseDrop } from '../../lib/dailySpin'
 import { formatCountdown } from '../../lib/formatCountdown'
 import { CaseOpenResultModal } from '../cases/CaseOpenResultModal'
 import { CaseOpenSpinner } from '../cases/CaseOpenSpinner'
+import { SkipCaseAnimationToggle } from '../cases/SkipCaseAnimationToggle'
 import { AssetImage } from '../media/AssetImage'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
@@ -60,8 +62,7 @@ export function DailyFreePanel() {
     const result = await claim()
     if (!result) return
     if (isDailyCashClaim(result)) applyBalance(result.balance)
-    const skipSpin = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setSpinning(!skipSpin && spinPool.length > 0)
+    setSpinning(!shouldSkipCaseSpin() && spinPool.length > 0)
   }
 
   async function handleSell() {
@@ -127,19 +128,23 @@ export function DailyFreePanel() {
               <p className="font-display text-3xl font-bold tabular-nums text-cd-accent">
                 {formatCountdown(remainingMs)}
               </p>
+              <SkipCaseAnimationToggle />
             </div>
           ) : (
-            <button
-              type="button"
-              disabled={openDisabled}
-              aria-busy={isOpening || undefined}
-              onClick={() => {
-                void handleOpen()
-              }}
-              className={cdBtnPrimaryBlock}
-            >
-              {isOpening ? t('daily.opening') : t('daily.open')}
-            </button>
+            <>
+              <SkipCaseAnimationToggle disabled={isOpening} />
+              <button
+                type="button"
+                disabled={openDisabled}
+                aria-busy={isOpening || undefined}
+                onClick={() => {
+                  void handleOpen()
+                }}
+                className={cdBtnPrimaryBlock}
+              >
+                {isOpening ? t('daily.opening') : t('daily.open')}
+              </button>
+            </>
           )}
 
           {error ? (

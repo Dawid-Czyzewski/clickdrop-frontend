@@ -203,4 +203,44 @@ describe('DailyFreePanel', () => {
 
     expect(getMockRouter().push).toHaveBeenCalledWith('/inventory')
   })
+
+  it('skip animation toggle shows result without spinner when motion is allowed', async () => {
+    const user = userEvent.setup()
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }))
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getStatusMock.mockResolvedValue({ available: true, nextClaimAt: null })
+    claimMock.mockResolvedValue({
+      type: 'SKIN',
+      inventoryItemId: 9,
+      itemCode: 'AK_47_SLATE',
+      itemDisplayName: 'AK-47 | Slate',
+      rarity: 'RESTRICTED',
+      exterior: 'FIELD_TESTED',
+      suggestedSellPrice: 40,
+      nextClaimAt: '2027-09-26T15:00:00.000Z',
+    })
+
+    renderWithProviders(<DailyFreePanel />)
+
+    await user.click(await screen.findByRole('checkbox', { name: /skip animation/i }))
+    await user.click(screen.getByRole('button', { name: /^open$/i }))
+
+    expect(screen.queryByText(/opening case/i)).not.toBeInTheDocument()
+    expect(await screen.findByRole('dialog')).toHaveTextContent('AK-47 | Slate')
+  })
 })

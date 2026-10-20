@@ -11,6 +11,7 @@ import { useCaseDrops } from '../../hooks/useCaseDrops'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { useDeferredLevelUpModal } from '../../hooks/useDeferredLevelUpModal'
 import { useInventory } from '../../hooks/useInventory'
+import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { LevelUpModal } from '../home/LevelUpModal'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
@@ -82,7 +83,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       queueLevelUp(result.level)
     }
     setOpenResult(result)
-    setSpinning(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setSpinning(!shouldSkipCaseSpin())
   }
 
   async function handleSellNow() {

@@ -12,6 +12,7 @@ import {
   SPIN_WINNER_INDEX,
   spinOffsetPx,
 } from '../../lib/caseSpin'
+import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { isCashSpinCode, parseCashSpinAmount } from '../../lib/dailySpin'
 import { AssetImage } from '../media/AssetImage'
@@ -49,8 +50,7 @@ export function CaseOpenSpinReel({
   }
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) {
+    if (shouldSkipCaseSpin()) {
       finish()
       return
     }
