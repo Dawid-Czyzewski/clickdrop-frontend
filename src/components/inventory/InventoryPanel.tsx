@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useInventory } from '../../hooks/useInventory'
+import { useInventoryFilters } from '../../hooks/useInventoryFilters'
+import { applyInventoryFilters } from '../../lib/inventoryFilters'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
   cdBodyMuted,
@@ -13,8 +15,7 @@ import {
   cdEyebrow,
   cdPageTitle,
 } from '../ui/uiStyles'
-import { InventoryItemCard } from './InventoryItemCard'
-import { InventorySelectionBar } from './InventorySelectionBar'
+import { InventoryBrowseSection } from './InventoryBrowseSection'
 import { InventorySellConfirmModal } from './InventorySellConfirmModal'
 import { InventorySoldToast } from './InventorySoldToast'
 
@@ -30,21 +31,31 @@ export function InventoryPanel() {
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [soldToast, setSoldToast] = useState<SoldToast | null>(null)
   const { applyBalance } = useBalance({ enabled: loggedIn })
-  const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } = useInventory({
-    enabled: loggedIn,
-  })
+  const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } =
+    useInventory({ enabled: loggedIn })
+  const { filters, setFilters, clearFilters, hasActiveFilters } = useInventoryFilters()
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
-  useEffect(() => {
-    const valid = new Set(items.map((item) => item.inventoryItemId))
-    setSelectedIds((prev) => prev.filter((id) => valid.has(id)))
-  }, [items])
+  const visibleItems = useMemo(
+    () => applyInventoryFilters(items, filters, t),
+    [items, filters, t],
+  )
 
-  const selectedItems = items.filter((item) => selectedIds.includes(item.inventoryItemId))
-  const estimatedTotal = selectedItems.reduce((sum, item) => sum + item.suggestedSellPrice, 0)
+  useEffect(() => {
+    const valid = new Set(visibleItems.map((item) => item.inventoryItemId))
+    setSelectedIds((prev) => prev.filter((id) => valid.has(id)))
+  }, [visibleItems])
+
+  const selectedItems = visibleItems.filter((item) =>
+    selectedIds.includes(item.inventoryItemId),
+  )
+  const estimatedTotal = selectedItems.reduce(
+    (sum, item) => sum + item.suggestedSellPrice,
+    0,
+  )
   const busy = sellingId !== null || isSellingBatch
 
   function showSoldToast(amount: number) {
@@ -74,14 +85,6 @@ export function InventoryPanel() {
       return
     }
     void runBatchSell()
-  }
-
-  function toggleSelect(inventoryItemId: number) {
-    setSelectedIds((prev) =>
-      prev.includes(inventoryItemId)
-        ? prev.filter((id) => id !== inventoryItemId)
-        : [...prev, inventoryItemId],
-    )
   }
 
   if (!loggedIn) {
@@ -118,42 +121,38 @@ export function InventoryPanel() {
         <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('inventory.subtitle')}</p>
       </div>
 
-      {items.length > 0 ? (
-        <InventorySelectionBar
-          selectedCount={selectedIds.length}
-          estimatedTotal={estimatedTotal}
-          isSelling={isSellingBatch}
-          onSelectAll={() => setSelectedIds(items.map((item) => item.inventoryItemId))}
-          onClear={() => setSelectedIds([])}
-          onSellSelected={handleSellSelected}
-        />
-      ) : null}
-
       {error ? (
         <p role="alert" className="text-sm text-cd-danger">
           {error}
         </p>
       ) : null}
 
-      {items.length === 0 ? (
-        <p className={cdBodyMuted}>{t('inventory.empty')}</p>
-      ) : (
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {items.map((item) => (
-            <InventoryItemCard
-              key={item.inventoryItemId}
-              item={item}
-              selected={selectedIds.includes(item.inventoryItemId)}
-              isSelling={sellingId === item.inventoryItemId}
-              disabled={busy}
-              onToggleSelect={toggleSelect}
-              onSell={(id) => {
-                void handleSell(id)
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <InventoryBrowseSection
+        items={items}
+        visibleItems={visibleItems}
+        filters={filters}
+        hasActiveFilters={hasActiveFilters}
+        selectedIds={selectedIds}
+        estimatedTotal={estimatedTotal}
+        sellingId={sellingId}
+        isSellingBatch={isSellingBatch}
+        busy={busy}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        onSelectAll={() =>
+          setSelectedIds(visibleItems.map((item) => item.inventoryItemId))
+        }
+        onClearSelection={() => setSelectedIds([])}
+        onSellSelected={handleSellSelected}
+        onToggleSelect={(id) => {
+          setSelectedIds((prev) =>
+            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+          )
+        }}
+        onSell={(id) => {
+          void handleSell(id)
+        }}
+      />
 
       {confirmOpen ? (
         <InventorySellConfirmModal

@@ -91,7 +91,7 @@ describe('InventoryPanel', () => {
       'src',
       '/items/AK_47_SLATE.webp',
     )
-    expect(screen.getByText('Restricted')).toBeInTheDocument()
+    expect(screen.getAllByText('Restricted').length).toBeGreaterThan(0)
 
     await user.click(screen.getByRole('button', { name: /sell for 40.00 cd/i }))
 
@@ -134,5 +134,62 @@ describe('InventoryPanel', () => {
       expect(screen.queryByText('Glock-18 | Umbral Rabbit')).not.toBeInTheDocument()
       expect(screen.getByRole('status')).toHaveTextContent('Sold for 60.00 CD')
     })
+  })
+
+  it('filters inventory and clears filters when empty', async () => {
+    const user = userEvent.setup()
+    login()
+    getInventoryMock.mockResolvedValue([
+      slate,
+      glock,
+      {
+        ...slate,
+        inventoryItemId: 11,
+        itemId: 6,
+        code: 'AK_47_ASIIMOV',
+        displayName: 'AK-47 | Asiimov',
+        rarity: 'COVERT' as const,
+        suggestedSellPrice: 120,
+        statTrack: true,
+      },
+    ])
+
+    renderWithProviders(<InventoryPanel />)
+
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
+    expect(screen.getByText('Glock-18 | Umbral Rabbit')).toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText(/^rarity$/i), 'MIL_SPEC')
+    expect(screen.queryByText('AK-47 | Slate')).not.toBeInTheDocument()
+    expect(screen.getByText('Glock-18 | Umbral Rabbit')).toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText(/^rarity$/i), 'COVERT')
+    expect(screen.getByText('AK-47 | Asiimov')).toBeInTheDocument()
+    expect(screen.queryByText('Glock-18 | Umbral Rabbit')).not.toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText(/^stattrack$/i), 'no')
+    expect(await screen.findByText(/no skins match these filters/i)).toBeInTheDocument()
+    await user.click(screen.getAllByRole('button', { name: /clear filters/i })[0]!)
+
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
+    expect(screen.getByText('Glock-18 | Umbral Rabbit')).toBeInTheDocument()
+    expect(screen.getByText('AK-47 | Asiimov')).toBeInTheDocument()
+  })
+
+  it('sorts visible inventory by price ascending', async () => {
+    const user = userEvent.setup()
+    login()
+    getInventoryMock.mockResolvedValue([slate, glock])
+
+    renderWithProviders(<InventoryPanel />)
+    expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
+
+    await user.selectOptions(screen.getByLabelText(/^sort$/i), 'price_asc')
+
+    const names = screen
+      .getAllByRole('heading', { level: 2 })
+      .map((el) => el.textContent)
+    expect(names[0]).toBe('Glock-18 | Umbral Rabbit')
+    expect(names[1]).toBe('AK-47 | Slate')
   })
 })
