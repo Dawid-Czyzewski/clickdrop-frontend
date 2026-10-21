@@ -43,6 +43,9 @@ export function LevelUpModal({ level, onClose }: LevelUpModalProps) {
         <p className="relative z-10 mt-3 max-w-sm text-center text-sm text-cd-muted sm:text-base">
           {t('home.header.levelUpMessage', { level })}
         </p>
+        <p className="relative z-10 mt-2 max-w-sm text-center text-sm text-cd-accent sm:text-base">
+          {t('home.header.levelUpCasesUnlocked')}
+        </p>
 
         <button
           type="button"

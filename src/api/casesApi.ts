@@ -15,6 +15,7 @@ export type GameCase = {
   displayName: string
   price: number
   sortOrder: number
+  minLevel?: number
 }
 
 export type CaseDrop = {

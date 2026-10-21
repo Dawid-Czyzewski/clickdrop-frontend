@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import type { GameCase } from '../../api/casesApi'
 import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
+import { caseMinLevel } from '../../lib/caseLevel'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { AssetImage } from '../media/AssetImage'
 import {
@@ -13,6 +14,7 @@ import {
   cdMoney,
   cdPageTitle,
 } from '../ui/uiStyles'
+import { CaseLevelBadge } from './CaseLevelBadge'
 import { CaseOpenCountPicker, type CaseOpenCount } from './CaseOpenCountPicker'
 import { SkipCaseAnimationToggle } from './SkipCaseAnimationToggle'
 
@@ -22,6 +24,7 @@ type CaseOpenHeroProps = {
   openCount: CaseOpenCount
   totalCost: number
   canAfford: boolean
+  levelLocked: boolean
   balance: number | null
   isOpening: boolean
   openDisabled: boolean
@@ -37,6 +40,7 @@ export function CaseOpenHero({
   openCount,
   totalCost,
   canAfford,
+  levelLocked,
   balance,
   isOpening,
   openDisabled,
@@ -48,15 +52,21 @@ export function CaseOpenHero({
   const { t, i18n } = useTranslation()
   const accent = caseAccent(gameCase.code)
   const caseLabel = resolveCaseLabel(t, gameCase.code, gameCase.displayName)
+  const minLevel = caseMinLevel(gameCase)
 
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-4">
       <div
-        className={cdHeroFrame}
+        className={`relative ${cdHeroFrame}`}
         style={{
           background: `radial-gradient(circle at 50% 40%, ${accent}20, transparent 65%)`,
         }}
       >
+        <CaseLevelBadge
+          minLevel={minLevel}
+          locked={levelLocked}
+          className="absolute top-3 right-3 z-10"
+        />
         <AssetImage
           kind="case"
           code={gameCase.code}
@@ -78,7 +88,7 @@ export function CaseOpenHero({
         <>
           <CaseOpenCountPicker
             value={openCount}
-            disabled={isOpening || resultOpen}
+            disabled={isOpening || resultOpen || levelLocked}
             onChange={onCountChange}
           />
           <SkipCaseAnimationToggle disabled={isOpening || resultOpen} />
@@ -100,7 +110,12 @@ export function CaseOpenHero({
         </Link>
       )}
 
-      {!canAfford && loggedIn && balance !== null && !resultOpen ? (
+      {levelLocked && loggedIn && !resultOpen ? (
+        <p className="text-sm text-cd-danger">
+          {t('cases.levelLocked', { level: minLevel })}
+        </p>
+      ) : null}
+      {!levelLocked && !canAfford && loggedIn && balance !== null && !resultOpen ? (
         <p className="text-sm text-cd-danger">
           {t('cases.openCount.insufficientFunds', {
             count: openCount,

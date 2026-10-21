@@ -50,7 +50,9 @@ describe('LevelUpToast', () => {
       patchSharedCurrentUserStats({ level: 4, experience: 460 })
     })
 
-    expect(await screen.findByRole('status')).toHaveTextContent('Level up! Lvl 4')
+    const toast = await screen.findByRole('status')
+    expect(toast).toHaveTextContent('Level up! Lvl 4')
+    expect(toast).toHaveTextContent(/new cases may be unlocked/i)
   })
 
   it('does not show toast when only XP increases', async () => {

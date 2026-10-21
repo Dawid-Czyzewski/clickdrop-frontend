@@ -3,25 +3,32 @@
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import type { GameCase } from '../../api/casesApi'
-import { formatClickDollars } from '../../lib/formatClickDollars'
 import { caseAccent, resolveCaseLabel } from '../../lib/caseI18n'
+import { caseMinLevel, isCaseLevelLocked } from '../../lib/caseLevel'
+import { formatClickDollars } from '../../lib/formatClickDollars'
 import { AssetImage } from '../media/AssetImage'
 import { CurrencyBadge } from '../ui/CurrencyBadge'
 import { cdTile } from '../ui/uiStyles'
+import { CaseLevelBadge } from './CaseLevelBadge'
 
 type CaseShopCardProps = {
   gameCase: GameCase
+  userLevel?: number | null
 }
 
-export function CaseShopCard({ gameCase }: CaseShopCardProps) {
+export function CaseShopCard({ gameCase, userLevel = null }: CaseShopCardProps) {
   const { t, i18n } = useTranslation()
   const accent = caseAccent(gameCase.code)
   const name = resolveCaseLabel(t, gameCase.code, gameCase.displayName)
+  const minLevel = caseMinLevel(gameCase)
+  const locked = userLevel != null && isCaseLevelLocked(gameCase, userLevel)
 
   return (
     <Link
       href={`/cases/${gameCase.id}`}
-      className={`group flex cursor-pointer flex-col overflow-hidden no-underline ${cdTile}`}
+      className={`group flex cursor-pointer flex-col overflow-hidden no-underline ${cdTile} ${
+        locked ? 'opacity-80' : ''
+      }`}
     >
       <div
         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-cd-bg/40 p-3 sm:aspect-square sm:p-4"
@@ -29,6 +36,11 @@ export function CaseShopCard({ gameCase }: CaseShopCardProps) {
           background: `radial-gradient(circle at 50% 42%, ${accent}30, transparent 68%)`,
         }}
       >
+        <CaseLevelBadge
+          minLevel={minLevel}
+          locked={locked}
+          className="absolute top-2 right-2 z-10"
+        />
         <AssetImage
           kind="case"
           code={gameCase.code}

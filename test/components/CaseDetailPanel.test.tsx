@@ -496,6 +496,62 @@ describe('CaseDetailPanel', () => {
     expect(screen.getByLabelText('Lvl 3, 50 / 100 XP')).toBeInTheDocument()
   })
 
+  it('disables open and shows lock reason when player level is too low', async () => {
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 2,
+      experience: 10,
+      clickDollars: 100,
+    })
+
+    renderWithProviders(
+      <CaseDetailPanel gameCase={{ ...anvil, minLevel: 5 }} />,
+    )
+
+    expect(await screen.findByText('Lvl 5+')).toBeInTheDocument()
+    expect(await screen.findByText(/requires lvl 5\+ to open/i)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /open ×1/i })).toBeDisabled()
+    expect(openCaseMock).not.toHaveBeenCalled()
+  })
+
+  it('enables open when player meets minLevel', async () => {
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 100 })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 5,
+      experience: 10,
+      clickDollars: 100,
+    })
+    openCaseMock.mockResolvedValue(slateOpen)
+
+    renderWithProviders(
+      <CaseDetailPanel gameCase={{ ...anvil, minLevel: 5 }} />,
+    )
+
+    expect(await screen.findByText('Lvl 5+')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /open ×1/i })).toBeEnabled()
+    })
+    expect(screen.queryByText(/requires lvl 5\+ to open/i)).not.toBeInTheDocument()
+  })
+
   it('skip animation toggle shows result without spinner when motion is allowed', async () => {
     const user = userEvent.setup()
     window.matchMedia = vi.fn().mockImplementation((query: string) => ({

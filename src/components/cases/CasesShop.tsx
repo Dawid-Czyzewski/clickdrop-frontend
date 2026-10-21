@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useCases } from '../../hooks/useCases'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
   cdBodyMuted,
@@ -19,6 +20,7 @@ export function CasesShop() {
   const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
   const { cases, isLoading: casesLoading, error: casesError } = useCases({ enabled: true })
+  const { user } = useCurrentUser({ enabled: loggedIn })
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -68,7 +70,11 @@ export function CasesShop() {
       ) : (
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {cases.map((gameCase) => (
-            <CaseShopCard key={gameCase.id} gameCase={gameCase} />
+            <CaseShopCard
+              key={gameCase.id}
+              gameCase={gameCase}
+              userLevel={user?.level ?? null}
+            />
           ))}
         </div>
       )}

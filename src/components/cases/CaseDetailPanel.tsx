@@ -12,6 +12,7 @@ import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { useDeferredLevelUpModal } from '../../hooks/useDeferredLevelUpModal'
 import { useInventory } from '../../hooks/useInventory'
 import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
+import { caseMinLevel, isCaseLevelLocked } from '../../lib/caseLevel'
 import { LevelUpModal } from '../home/LevelUpModal'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
@@ -57,10 +58,20 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
 
   const totalCost = gameCase.price * openCount
   const canAfford = balance !== null && balance >= totalCost
+  const levelLocked =
+    loggedIn &&
+    (user != null
+      ? isCaseLevelLocked(gameCase, user.level)
+      : caseMinLevel(gameCase) > 1)
   const isOpening = openingCaseId === gameCase.id || spinning
   const resultOpen = openResult !== null
   const openDisabled =
-    !loggedIn || isOpening || resultOpen || !canAfford || balanceLoading
+    !loggedIn ||
+    isOpening ||
+    resultOpen ||
+    !canAfford ||
+    balanceLoading ||
+    levelLocked
   const singleDrop = openResult?.count === 1 ? openResult.drops[0] : null
   const multiDrops = openResult && openResult.count > 1 ? openResult.drops : null
 
@@ -118,6 +129,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
           openCount={openCount}
           totalCost={totalCost}
           canAfford={canAfford}
+          levelLocked={levelLocked}
           balance={balance}
           isOpening={isOpening}
           openDisabled={openDisabled}

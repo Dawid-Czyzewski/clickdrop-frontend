@@ -34,6 +34,9 @@ export function LevelUpToast() {
       <p className="font-display text-sm font-bold tracking-wide text-cd-accent sm:text-base">
         {t('home.header.levelUp', { level: toast.level })}
       </p>
+      <p className="mt-0.5 text-xs text-cd-muted sm:text-sm">
+        {t('home.header.levelUpCasesUnlocked')}
+      </p>
     </div>
   )
 }

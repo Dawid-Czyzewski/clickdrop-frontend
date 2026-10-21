@@ -8,6 +8,7 @@ describe('resolveCaseError', () => {
   it('maps known statuses', () => {
     expect(resolveCaseError(new ApiError(400, 'x'), t)).toBe('cases.insufficientFunds')
     expect(resolveCaseError(new ApiError(401, 'x'), t)).toBe('cases.errorUnauthorized')
+    expect(resolveCaseError(new ApiError(403, 'x'), t)).toBe('cases.errorLevelLocked')
     expect(resolveCaseError(new ApiError(404, 'x'), t)).toBe('cases.errorNotFound')
     expect(resolveCaseError(new ApiError(429, 'x'), t)).toBe('cases.errorTooFast')
     expect(resolveCaseError(new ApiError(500, 'x'), t)).toBe('cases.errorServer')

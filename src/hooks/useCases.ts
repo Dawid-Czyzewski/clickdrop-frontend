@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getCases, type GameCase } from '../api/casesApi'
 import { resolveCaseError } from '../api/resolveCaseError'
+import { compareCasesByLevel } from '../lib/caseLevel'
 
 type UseCasesOptions = {
   enabled?: boolean
@@ -29,7 +30,7 @@ export function useCases(options: UseCasesOptions = {}) {
     getCases()
       .then((data) => {
         if (!cancelled) {
-          setCases([...data].sort((a, b) => a.sortOrder - b.sortOrder))
+          setCases([...data].sort(compareCasesByLevel))
         }
       })
       .catch((err) => {

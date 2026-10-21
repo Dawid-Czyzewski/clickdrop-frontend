@@ -25,7 +25,7 @@ export function CaseOpenHistoryRow({ open }: CaseOpenHistoryRowProps) {
     <li className="flex items-center gap-3 overflow-hidden rounded-lg border border-cd-border bg-cd-surface/80 p-2.5 sm:gap-4 sm:p-3">
       <div className="h-full w-0.5 shrink-0 self-stretch rounded-full" style={{ backgroundColor: color }} />
       <div
-        className="relative flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1 sm:h-16 sm:w-20"
+        className="flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-cd-bg/40 p-1 sm:h-16 sm:w-20"
         style={{
           background: `radial-gradient(circle at 50% 40%, ${color}22, transparent 70%)`,
         }}
@@ -36,16 +36,14 @@ export function CaseOpenHistoryRow({ open }: CaseOpenHistoryRowProps) {
           alt={name}
           className="h-full w-full object-contain"
         />
-        {open.statTrack ? (
-          <div className="pointer-events-none absolute top-0.5 left-0.5 z-10">
-            <StatTrackBadge className="text-[0.5rem] px-1 py-0.5" />
-          </div>
-        ) : null}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-[0.6rem] font-medium tracking-wide uppercase" style={{ color }}>
-          {t(rarityLabelKey(open.rarity))}
-        </p>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <p className="text-[0.6rem] font-medium tracking-wide uppercase" style={{ color }}>
+            {t(rarityLabelKey(open.rarity))}
+          </p>
+          {open.statTrack ? <StatTrackBadge className="text-[0.55rem] px-1 py-0.5" /> : null}
+        </div>
         <p className="truncate font-display text-sm font-semibold text-cd-text sm:text-base">
           {name}
         </p>
