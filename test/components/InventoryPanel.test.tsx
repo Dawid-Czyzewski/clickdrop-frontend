@@ -78,6 +78,19 @@ describe('InventoryPanel', () => {
     expect(getInventoryMock).not.toHaveBeenCalled()
   })
 
+  it('shows open-case CTA when inventory is empty', async () => {
+    login()
+    getInventoryMock.mockResolvedValue([])
+
+    renderWithProviders(<InventoryPanel />)
+
+    expect(await screen.findByText(/inventory is empty/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /open a case/i })).toHaveAttribute(
+      'href',
+      '/#cases',
+    )
+  })
+
   it('shows kept items from open and sells from inventory', async () => {
     const user = userEvent.setup()
     login()

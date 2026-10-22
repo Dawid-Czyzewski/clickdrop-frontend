@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next'
 import type { InventoryItem } from '../../api/casesApi'
 import type { InventoryFilterState } from '../../lib/inventoryFilters'
+import { EmptyState } from '../ui/EmptyState'
 import { cdBodyMuted, cdBtnGhost } from '../ui/uiStyles'
 import { InventoryFilters } from './InventoryFilters'
 import { InventoryItemCard } from './InventoryItemCard'
@@ -48,7 +49,13 @@ export function InventoryBrowseSection({
   const { t } = useTranslation()
 
   if (items.length === 0) {
-    return <p className={cdBodyMuted}>{t('inventory.empty')}</p>
+    return (
+      <EmptyState
+        message={t('inventory.empty')}
+        ctaLabel={t('inventory.emptyCta')}
+        ctaHref="/#cases"
+      />
+    )
   }
 
   return (

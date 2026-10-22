@@ -173,6 +173,10 @@ describe('DailyFreePanel', () => {
     expect(await screen.findByText(/\d{2}:\d{2}:\d{2}/)).toBeInTheDocument()
     expect(await screen.findByText('AK-47 | Slate')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /^open$/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /open a paid case meanwhile/i })).toHaveAttribute(
+      'href',
+      '/#cases',
+    )
   })
 
   it('keep navigates to inventory after skin win', async () => {

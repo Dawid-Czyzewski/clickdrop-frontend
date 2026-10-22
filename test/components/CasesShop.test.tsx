@@ -1,4 +1,5 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CasesShop } from '../../src/components/cases/CasesShop'
 import { authService } from '../../src/auth/authService'
@@ -89,6 +90,35 @@ describe('CasesShop', () => {
       'Clutch Case',
       'CS20 Case',
     ])
+  })
+
+  it('shows retry and home when cases list is empty', async () => {
+    const user = userEvent.setup()
+    getCasesMock.mockResolvedValueOnce([]).mockResolvedValueOnce([
+      { id: 1, code: 'REVOLUTION_CASE', displayName: 'Revolution Case', price: 50, sortOrder: 1 },
+    ])
+
+    renderWithProviders(<CasesShop />)
+
+    expect(await screen.findByText(/no cases available yet/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /back to home/i })).toHaveAttribute('href', '/')
+    await user.click(screen.getByRole('button', { name: /try again/i }))
+
+    expect(await screen.findByRole('heading', { name: 'Revolution Case' })).toBeInTheDocument()
+    expect(getCasesMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('shows retry and home on cases load error', async () => {
+    getCasesMock.mockRejectedValue(new Error('boom'))
+
+    renderWithProviders(<CasesShop />)
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /try again/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /back to home/i })).toHaveAttribute('href', '/')
+    await waitFor(() => {
+      expect(getCasesMock).toHaveBeenCalled()
+    })
   })
 
   it('shows level badge for gated cases and marks locked for underleveled players', async () => {

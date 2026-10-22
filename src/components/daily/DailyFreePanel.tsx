@@ -123,11 +123,14 @@ export function DailyFreePanel() {
               {t('daily.loginCta')}
             </Link>
           ) : locked ? (
-            <div className="flex w-full flex-col items-center gap-2">
+            <div className="flex w-full flex-col items-center gap-3">
               <p className={cdBodyMuted}>{t('daily.countdownHint')}</p>
               <p className="font-display text-3xl font-bold tabular-nums text-cd-accent">
                 {formatCountdown(remainingMs)}
               </p>
+              <Link href="/#cases" className={`${cdBtnPrimaryLink} w-full`}>
+                {t('daily.lockedCta')}
+              </Link>
               <SkipCaseAnimationToggle />
             </div>
           ) : (

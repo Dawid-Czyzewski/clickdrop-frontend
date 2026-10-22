@@ -14,6 +14,7 @@ export function useCases(options: UseCasesOptions = {}) {
   const [cases, setCases] = useState<GameCase[]>([])
   const [isLoading, setIsLoading] = useState(enabled)
   const [error, setError] = useState('')
+  const [reloadToken, setReloadToken] = useState(0)
 
   useEffect(() => {
     if (!enabled) {
@@ -46,7 +47,12 @@ export function useCases(options: UseCasesOptions = {}) {
     return () => {
       cancelled = true
     }
-  }, [enabled, t])
+  }, [enabled, t, reloadToken])
 
-  return { cases, isLoading, error }
+  return {
+    cases,
+    isLoading,
+    error,
+    refresh: () => setReloadToken((n) => n + 1),
+  }
 }

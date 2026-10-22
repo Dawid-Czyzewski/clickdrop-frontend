@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useCaseOpenHistory } from '../../hooks/useCaseOpenHistory'
+import { EmptyState } from '../ui/EmptyState'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
   cdBodyMuted,
@@ -59,7 +60,11 @@ export function CaseOpenHistoryPanel() {
       ) : null}
 
       {!isLoading && !error && opens.length === 0 ? (
-        <p className={cdBodyMuted}>{t('cases.opens.empty')}</p>
+        <EmptyState
+          message={t('cases.opens.empty')}
+          ctaLabel={t('cases.opens.emptyCta')}
+          ctaHref="/#cases"
+        />
       ) : null}
 
       {!isLoading && opens.length > 0 ? (

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useCases } from '../../hooks/useCases'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { EmptyState } from '../ui/EmptyState'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
   cdBodyMuted,
@@ -19,7 +20,12 @@ import { CaseShopCard } from './CaseShopCard'
 export function CasesShop() {
   const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
-  const { cases, isLoading: casesLoading, error: casesError } = useCases({ enabled: true })
+  const {
+    cases,
+    isLoading: casesLoading,
+    error: casesError,
+    refresh,
+  } = useCases({ enabled: true })
   const { user } = useCurrentUser({ enabled: loggedIn })
 
   useEffect(() => {
@@ -58,16 +64,33 @@ export function CasesShop() {
       </div>
 
       {casesError ? (
-        <p role="alert" className="text-sm text-cd-danger">
-          {casesError}
-        </p>
+        <div className="flex flex-col gap-2" role="alert">
+          <p className="text-sm text-cd-danger">{casesError}</p>
+          <EmptyState
+            message={t('cases.errorHint')}
+            ctaLabel={t('cases.retry')}
+            onCtaClick={refresh}
+            secondaryLabel={t('cases.homeCta')}
+            secondaryHref="/"
+          />
+        </div>
       ) : null}
 
-      {!loggedIn ? <p className={cdBodyMuted}>{t('cases.loginHint')}</p> : null}
+      {!loggedIn && !casesError ? (
+        <p className={cdBodyMuted}>{t('cases.loginHint')}</p>
+      ) : null}
 
-      {cases.length === 0 ? (
-        <p className={cdBodyMuted}>{t('cases.empty')}</p>
-      ) : (
+      {!casesError && cases.length === 0 ? (
+        <EmptyState
+          message={t('cases.empty')}
+          ctaLabel={t('cases.retry')}
+          onCtaClick={refresh}
+          secondaryLabel={t('cases.homeCta')}
+          secondaryHref="/"
+        />
+      ) : null}
+
+      {!casesError && cases.length > 0 ? (
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {cases.map((gameCase) => (
             <CaseShopCard
@@ -77,7 +100,7 @@ export function CasesShop() {
             />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   )
 }
