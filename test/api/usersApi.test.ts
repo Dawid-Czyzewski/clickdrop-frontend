@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { getCurrentUser, getLeaderboard, usersApi } from '../../src/api/usersApi'
+import {
+  getCurrentUser,
+  getLeaderboard,
+  getMyLeaderboardRank,
+  usersApi,
+} from '../../src/api/usersApi'
 
 const requestMock = vi.hoisted(() => vi.fn())
 
@@ -58,6 +63,23 @@ describe('usersApi', () => {
       data: undefined,
       headers: undefined,
       skipAuth: true,
+    })
+  })
+
+  it('getMyLeaderboardRank calls GET /api/users/leaderboard/me with auth', async () => {
+    const mine = { rank: 42, username: 'player', level: 7, experience: 210 }
+    requestMock.mockResolvedValue({ data: mine })
+
+    const result = await getMyLeaderboardRank()
+
+    expect(result).toEqual(mine)
+    expect(usersApi.getMyLeaderboardRank).toBe(getMyLeaderboardRank)
+    expect(requestMock).toHaveBeenCalledWith({
+      url: '/api/users/leaderboard/me',
+      method: 'GET',
+      data: undefined,
+      headers: undefined,
+      skipAuth: false,
     })
   })
 })

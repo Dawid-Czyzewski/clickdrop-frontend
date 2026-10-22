@@ -317,6 +317,12 @@
     "anonymous": "Player",
     "levelValue": "Lvl {{level}}",
     "xpValue": "{{xp}} XP",
+    "myRankLabel": "Your rank",
+    "myRank": "You · #{{rank}} · Lvl {{level}} · {{xp}} XP",
+    "myRankLoading": "Loading your rank…",
+    "youBadge": "You",
+    "guestHint": "Sign in to see your rank on the board.",
+    "loginCta": "Sign in",
     "columns": {
       "rank": "Rank",
       "player": "Player",

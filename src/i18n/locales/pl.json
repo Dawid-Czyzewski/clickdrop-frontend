@@ -319,6 +319,12 @@
     "anonymous": "Gracz",
     "levelValue": "Lvl {{level}}",
     "xpValue": "{{xp}} XP",
+    "myRankLabel": "Twój ranking",
+    "myRank": "Ty · #{{rank}} · Lvl {{level}} · {{xp}} XP",
+    "myRankLoading": "Ładowanie Twojego rankingu…",
+    "youBadge": "Ty",
+    "guestHint": "Zaloguj się, żeby zobaczyć swój ranking.",
+    "loginCta": "Zaloguj się",
     "columns": {
       "rank": "Poz.",
       "player": "Gracz",

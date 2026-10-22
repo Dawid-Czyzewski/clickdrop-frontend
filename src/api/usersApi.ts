@@ -15,6 +15,8 @@ export type LeaderboardEntry = {
   experience: number
 }
 
+export type MyLeaderboardRank = LeaderboardEntry
+
 export function getCurrentUser(): Promise<CurrentUser> {
   return apiRequest<CurrentUser>('/api/users/me')
 }
@@ -26,7 +28,12 @@ export function getLeaderboard(limit = 20): Promise<LeaderboardEntry[]> {
   })
 }
 
+export function getMyLeaderboardRank(): Promise<MyLeaderboardRank> {
+  return apiRequest<MyLeaderboardRank>('/api/users/leaderboard/me')
+}
+
 export const usersApi = {
   getCurrentUser,
   getLeaderboard,
+  getMyLeaderboardRank,
 }
