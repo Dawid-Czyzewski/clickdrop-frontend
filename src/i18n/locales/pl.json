@@ -150,7 +150,10 @@
       "subtitle": "Najnowsze skiny ze skrzynek i daily w ClickDrop.",
       "empty": "Brak dropów. Otwórz skrzynkę, żeby zasilić feed.",
       "error": "Nie udało się wczytać ostatnich dropów. Spróbuj ponownie.",
-      "errorServer": "Feed dropów jest niedostępny. Spróbuj ponownie później."
+      "errorServer": "Feed dropów jest niedostępny. Spróbuj ponownie później.",
+      "goToCase": "Otwórz skrzynkę dla {{name}}",
+      "goToDaily": "Otwórz Daily Free dla {{name}}",
+      "goToCases": "Przeglądaj skrzynki dla {{name}}"
     }
   },
   "upgrades": {

@@ -148,7 +148,10 @@
       "subtitle": "Latest skins from cases and daily rewards across ClickDrop.",
       "empty": "No drops yet. Open a case to get the feed started.",
       "error": "Could not load recent drops. Please try again.",
-      "errorServer": "The drops feed is unavailable. Please try again later."
+      "errorServer": "The drops feed is unavailable. Please try again later.",
+      "goToCase": "Open case for {{name}}",
+      "goToDaily": "Open Daily Free for {{name}}",
+      "goToCases": "Browse cases for {{name}}"
     }
   },
   "upgrades": {

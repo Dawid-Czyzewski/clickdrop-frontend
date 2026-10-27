@@ -11,6 +11,8 @@ export type RecentDrop = {
   statTrack: boolean
   source: RecentDropSource
   createdAt: string
+  caseId?: number
+  caseCode?: string
 }
 
 export function getRecentDrops(limit = 20): Promise<RecentDrop[]> {

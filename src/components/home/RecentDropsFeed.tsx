@@ -1,7 +1,9 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
+import { useCaseLookup } from '../../hooks/useCaseLookup'
 import { useRecentDrops } from '../../hooks/useRecentDrops'
+import { resolveCaseIdFromLookup } from '../../lib/recentDropCaseLookup'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdEyebrow, cdSectionLabel } from '../ui/uiStyles'
 import { RecentDropChip } from './RecentDropChip'
@@ -9,6 +11,10 @@ import { RecentDropChip } from './RecentDropChip'
 export function RecentDropsFeed() {
   const { t } = useTranslation()
   const { drops, isLoading, error } = useRecentDrops({ enabled: true })
+  const needsLookup = drops.some(
+    (d) => d.source === 'CASE' && !(d.caseId != null && d.caseId > 0),
+  )
+  const lookup = useCaseLookup(needsLookup)
 
   return (
     <section className="flex flex-col gap-3" aria-labelledby="recent-drops-heading">
@@ -40,6 +46,7 @@ export function RecentDropsFeed() {
             <RecentDropChip
               key={`${drop.itemCode}-${drop.createdAt}-${index}`}
               drop={drop}
+              resolvedCaseId={resolveCaseIdFromLookup(drop, lookup)}
             />
           ))}
         </ul>
