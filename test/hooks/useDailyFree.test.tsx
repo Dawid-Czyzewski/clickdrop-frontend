@@ -163,9 +163,9 @@ describe('useDailyFree', () => {
       await result.current.claim()
     })
 
-    const balance = await act(async () => result.current.sellDrop())
+    const sold = await act(async () => result.current.sellDrop())
 
-    expect(balance).toBe(90)
+    expect(sold).toEqual({ balance: 90, soldFor: 40 })
     expect(sellMock).toHaveBeenCalledWith(9)
     expect(result.current.drop).toBeNull()
   })

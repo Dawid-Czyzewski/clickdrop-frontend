@@ -127,6 +127,7 @@ describe('DailyFreePanel', () => {
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent('+40.00 CD')
     })
   })
 

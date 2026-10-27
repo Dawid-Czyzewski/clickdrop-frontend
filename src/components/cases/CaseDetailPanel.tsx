@@ -11,9 +11,11 @@ import { useCaseDrops } from '../../hooks/useCaseDrops'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { useDeferredLevelUpModal } from '../../hooks/useDeferredLevelUpModal'
 import { useInventory } from '../../hooks/useInventory'
+import { useSoldToast } from '../../hooks/useSoldToast'
 import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { caseMinLevel, isCaseLevelLocked } from '../../lib/caseLevel'
 import { LevelUpModal } from '../home/LevelUpModal'
+import { InventorySoldToast } from '../inventory/InventorySoldToast'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
 import { CaseDropsGrid } from './CaseDropsGrid'
@@ -51,6 +53,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     sellBatch,
     clearError,
   } = useInventory({ enabled: loggedIn })
+  const { soldToast, showSoldToast, dismissSoldToast } = useSoldToast()
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -102,6 +105,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     const result = await sellItem(singleDrop.inventoryItemId)
     if (!result) return
     applyBalance(result.balance)
+    showSoldToast(result.soldFor)
     dismissResult()
   }
 
@@ -110,6 +114,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     const result = await sellBatch(multiDrops.map((drop) => drop.inventoryItemId))
     if (!result) return
     applyBalance(result.balance)
+    showSoldToast(result.totalEarned)
     dismissResult()
   }
 
@@ -172,6 +177,14 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         <LevelUpModal
           level={levelUpLevel}
           onClose={() => closeLevelUp(() => router.push('/inventory'))}
+        />
+      ) : null}
+
+      {soldToast ? (
+        <InventorySoldToast
+          amount={soldToast.amount}
+          toastKey={soldToast.id}
+          onDismiss={dismissSoldToast}
         />
       ) : null}
     </div>

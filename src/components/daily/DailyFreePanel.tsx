@@ -8,11 +8,10 @@ import { isDailyCashClaim, isDailySkinClaim } from '../../api/dailyApi'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useDailyFree } from '../../hooks/useDailyFree'
+import { useSoldToast } from '../../hooks/useSoldToast'
 import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { dailyDropSpinCode, toSpinCaseDrop } from '../../lib/dailySpin'
 import { formatCountdown } from '../../lib/formatCountdown'
-import { CaseOpenResultModal } from '../cases/CaseOpenResultModal'
-import { CaseOpenSpinner } from '../cases/CaseOpenSpinner'
 import { SkipCaseAnimationToggle } from '../cases/SkipCaseAnimationToggle'
 import { AssetImage } from '../media/AssetImage'
 import { CatalogSkeleton } from '../ui/Skeleton'
@@ -25,8 +24,8 @@ import {
   cdPageTitle,
   cdSectionLabel,
 } from '../ui/uiStyles'
-import { DailyCashResultModal } from './DailyCashResultModal'
 import { DailyDropsGrid } from './DailyDropsGrid'
+import { DailyFreeResultOverlay } from './DailyFreeResultOverlay'
 
 export function DailyFreePanel() {
   const { t } = useTranslation()
@@ -34,6 +33,7 @@ export function DailyFreePanel() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [spinning, setSpinning] = useState(false)
   const { applyBalance } = useBalance({ enabled: loggedIn })
+  const { soldToast, showSoldToast, dismissSoldToast } = useSoldToast()
   const {
     drops,
     status,
@@ -67,7 +67,9 @@ export function DailyFreePanel() {
 
   async function handleSell() {
     const next = await sellDrop()
-    if (next !== null) applyBalance(next)
+    if (!next) return
+    applyBalance(next.balance)
+    showSoldToast(next.soldFor)
   }
 
   function handleKeep() {
@@ -164,32 +166,22 @@ export function DailyFreePanel() {
         </div>
       </div>
 
-      {spinning && drop ? (
-        <CaseOpenSpinner
-          drops={spinPool}
-          winnerCode={winnerCode()}
-          onComplete={() => setSpinning(false)}
-        />
-      ) : null}
-
-      {!spinning && drop && isDailySkinClaim(drop) ? (
-        <CaseOpenResultModal
-          drop={drop}
-          isSelling={isSelling}
-          onClose={keepDrop}
-          onKeep={handleKeep}
-          onSell={() => {
-            void handleSell()
-          }}
-          backdropCodes={drops
-            .filter((d) => d.type === 'SKIN')
-            .map((d) => d.itemCode)}
-        />
-      ) : null}
-
-      {!spinning && drop && isDailyCashClaim(drop) ? (
-        <DailyCashResultModal cashAmount={drop.cashAmount} onClose={keepDrop} />
-      ) : null}
+      <DailyFreeResultOverlay
+        spinning={spinning}
+        drop={drop}
+        spinPool={spinPool}
+        winnerCode={winnerCode()}
+        drops={drops}
+        isSelling={isSelling}
+        soldToast={soldToast}
+        onSpinComplete={() => setSpinning(false)}
+        onKeepDrop={keepDrop}
+        onKeep={handleKeep}
+        onSell={() => {
+          void handleSell()
+        }}
+        onDismissSoldToast={dismissSoldToast}
+      />
     </div>
   )
 }

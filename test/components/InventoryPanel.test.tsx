@@ -111,6 +111,7 @@ describe('InventoryPanel', () => {
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
       expect(screen.queryByText('AK-47 | Slate')).not.toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent('+40.00 CD')
     })
   })
 
@@ -145,7 +146,7 @@ describe('InventoryPanel', () => {
       expect(sellBatchMock).toHaveBeenCalledWith([9, 10])
       expect(screen.queryByText('AK-47 | Slate')).not.toBeInTheDocument()
       expect(screen.queryByText('Glock-18 | Umbral Rabbit')).not.toBeInTheDocument()
-      expect(screen.getByRole('status')).toHaveTextContent('Sold for 60.00 CD')
+      expect(screen.getByRole('status')).toHaveTextContent('+60.00 CD')
     })
   })
 

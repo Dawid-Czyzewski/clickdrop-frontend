@@ -121,7 +121,7 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
     }
   }
 
-  async function sellDrop(): Promise<number | null> {
+  async function sellDrop(): Promise<{ balance: number; soldFor: number } | null> {
     if (!drop || !isDailySkinClaim(drop) || busyRef.current) return null
 
     busyRef.current = true
@@ -131,7 +131,7 @@ export function useDailyFree(options: UseDailyFreeOptions = {}) {
     try {
       const result = await sellInventoryItem(drop.inventoryItemId)
       setDrop(null)
-      return result.balance
+      return { balance: result.balance, soldFor: result.soldFor }
     } catch (err) {
       setError(resolveDailyError(err, t))
       return null

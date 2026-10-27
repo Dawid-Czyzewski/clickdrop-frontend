@@ -391,7 +391,7 @@
     "selectedCount": "{{count}} selected",
     "sellSelected": "Sell {{count}} for {{amount}} CD",
     "sellingBatch": "Selling…",
-    "batchSold": "Sold for {{amount}} CD",
+    "batchSold": "+{{amount}} CD",
     "sellConfirmTitle": "Sell selected skins?",
     "sellConfirmBody": "Sell {{count}} skins for about {{amount}} CD.",
     "sellConfirmCta": "Sell selected",

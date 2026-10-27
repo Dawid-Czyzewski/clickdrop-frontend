@@ -7,6 +7,7 @@ import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useInventory } from '../../hooks/useInventory'
 import { useInventoryFilters } from '../../hooks/useInventoryFilters'
+import { useSoldToast } from '../../hooks/useSoldToast'
 import { applyInventoryFilters } from '../../lib/inventoryFilters'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
@@ -19,17 +20,12 @@ import { InventoryBrowseSection } from './InventoryBrowseSection'
 import { InventorySellConfirmModal } from './InventorySellConfirmModal'
 import { InventorySoldToast } from './InventorySoldToast'
 
-type SoldToast = {
-  id: number
-  amount: number
-}
-
 export function InventoryPanel() {
   const { t } = useTranslation()
   const [loggedIn, setLoggedIn] = useState(false)
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const [soldToast, setSoldToast] = useState<SoldToast | null>(null)
+  const { soldToast, showSoldToast, dismissSoldToast } = useSoldToast()
   const { applyBalance } = useBalance({ enabled: loggedIn })
   const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } =
     useInventory({ enabled: loggedIn })
@@ -57,10 +53,6 @@ export function InventoryPanel() {
     0,
   )
   const busy = sellingId !== null || isSellingBatch
-
-  function showSoldToast(amount: number) {
-    setSoldToast((prev) => ({ id: (prev?.id ?? 0) + 1, amount }))
-  }
 
   async function handleSell(inventoryItemId: number) {
     const result = await sellItem(inventoryItemId)
@@ -170,7 +162,7 @@ export function InventoryPanel() {
         <InventorySoldToast
           amount={soldToast.amount}
           toastKey={soldToast.id}
-          onDismiss={() => setSoldToast(null)}
+          onDismiss={dismissSoldToast}
         />
       ) : null}
     </div>

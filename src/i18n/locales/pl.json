@@ -393,7 +393,7 @@
     "selectedCount": "Zaznaczono: {{count}}",
     "sellSelected": "Sprzedaj {{count}} za {{amount}} CD",
     "sellingBatch": "Sprzedawanie…",
-    "batchSold": "Sprzedano za {{amount}} CD",
+    "batchSold": "+{{amount}} CD",
     "sellConfirmTitle": "Sprzedać zaznaczone skiny?",
     "sellConfirmBody": "Sprzedaj {{count}} skinów za ok. {{amount}} CD.",
     "sellConfirmCta": "Sprzedaj zaznaczone",

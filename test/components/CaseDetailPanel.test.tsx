@@ -223,6 +223,7 @@ describe('CaseDetailPanel', () => {
 
     await waitFor(() => {
       expect(sellMock).toHaveBeenCalledWith(9)
+      expect(screen.getByRole('status')).toHaveTextContent('+40.00 CD')
     })
     expect(await screen.findByRole('dialog', { name: /lvl 4/i })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /^continue$/i }))
