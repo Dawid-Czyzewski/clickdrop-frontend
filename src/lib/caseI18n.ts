@@ -65,6 +65,16 @@ export const CASE_ACCENT: Record<string, string> = {
   DANGER_ZONE_CASE: '#84cc16',
   CS20_CASE: '#3b82f6',
   OPERATION_BROKEN_FANG_CASE: '#f59e0b',
+  GALLERY_CASE: '#14b8a6',
+  CHROMA_3_CASE: '#f43f5e',
+  GAMMA_2_CASE: '#10b981',
+  HORIZON_CASE: '#0ea5e9',
+  PRISMA_CASE: '#c026d3',
+  SPECTRUM_CASE: '#db2777',
+  GLOVE_CASE: '#78716c',
+  OPERATION_HYDRA_CASE: '#dc2626',
+  OPERATION_RIPTIDE_CASE: '#0284c7',
+  FEVER_CASE: '#ea580c',
 }
 
 export function caseAccent(code: string): string {
