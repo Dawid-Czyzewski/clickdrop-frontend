@@ -21,7 +21,7 @@ export function NavStatsBar() {
 
   return (
     <div className="border-b border-cd-border bg-cd-bg-elevated/50">
-      <div className="flex w-full items-center px-3 sm:px-5 lg:px-8">
+      <div className="flex w-full items-center overflow-x-auto px-3 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-5 lg:px-8 [&::-webkit-scrollbar]:hidden">
         <nav
           className="relative z-10 flex shrink-0 items-center gap-1 py-1.5"
           aria-label={t('home.nav.label')}

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 type ClickButtonProps = {
   disabled?: boolean
+  busy?: boolean
   onClick?: () => void
 }
 
@@ -71,7 +72,7 @@ const idleShadow = '0 14px 0 #9a3412, 0 18px 28px rgba(0,0,0,0.45)'
 const hoverShadow = '0 18px 0 #9a3412, 0 24px 36px rgba(0,0,0,0.5)'
 const pressedShadow = '0 4px 0 #9a3412, 0 8px 16px rgba(0,0,0,0.4)'
 
-export function ClickButton({ disabled = false, onClick }: ClickButtonProps) {
+export function ClickButton({ disabled = false, busy = false, onClick }: ClickButtonProps) {
   const { t } = useTranslation()
   const [pressed, setPressed] = useState(false)
   const ringsGradientId = useId().replace(/:/g, '')
@@ -83,7 +84,7 @@ export function ClickButton({ disabled = false, onClick }: ClickButtonProps) {
       <button
         type="button"
         disabled={disabled}
-        aria-busy={disabled || undefined}
+        aria-busy={busy || undefined}
         aria-label={t('home.earn.clickLabel')}
         onClick={onClick}
         onPointerDown={() => {

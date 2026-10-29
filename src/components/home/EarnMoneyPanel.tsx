@@ -107,6 +107,7 @@ export function EarnMoneyPanel() {
               <div className="relative flex items-center justify-center">
                 <ClickButton
                   disabled={isLoading || isClicking || isCollecting}
+                  busy={isClicking || isCollecting}
                   onClick={() => {
                     void handleClick()
                   }}

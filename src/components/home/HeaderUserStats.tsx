@@ -24,9 +24,9 @@ export function HeaderUserStats({
   const percent = Math.round(ratio * 100)
 
   return (
-    <div className="hidden items-center gap-1.5 md:flex" aria-live="polite">
+    <div className="flex items-center gap-1.5" aria-live="polite">
       <div
-        className="flex items-center gap-2 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:px-2.5"
+        className="hidden items-center gap-2 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:flex sm:px-2.5"
         aria-label={`${levelLabel} ${level}, ${currentXp} / ${xpForLevel} ${xpLabel}`}
       >
         <span className="font-medium tracking-wider text-cd-muted uppercase">
@@ -46,7 +46,7 @@ export function HeaderUserStats({
             style={{ width: `${percent}%` }}
           />
         </div>
-        <span className="font-display font-semibold tabular-nums text-cd-muted">
+        <span className="hidden font-display font-semibold tabular-nums text-cd-muted md:inline">
           {xpProgressLabel}
         </span>
       </div>
@@ -65,7 +65,7 @@ export function HeaderUserStats({
 
 export function HeaderUserStatsLoading({ label }: { label: string }) {
   return (
-    <p className="hidden text-xs text-cd-muted md:block" role="status" aria-live="polite">
+    <p className="text-xs text-cd-muted" role="status" aria-live="polite">
       {label}
     </p>
   )

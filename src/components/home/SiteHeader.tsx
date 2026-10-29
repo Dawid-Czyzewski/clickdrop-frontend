@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { performSessionLogout } from '../../auth/performSessionLogout'
+import { setAppLanguage } from '../../i18n/setAppLanguage'
 import { HeaderUserStatsPanel } from './HeaderUserStatsPanel'
 
 export function SiteHeader() {
@@ -52,7 +53,7 @@ export function SiteHeader() {
           <div className="flex gap-1" role="group" aria-label={t('language.label')}>
             <button
               type="button"
-              onClick={() => void i18n.changeLanguage('pl')}
+              onClick={() => void setAppLanguage('pl')}
               className={`cursor-pointer rounded px-2 py-1 text-xs font-medium transition ${
                 i18n.language.startsWith('pl')
                   ? 'bg-cd-accent text-cd-bg'
@@ -63,7 +64,7 @@ export function SiteHeader() {
             </button>
             <button
               type="button"
-              onClick={() => void i18n.changeLanguage('en')}
+              onClick={() => void setAppLanguage('en')}
               className={`cursor-pointer rounded px-2 py-1 text-xs font-medium transition ${
                 i18n.language.startsWith('en')
                   ? 'bg-cd-accent text-cd-bg'
@@ -75,18 +76,18 @@ export function SiteHeader() {
           </div>
 
           {loggedIn ? (
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex min-w-0 items-center gap-1.5 sm:gap-3">
               <HeaderUserStatsPanel />
               <Link
                 href="/settings"
-                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover"
+                className="hidden cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover sm:inline-flex"
               >
                 {t('home.header.settings')}
               </Link>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text transition hover:bg-cd-surface-hover"
+                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-2.5 py-1.5 text-sm font-medium text-cd-text transition hover:bg-cd-surface-hover sm:px-3"
               >
                 {t('home.header.logout')}
               </button>

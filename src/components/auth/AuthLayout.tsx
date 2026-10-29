@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { setAppLanguage } from '../../i18n/setAppLanguage'
 import { ClickDropLogo } from './ClickDropLogo'
 
 type AuthLayoutProps = {
@@ -36,7 +37,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
       >
         <button
           type="button"
-          onClick={() => void i18n.changeLanguage('pl')}
+          onClick={() => void setAppLanguage('pl')}
           className={`cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition ${
             i18n.language.startsWith('pl')
               ? 'bg-cd-accent text-cd-bg'
@@ -47,7 +48,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
         </button>
         <button
           type="button"
-          onClick={() => void i18n.changeLanguage('en')}
+          onClick={() => void setAppLanguage('en')}
           className={`cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition ${
             i18n.language.startsWith('en')
               ? 'bg-cd-accent text-cd-bg'
