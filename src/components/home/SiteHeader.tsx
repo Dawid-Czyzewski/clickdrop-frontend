@@ -25,11 +25,21 @@ export function SiteHeader() {
     })
   }
 
+  const langBtn = (active: boolean) =>
+    [
+      'inline-flex h-10 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-xs font-medium transition sm:h-11 sm:w-11',
+      active ? 'bg-cd-accent text-cd-bg' : 'text-cd-muted hover:text-cd-text',
+    ].join(' ')
+
   return (
-    <header className="border-b border-cd-border bg-cd-bg-elevated/90 backdrop-blur-md">
-      <div className="flex h-14 w-full items-center gap-4 px-3 sm:h-16 sm:px-5 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2 no-underline">
-          <svg viewBox="0 0 64 64" className="h-8 w-8" aria-hidden="true">
+    <header className="overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/90 backdrop-blur-md">
+      <div className="flex h-14 w-full min-w-0 items-center gap-2 px-2 sm:h-16 sm:gap-3 sm:px-5 lg:px-8">
+        <Link
+          href="/"
+          aria-label="ClickDrop"
+          className="flex shrink-0 items-center gap-2 no-underline"
+        >
+          <svg viewBox="0 0 64 64" className="h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true">
             <defs>
               <linearGradient id="cd-header-logo" x1="8" y1="4" x2="56" y2="60">
                 <stop stopColor="#fbbf24" />
@@ -44,58 +54,80 @@ export function SiteHeader() {
             />
             <path d="M32 14L22 36H30L28 50L42 28H34L36 14H32Z" fill="url(#cd-header-logo)" />
           </svg>
-          <span className="font-display text-sm font-semibold tracking-[0.14em] text-cd-text sm:text-base">
+          <span className="hidden font-display text-base font-semibold tracking-[0.14em] text-cd-text sm:inline">
             CLICK<span className="text-cd-accent">DROP</span>
           </span>
         </Link>
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          <div className="flex gap-1" role="group" aria-label={t('language.label')}>
+        <div className="ml-auto flex min-w-0 shrink items-center gap-1 sm:gap-2">
+          <div className="flex shrink-0" role="group" aria-label={t('language.label')}>
             <button
               type="button"
               onClick={() => void setAppLanguage('pl')}
-              className={`cursor-pointer rounded px-2 py-1 text-xs font-medium transition ${
-                i18n.language.startsWith('pl')
-                  ? 'bg-cd-accent text-cd-bg'
-                  : 'text-cd-muted hover:text-cd-text'
-              }`}
+              className={langBtn(i18n.language.startsWith('pl'))}
             >
               PL
             </button>
             <button
               type="button"
               onClick={() => void setAppLanguage('en')}
-              className={`cursor-pointer rounded px-2 py-1 text-xs font-medium transition ${
-                i18n.language.startsWith('en')
-                  ? 'bg-cd-accent text-cd-bg'
-                  : 'text-cd-muted hover:text-cd-text'
-              }`}
+              className={langBtn(i18n.language.startsWith('en'))}
             >
               EN
             </button>
           </div>
 
           {loggedIn ? (
-            <div className="flex min-w-0 items-center gap-1.5 sm:gap-3">
-              <HeaderUserStatsPanel />
+            <div className="flex min-w-0 items-center gap-1 sm:gap-2">
+              <div className="min-w-0 overflow-hidden">
+                <HeaderUserStatsPanel />
+              </div>
               <Link
                 href="/settings"
-                className="hidden cursor-pointer rounded-md border border-cd-border bg-cd-surface px-3 py-1.5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover sm:inline-flex"
+                aria-label={t('home.header.settings')}
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-surface text-cd-text no-underline transition hover:bg-cd-surface-hover sm:h-11 sm:w-auto sm:gap-2 sm:px-3"
               >
-                {t('home.header.settings')}
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 sm:hidden"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 3.5v2.2M12 18.3v2.2M4.9 6.4l1.6 1.5M17.5 16.1l1.6 1.5M3.5 12h2.2M18.3 12h2.2M4.9 17.6l1.6-1.5M17.5 7.9l1.6-1.5" />
+                </svg>
+                <span className="hidden text-sm font-medium sm:inline">
+                  {t('home.header.settings')}
+                </span>
               </Link>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="cursor-pointer rounded-md border border-cd-border bg-cd-surface px-2.5 py-1.5 text-sm font-medium text-cd-text transition hover:bg-cd-surface-hover sm:px-3"
+                aria-label={t('home.header.logout')}
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-surface text-cd-text transition hover:bg-cd-surface-hover sm:h-11 sm:w-auto sm:px-3"
               >
-                {t('home.header.logout')}
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 sm:hidden"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <path d="M10 7V5.8A1.8 1.8 0 0 1 11.8 4h6.4A1.8 1.8 0 0 1 20 5.8v12.4a1.8 1.8 0 0 1-1.8 1.8h-6.4A1.8 1.8 0 0 1 10 18.2V17" />
+                  <path d="M4 12h10M7 9l-3 3 3 3" />
+                </svg>
+                <span className="hidden text-sm font-medium sm:inline">
+                  {t('home.header.logout')}
+                </span>
               </button>
             </div>
           ) : (
             <Link
               href="/login"
-              className="cursor-pointer rounded-md bg-cd-accent px-4 py-1.5 font-display text-xs font-semibold tracking-wider text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover sm:px-5 sm:text-sm"
+              className="inline-flex h-10 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-md bg-cd-accent px-3 font-display text-xs font-semibold text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover sm:h-11 sm:px-5 sm:text-sm"
             >
               {t('home.header.login')}
             </Link>

@@ -15,13 +15,13 @@ export function CaseOpenSpinner({ drops, winnerCode, onComplete }: CaseOpenSpinn
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-clip bg-black/85 p-3 backdrop-blur-[2px] sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-spin-title"
       aria-busy="true"
     >
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-6xl py-4">
         <p
           id="case-spin-title"
           className="mb-5 text-center font-display text-sm tracking-[0.2em] text-cd-accent uppercase sm:text-base"

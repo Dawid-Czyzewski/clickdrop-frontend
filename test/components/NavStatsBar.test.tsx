@@ -5,7 +5,7 @@ import { setMockPathname } from '../mocks/nextNavigation'
 import { renderWithProviders } from '../utils/render'
 
 describe('NavStatsBar', () => {
-  it('shows cases, history, upgrades, skin upgrade, inventory, daily, leaderboard, and settings links', () => {
+  it('shows cases, history, upgrades, skins, inventory, daily, ranks, and settings links', () => {
     setMockPathname('/')
     renderWithProviders(<NavStatsBar />)
 
@@ -14,11 +14,11 @@ describe('NavStatsBar', () => {
       'href',
       '/cases/opens',
     )
-    expect(screen.getByRole('link', { name: /upgrades shop/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /^upgrades$/i })).toHaveAttribute(
       'href',
       '/upgrades',
     )
-    expect(screen.getByRole('link', { name: /^skin upgrade$/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /^skins$/i })).toHaveAttribute(
       'href',
       '/skin-upgrade',
     )
@@ -26,8 +26,8 @@ describe('NavStatsBar', () => {
       'href',
       '/inventory',
     )
-    expect(screen.getByRole('link', { name: /daily free/i })).toHaveAttribute('href', '/daily')
-    expect(screen.getByRole('link', { name: /^leaderboard$/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /^daily$/i })).toHaveAttribute('href', '/daily')
+    expect(screen.getByRole('link', { name: /^ranks$/i })).toHaveAttribute(
       'href',
       '/leaderboard',
     )
@@ -48,7 +48,7 @@ describe('NavStatsBar', () => {
     setMockPathname('/daily')
     renderWithProviders(<NavStatsBar />)
 
-    expect(screen.getByRole('link', { name: /daily free/i }).className).toContain(
+    expect(screen.getByRole('link', { name: /^daily$/i }).className).toContain(
       'border-cd-accent',
     )
   })

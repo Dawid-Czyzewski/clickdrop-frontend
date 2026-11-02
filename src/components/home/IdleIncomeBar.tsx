@@ -22,8 +22,8 @@ export function IdleIncomeBar({
   const canCollect = pending > 0
 
   return (
-    <div className="flex w-full max-w-sm flex-wrap items-center justify-between gap-3 rounded-lg border border-cd-border bg-cd-bg/55 px-3 py-2.5">
-      <p className="text-sm tabular-nums text-cd-text">
+    <div className="flex w-full max-w-sm flex-col items-stretch gap-2 rounded-lg border border-cd-border bg-cd-bg/55 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+      <p className="text-center text-sm tabular-nums text-cd-text sm:text-left">
         {t('home.earn.pendingIdle', { amount })}
       </p>
       <button
@@ -31,7 +31,7 @@ export function IdleIncomeBar({
         disabled={collectDisabled || isCollecting || !canCollect}
         aria-busy={isCollecting || undefined}
         onClick={onCollect}
-        className={`${canCollect ? cdBtnPrimary : cdBtnGhost} h-9 px-4 text-xs`}
+        className={`${canCollect ? cdBtnPrimary : cdBtnGhost} h-11 w-full px-4 text-xs sm:w-auto`}
       >
         {isCollecting ? t('home.earn.collecting') : t('home.earn.collect')}
       </button>

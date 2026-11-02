@@ -47,7 +47,7 @@ export function CaseOpenResultModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-[#06070a]/95"
+      className="fixed inset-0 z-50 flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-drop-title"
@@ -58,7 +58,7 @@ export function CaseOpenResultModal({
         onClick={handleDismiss}
         disabled={isSelling}
         aria-label={t('cases.close')}
-        className="absolute top-4 right-4 z-20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-cd-border bg-cd-surface text-cd-text transition hover:border-cd-accent/60 hover:text-cd-accent disabled:opacity-50 sm:top-6 sm:right-6"
+        className="absolute top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-cd-border bg-cd-surface text-cd-text transition hover:border-cd-accent/60 hover:text-cd-accent disabled:opacity-50 sm:top-6 sm:right-6"
       >
         <span aria-hidden="true" className="font-display text-2xl leading-none font-semibold">
           ×
@@ -66,7 +66,7 @@ export function CaseOpenResultModal({
       </button>
 
       <div
-        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16"
+        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16 pb-[max(4rem,env(safe-area-inset-bottom))]"
         onClick={(e) => e.stopPropagation()}
       >
         <div

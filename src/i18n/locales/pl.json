@@ -81,12 +81,12 @@
     },
     "nav": {
       "label": "Główne sekcje",
-      "upgrades": "Sklep ulepszeń",
-      "skinUpgrade": "Ulepsz skiny",
+      "upgrades": "Ulepszenia",
+      "skinUpgrade": "Skiny",
       "cases": "Skrzynki",
       "caseOpens": "Historia",
       "inventory": "Ekwipunek",
-      "daily": "Daily Free",
+      "daily": "Daily",
       "leaderboard": "Ranking",
       "settings": "Ustawienia"
     },

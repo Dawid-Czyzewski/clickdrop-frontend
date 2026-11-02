@@ -46,18 +46,18 @@ export function CasesShop() {
 
   return (
     <div id="cases" className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-end justify-between gap-3 border-t border-cd-border/80 pt-8">
-        <div>
+      <div className="flex flex-col gap-3 border-t border-cd-border/80 pt-8 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <p className={cdEyebrow}>{t('cases.eyebrow')}</p>
           <h1 className={cdPageTitle}>{t('cases.title')}</h1>
           <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('cases.subtitle')}</p>
         </div>
         {!loggedIn ? (
-          <Link href="/login" className={cdBtnPrimaryLink}>
+          <Link href="/login" className={`${cdBtnPrimaryLink} w-full sm:w-auto`}>
             {t('cases.loginCta')}
           </Link>
         ) : (
-          <Link href="/cases/opens" className={cdBtnGhost}>
+          <Link href="/cases/opens" className={`${cdBtnGhost} w-full sm:w-auto`}>
             {t('cases.opens.historyLink')}
           </Link>
         )}

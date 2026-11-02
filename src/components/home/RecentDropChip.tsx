@@ -27,7 +27,7 @@ export function RecentDropChip({ drop, resolvedCaseId }: RecentDropChipProps) {
   const href = recentDropHref(drop, resolvedCaseId)
 
   return (
-    <li className="w-[8.5rem] shrink-0 sm:w-[9.5rem]">
+    <li className="w-[7.75rem] shrink-0 sm:w-[9.5rem]">
       <Link
         href={href}
         aria-label={t(ariaLabelKey(drop, caseId), { name })}

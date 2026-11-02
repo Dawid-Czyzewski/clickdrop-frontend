@@ -25,19 +25,24 @@ export function InventorySelectionBar({
   const sellDisabled = selectedCount === 0 || isSelling
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-cd-border bg-cd-surface/60 px-3 py-2.5">
+    <div className="flex flex-col gap-3 rounded-lg border border-cd-border bg-cd-surface/60 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
       <p className="text-sm text-cd-muted">
         {t('inventory.selectedCount', { count: selectedCount })}
       </p>
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" disabled={isSelling} onClick={onSelectAll} className={`${cdBtnGhost} h-9 px-3 text-xs`}>
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+        <button
+          type="button"
+          disabled={isSelling}
+          onClick={onSelectAll}
+          className={`${cdBtnGhost} h-11 px-3 text-xs`}
+        >
           {t('inventory.selectAll')}
         </button>
         <button
           type="button"
           disabled={selectedCount === 0 || isSelling}
           onClick={onClear}
-          className={`${cdBtnGhost} h-9 px-3 text-xs`}
+          className={`${cdBtnGhost} h-11 px-3 text-xs`}
         >
           {t('inventory.clearSelection')}
         </button>
@@ -46,7 +51,7 @@ export function InventorySelectionBar({
           disabled={sellDisabled}
           aria-busy={isSelling || undefined}
           onClick={onSellSelected}
-          className={`${cdBtnPrimary} h-9 px-3 text-xs`}
+          className={`${cdBtnPrimary} col-span-2 h-11 px-3 text-xs sm:col-span-1`}
         >
           {isSelling
             ? t('inventory.sellingBatch')

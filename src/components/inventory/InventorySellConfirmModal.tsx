@@ -23,14 +23,14 @@ export function InventorySellConfirmModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-black/70 px-3 py-4 sm:items-center sm:px-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="inventory-sell-confirm-title"
       onClick={onCancel}
     >
       <div
-        className="w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
+        className="mb-[env(safe-area-inset-bottom,0px)] w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h2
@@ -50,7 +50,7 @@ export function InventorySellConfirmModal({
             type="button"
             disabled={isSelling}
             onClick={onCancel}
-            className={`${cdBtnGhost} h-10 px-4`}
+            className={`${cdBtnGhost} h-11 px-4`}
           >
             {t('inventory.sellConfirmCancel')}
           </button>
@@ -59,7 +59,7 @@ export function InventorySellConfirmModal({
             disabled={isSelling}
             aria-busy={isSelling || undefined}
             onClick={onConfirm}
-            className={`${cdBtnPrimary} h-10 px-4`}
+            className={`${cdBtnPrimary} h-11 px-4`}
           >
             {isSelling ? t('inventory.sellingBatch') : t('inventory.sellConfirmCta')}
           </button>

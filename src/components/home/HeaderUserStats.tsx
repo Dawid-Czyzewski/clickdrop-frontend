@@ -24,17 +24,18 @@ export function HeaderUserStats({
   const percent = Math.round(ratio * 100)
 
   return (
-    <div className="flex items-center gap-1.5" aria-live="polite">
+    <div className="flex min-w-0 items-center gap-1.5" aria-live="polite">
       <div
-        className="hidden items-center gap-2 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:flex sm:px-2.5"
+        className="flex items-center gap-1.5 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:gap-2 sm:px-2.5"
         aria-label={`${levelLabel} ${level}, ${currentXp} / ${xpForLevel} ${xpLabel}`}
       >
         <span className="font-medium tracking-wider text-cd-muted uppercase">
-          {levelLabel}{' '}
+          <span className="sm:hidden">Lv</span>
+          <span className="hidden sm:inline">{levelLabel}</span>{' '}
           <span className="font-display font-semibold tabular-nums text-cd-text">{level}</span>
         </span>
         <div
-          className="h-1.5 w-16 overflow-hidden rounded-full bg-cd-border sm:w-20"
+          className="hidden h-1.5 w-16 overflow-hidden rounded-full bg-cd-border sm:block sm:w-20"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={xpForLevel}
@@ -52,11 +53,13 @@ export function HeaderUserStats({
       </div>
       {balance !== null ? (
         <div
-          className="flex items-center gap-1.5 rounded-md border border-cd-accent/35 bg-cd-surface px-2 py-1 text-xs sm:px-2.5"
+          className="flex max-w-[5.5rem] items-center gap-1 overflow-hidden rounded-md border border-cd-accent/35 bg-cd-surface px-1.5 py-1 text-xs sm:max-w-[9rem] sm:gap-1.5 sm:px-2.5 md:max-w-none"
           aria-label={`${balanceLabel} ${balance}`}
         >
           <CurrencyBadge />
-          <span className="font-display font-semibold tabular-nums text-cd-accent">{balance}</span>
+          <span className="truncate font-display font-semibold tabular-nums text-cd-accent">
+            {balance}
+          </span>
         </div>
       ) : null}
     </div>

@@ -23,7 +23,7 @@ export function EarnedFeedback({ toasts, onDismiss }: EarnedFeedbackProps) {
 
   return (
     <div
-      className="pointer-events-none absolute top-1/2 left-[calc(50%+5.75rem)] z-30 h-0 w-32 -translate-y-1/2 sm:left-[calc(50%+7rem)] sm:w-40"
+      className="pointer-events-none absolute top-3 left-1/2 z-30 h-0 w-28 -translate-x-1/2 sm:top-1/2 sm:left-[calc(50%+7rem)] sm:w-40 sm:translate-x-0 sm:-translate-y-1/2"
       aria-live="polite"
     >
       {latest ? (

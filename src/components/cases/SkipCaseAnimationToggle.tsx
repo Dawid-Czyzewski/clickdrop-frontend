@@ -14,13 +14,13 @@ export function SkipCaseAnimationToggle({
   const { skipAnimation, setSkipAnimation } = useSkipCaseAnimation()
 
   return (
-    <label className="flex cursor-pointer items-center justify-center gap-2 text-sm text-cd-muted">
+    <label className="flex min-h-11 cursor-pointer items-center justify-center gap-2.5 px-1 text-sm text-cd-muted">
       <input
         type="checkbox"
         checked={skipAnimation}
         disabled={disabled}
         onChange={(e) => setSkipAnimation(e.target.checked)}
-        className="h-4 w-4 cursor-pointer accent-cd-accent disabled:cursor-not-allowed"
+        className="h-5 w-5 shrink-0 cursor-pointer accent-cd-accent disabled:cursor-not-allowed"
       />
       <span>{t('cases.skipAnimation')}</span>
     </label>

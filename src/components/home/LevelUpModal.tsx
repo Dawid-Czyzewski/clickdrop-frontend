@@ -13,14 +13,14 @@ export function LevelUpModal({ level, onClose }: LevelUpModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex flex-col bg-[#06070a]/95"
+      className="fixed inset-0 z-[70] flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95"
       role="dialog"
       aria-modal="true"
       aria-labelledby="level-up-title"
       onClick={onClose}
     >
       <div
-        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16"
+        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16 pb-[max(4rem,env(safe-area-inset-bottom))]"
         onClick={(e) => e.stopPropagation()}
       >
         <div

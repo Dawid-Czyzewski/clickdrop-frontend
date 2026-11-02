@@ -19,7 +19,8 @@ export const cdBtnPrimaryLink = `${cdBtnPrimary} no-underline`
 export const cdBtnGhost =
   'inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-bg px-5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover disabled:cursor-not-allowed disabled:opacity-50'
 
-export const cdPagePad = 'w-full px-3 py-5 sm:px-5 sm:py-7 lg:px-8'
+export const cdPagePad =
+  'w-full max-w-[100vw] overflow-x-clip px-3 py-5 sm:px-5 sm:py-7 lg:px-8'
 
 export const cdTile =
   'rounded-lg border border-cd-border bg-cd-surface/80 transition duration-200 hover:border-cd-accent/45 hover:bg-cd-surface'

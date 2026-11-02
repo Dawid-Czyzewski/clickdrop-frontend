@@ -18,7 +18,7 @@ export function LogoutAllConfirmModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-black/70 px-3 py-4 sm:items-center sm:px-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="logout-all-confirm-title"
@@ -27,7 +27,7 @@ export function LogoutAllConfirmModal({
       }}
     >
       <div
-        className="w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
+        className="mb-[env(safe-area-inset-bottom,0px)] w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h2
@@ -42,7 +42,7 @@ export function LogoutAllConfirmModal({
             type="button"
             disabled={isSubmitting}
             onClick={onCancel}
-            className={`${cdBtnGhost} h-10 px-4`}
+            className={`${cdBtnGhost} h-11 px-4`}
           >
             {t('settings.logoutAll.confirmCancel')}
           </button>
@@ -51,7 +51,7 @@ export function LogoutAllConfirmModal({
             disabled={isSubmitting}
             aria-busy={isSubmitting || undefined}
             onClick={onConfirm}
-            className="inline-flex h-10 cursor-pointer items-center justify-center rounded-md border border-cd-danger bg-cd-danger/15 px-4 font-display text-sm font-semibold tracking-wider text-cd-danger uppercase transition hover:bg-cd-danger/25 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-cd-danger bg-cd-danger/15 px-4 font-display text-sm font-semibold tracking-wider text-cd-danger uppercase transition hover:bg-cd-danger/25 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting
               ? t('settings.logoutAll.submitting')

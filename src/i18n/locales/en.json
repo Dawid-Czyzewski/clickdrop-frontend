@@ -81,13 +81,13 @@
     },
     "nav": {
       "label": "Main sections",
-      "upgrades": "Upgrades shop",
-      "skinUpgrade": "Skin upgrade",
+      "upgrades": "Upgrades",
+      "skinUpgrade": "Skins",
       "cases": "Cases",
       "caseOpens": "History",
       "inventory": "Inventory",
-      "daily": "Daily Free",
-      "leaderboard": "Leaderboard",
+      "daily": "Daily",
+      "leaderboard": "Ranks",
       "settings": "Settings"
     },
     "stats": {

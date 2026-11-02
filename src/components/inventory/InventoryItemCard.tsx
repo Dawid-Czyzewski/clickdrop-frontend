@@ -47,7 +47,7 @@ export function InventoryItemCard({
         <div className="flex items-center justify-between gap-2">
           <label
             htmlFor={checkboxId}
-            className="flex cursor-pointer items-center gap-1.5 text-[0.65rem] text-cd-muted"
+            className="flex min-h-11 cursor-pointer items-center gap-2 text-xs text-cd-muted"
           >
             <input
               id={checkboxId}
@@ -55,7 +55,7 @@ export function InventoryItemCard({
               checked={selected}
               disabled={disabled}
               onChange={() => onToggleSelect(item.inventoryItemId)}
-              className="h-3.5 w-3.5 accent-cd-accent"
+              className="h-5 w-5 shrink-0 accent-cd-accent"
             />
             {t('inventory.select')}
           </label>
@@ -93,7 +93,7 @@ export function InventoryItemCard({
           disabled={disabled || isSelling}
           aria-busy={isSelling || undefined}
           onClick={() => onSell(item.inventoryItemId)}
-          className={`${cdBtnPrimary} h-9 w-full cursor-pointer px-2 text-[0.65rem]`}
+          className={`${cdBtnPrimary} h-11 w-full cursor-pointer px-2 text-xs`}
         >
           {isSelling
             ? t('inventory.selling')

@@ -24,7 +24,7 @@ function PulseRings({ gradientId }: { gradientId: string }) {
   return (
     <svg
       viewBox="0 0 320 320"
-      className="pointer-events-none absolute top-1/2 left-1/2 h-[min(92vw,28rem)] w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2"
+      className="pointer-events-none absolute inset-0 h-full w-full"
       aria-hidden="true"
     >
       <defs>
@@ -78,7 +78,7 @@ export function ClickButton({ disabled = false, busy = false, onClick }: ClickBu
   const ringsGradientId = useId().replace(/:/g, '')
 
   return (
-    <div className="relative flex items-center justify-center py-6 sm:py-8">
+    <div className="relative flex w-[min(72vw,17.5rem)] items-center justify-center overflow-hidden py-6 sm:w-[19rem] sm:py-8">
       <PulseRings gradientId={`cd-pulse-${ringsGradientId}`} />
 
       <button

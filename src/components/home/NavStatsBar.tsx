@@ -20,10 +20,10 @@ export function NavStatsBar() {
   const pathname = usePathname()
 
   return (
-    <div className="border-b border-cd-border bg-cd-bg-elevated/50">
-      <div className="flex w-full items-center overflow-x-auto px-3 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-5 lg:px-8 [&::-webkit-scrollbar]:hidden">
+    <div className="overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/50">
+      <div className="w-full px-1.5 sm:px-5 lg:px-8">
         <nav
-          className="relative z-10 flex shrink-0 items-center gap-1 py-1.5"
+          className="relative z-10 flex flex-wrap items-center gap-x-0 gap-y-0.5 py-1"
           aria-label={t('home.nav.label')}
         >
           {NAV_LINKS.map((link) => {
@@ -34,7 +34,7 @@ export function NavStatsBar() {
                 key={link.key}
                 href={link.href}
                 className={[
-                  'cursor-pointer shrink-0 px-3.5 py-2 text-sm font-medium tracking-wide uppercase no-underline transition',
+                  'inline-flex min-h-10 cursor-pointer items-center px-2 text-[0.7rem] font-medium uppercase no-underline transition sm:min-h-11 sm:px-3.5 sm:text-sm sm:tracking-wide',
                   isCases
                     ? active
                       ? 'rounded-md bg-cd-accent font-semibold text-cd-bg'

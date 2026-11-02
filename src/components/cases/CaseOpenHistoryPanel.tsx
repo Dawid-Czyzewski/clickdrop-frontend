@@ -38,13 +38,13 @@ export function CaseOpenHistoryPanel() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <p className={cdEyebrow}>{t('cases.opens.eyebrow')}</p>
           <h1 className={cdPageTitle}>{t('cases.opens.title')}</h1>
           <p className={`mt-1 max-w-xl ${cdBodyMuted}`}>{t('cases.opens.subtitle')}</p>
         </div>
-        <Link href="/#cases" className={cdBtnGhost}>
+        <Link href="/#cases" className={`${cdBtnGhost} w-full sm:w-auto`}>
           {t('cases.opens.backToCases')}
         </Link>
       </div>

@@ -63,7 +63,7 @@ export function EarnMoneyPanel() {
 
   return (
     <section
-      className="cd-fade-in relative overflow-hidden rounded-xl border border-cd-border bg-cd-surface/50"
+      className="cd-fade-in relative overflow-x-clip overflow-y-hidden rounded-xl border border-cd-border bg-cd-surface/50"
       aria-labelledby="earn-panel-title"
     >
       <div

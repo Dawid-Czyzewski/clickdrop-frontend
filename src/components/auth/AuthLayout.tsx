@@ -14,7 +14,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
   const { t, i18n } = useTranslation()
 
   return (
-    <main className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 py-10 sm:px-6">
+    <main className="relative flex min-h-svh flex-col items-center justify-center overflow-x-clip px-4 py-10 sm:px-6">
       <div className="pointer-events-none absolute inset-0 bg-cd-bg" aria-hidden="true" />
       <div
         className="cd-glow pointer-events-none absolute -top-1/4 left-1/2 h-[60vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-cd-accent/15 blur-[100px]"
@@ -38,7 +38,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
         <button
           type="button"
           onClick={() => void setAppLanguage('pl')}
-          className={`cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition ${
+          className={`inline-flex h-11 min-w-11 cursor-pointer items-center justify-center rounded-md px-3 text-sm font-medium transition ${
             i18n.language.startsWith('pl')
               ? 'bg-cd-accent text-cd-bg'
               : 'bg-cd-surface text-cd-muted ring-1 ring-cd-border hover:bg-cd-surface-hover hover:text-cd-text'
@@ -49,7 +49,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
         <button
           type="button"
           onClick={() => void setAppLanguage('en')}
-          className={`cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition ${
+          className={`inline-flex h-11 min-w-11 cursor-pointer items-center justify-center rounded-md px-3 text-sm font-medium transition ${
             i18n.language.startsWith('en')
               ? 'bg-cd-accent text-cd-bg'
               : 'bg-cd-surface text-cd-muted ring-1 ring-cd-border hover:bg-cd-surface-hover hover:text-cd-text'

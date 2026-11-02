@@ -19,7 +19,7 @@ type InventoryFiltersProps = {
 }
 
 const selectClass =
-  'h-9 min-w-0 flex-1 cursor-pointer rounded-md border border-cd-border bg-cd-bg px-2 text-sm text-cd-text sm:min-w-[8.5rem] sm:flex-none'
+  'h-11 w-full min-w-0 cursor-pointer rounded-md border border-cd-border bg-cd-bg px-2.5 text-sm text-cd-text'
 
 export function InventoryFilters({
   filters,
@@ -32,8 +32,8 @@ export function InventoryFilters({
   return (
     <div className="flex flex-col gap-2" aria-label={t('inventory.filtersLabel')}>
       <p className={cdSectionLabel}>{t('inventory.filtersLabel')}</p>
-      <div className="flex flex-wrap items-center gap-2">
-        <label className="flex min-w-[9rem] flex-1 flex-col gap-1 text-xs text-cd-muted sm:flex-none">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-end">
+        <label className="flex min-w-0 flex-col gap-1 text-xs text-cd-muted sm:min-w-[8.5rem]">
           <span>{t('inventory.filterRarity')}</span>
           <select
             className={selectClass}
@@ -53,7 +53,7 @@ export function InventoryFilters({
           </select>
         </label>
 
-        <label className="flex min-w-[9rem] flex-1 flex-col gap-1 text-xs text-cd-muted sm:flex-none">
+        <label className="flex min-w-0 flex-col gap-1 text-xs text-cd-muted sm:min-w-[8.5rem]">
           <span>{t('inventory.filterStatTrack')}</span>
           <select
             className={selectClass}
@@ -68,7 +68,7 @@ export function InventoryFilters({
           </select>
         </label>
 
-        <label className="flex min-w-[9rem] flex-1 flex-col gap-1 text-xs text-cd-muted sm:flex-none">
+        <label className="flex min-w-0 flex-col gap-1 text-xs text-cd-muted sm:min-w-[8.5rem]">
           <span>{t('inventory.filterExterior')}</span>
           <select
             className={selectClass}
@@ -88,7 +88,7 @@ export function InventoryFilters({
           </select>
         </label>
 
-        <label className="flex min-w-[9rem] flex-1 flex-col gap-1 text-xs text-cd-muted sm:flex-none">
+        <label className="flex min-w-0 flex-col gap-1 text-xs text-cd-muted sm:min-w-[8.5rem]">
           <span>{t('inventory.sortLabel')}</span>
           <select
             className={selectClass}
@@ -106,7 +106,7 @@ export function InventoryFilters({
           <button
             type="button"
             onClick={onClear}
-            className={`${cdBtnGhost} h-9 px-3 text-sm sm:mt-5`}
+            className={`${cdBtnGhost} col-span-2 h-11 w-full px-3 text-sm sm:col-span-1 sm:w-auto`}
           >
             {t('inventory.clearFilters')}
           </button>

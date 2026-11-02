@@ -35,7 +35,7 @@ export function CaseOpenCountPicker({
             aria-pressed={selected}
             onClick={() => onChange(count)}
             className={[
-              'h-10 min-w-[3.5rem] cursor-pointer rounded-md border px-3 font-display text-sm font-semibold tracking-wide uppercase transition disabled:cursor-not-allowed disabled:opacity-50',
+              'h-11 min-w-[3.5rem] flex-1 cursor-pointer rounded-md border px-3 font-display text-sm font-semibold tracking-wide uppercase transition disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none',
               selected
                 ? 'border-cd-accent bg-cd-accent text-cd-bg'
                 : 'border-cd-border bg-cd-bg text-cd-muted hover:border-cd-accent/50 hover:text-cd-text',

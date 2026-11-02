@@ -16,13 +16,13 @@ export function OwnedUpgradesFlank({ upgrades, side }: OwnedUpgradesFlankProps) 
   const visible = side === 'left' ? owned.slice(0, midpoint) : owned.slice(midpoint)
 
   if (visible.length === 0) {
-    return <div className="hidden min-w-[9.5rem] sm:block sm:min-w-[11rem]" aria-hidden="true" />
+    return <div className="hidden min-w-[9.5rem] md:block md:min-w-[11rem]" aria-hidden="true" />
   }
 
   return (
     <ul
       className={[
-        'm-0 flex list-none flex-col gap-2',
+        'm-0 hidden list-none flex-col gap-2 md:flex',
         side === 'left' ? 'items-end' : 'items-start',
       ].join(' ')}
       aria-label={t(side === 'left' ? 'upgrades.ownedLeft' : 'upgrades.ownedRight')}

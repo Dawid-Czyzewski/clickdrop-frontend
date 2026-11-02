@@ -8,8 +8,8 @@ export function GuestEarnPreview() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex w-full max-w-3xl flex-col items-center gap-7">
-      <div className="relative">
+    <div className="flex w-full max-w-3xl flex-col items-center gap-7 overflow-x-clip">
+      <div className="relative max-w-full overflow-x-clip">
         <div className="pointer-events-none absolute inset-0 rounded-full bg-cd-accent/10 blur-2xl" aria-hidden="true" />
         <div className="relative opacity-90">
           <ClickButton disabled />
@@ -49,7 +49,7 @@ export function GuestEarnPreview() {
       <div className="flex flex-col items-center gap-3">
         <Link
           href="/login"
-          className="cursor-pointer rounded-md bg-cd-accent px-8 py-3.5 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline shadow-[0_8px_24px_rgba(245,158,11,0.25)] transition hover:bg-cd-accent-hover"
+          className="inline-flex h-12 w-full max-w-sm cursor-pointer items-center justify-center rounded-md bg-cd-accent px-6 text-center font-display text-sm font-semibold tracking-wider text-cd-bg uppercase no-underline shadow-[0_8px_24px_rgba(245,158,11,0.25)] transition hover:bg-cd-accent-hover"
         >
           {t('home.earn.loginCta')}
         </Link>

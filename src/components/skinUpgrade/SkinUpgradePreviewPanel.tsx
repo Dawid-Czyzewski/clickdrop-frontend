@@ -109,7 +109,7 @@ export function SkinUpgradePreviewPanel({
               {playsForStatTrack ? (
                 <p className={cdBodyMuted}>{t('skinUpgrade.confirmStatTrack')}</p>
               ) : null}
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
                 <button
                   type="button"
                   disabled={locked || !target}
@@ -120,7 +120,7 @@ export function SkinUpgradePreviewPanel({
                       targetExterior: target.exterior,
                     })
                   }}
-                  className={`${cdBtnPrimary} cursor-pointer`}
+                  className={`${cdBtnPrimary} w-full cursor-pointer sm:w-auto`}
                 >
                   {t('skinUpgrade.confirmCta')}
                 </button>
@@ -128,19 +128,19 @@ export function SkinUpgradePreviewPanel({
                   type="button"
                   disabled={locked}
                   onClick={onCancelConfirm}
-                  className={`${cdBtnGhost} cursor-pointer`}
+                  className={`${cdBtnGhost} w-full cursor-pointer sm:w-auto`}
                 >
                   {t('skinUpgrade.cancel')}
                 </button>
               </div>
             </div>
           ) : (
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
               <button
                 type="button"
                 disabled={locked || !canUpgrade}
                 onClick={onRequestUpgrade}
-                className={`${cdBtnPrimary} cursor-pointer`}
+                className={`${cdBtnPrimary} w-full cursor-pointer sm:w-auto`}
               >
                 {t('skinUpgrade.upgradeFree')}
               </button>
@@ -148,7 +148,7 @@ export function SkinUpgradePreviewPanel({
                 type="button"
                 disabled={locked}
                 onClick={onBack}
-                className={`${cdBtnGhost} cursor-pointer`}
+                className={`${cdBtnGhost} w-full cursor-pointer sm:w-auto`}
               >
                 {t('skinUpgrade.back')}
               </button>

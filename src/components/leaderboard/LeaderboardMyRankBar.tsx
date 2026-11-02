@@ -22,7 +22,7 @@ export function LeaderboardMyRankBar({
     return (
       <div className="sticky top-14 z-20 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-cd-border bg-cd-surface/95 px-3 py-2.5 shadow-sm backdrop-blur-sm sm:top-16 sm:px-4">
         <p className="text-sm text-cd-muted">{t('leaderboard.guestHint')}</p>
-        <Link href="/login" className={`${cdBtnPrimaryLink} h-9 px-4 text-xs`}>
+        <Link href="/login" className={`${cdBtnPrimaryLink} h-11 px-4 text-xs`}>
           {t('leaderboard.loginCta')}
         </Link>
       </div>

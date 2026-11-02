@@ -14,12 +14,12 @@ export function DailyCashResultModal({ cashAmount, onClose }: DailyCashResultMod
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-black/80 p-3 backdrop-blur-[2px] sm:items-center sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="daily-cash-title"
     >
-      <div className="cd-fade-in w-full max-w-md overflow-hidden rounded-xl border border-cd-border bg-cd-surface shadow-2xl">
+      <div className="cd-fade-in mb-[env(safe-area-inset-bottom,0px)] w-full max-w-md overflow-hidden rounded-xl border border-cd-border bg-cd-surface shadow-2xl">
         <div className="h-1 w-full bg-cd-accent" />
         <div className="p-6 text-center sm:p-8">
           <p className={cdEyebrow}>{t('daily.cashLabel')}</p>
