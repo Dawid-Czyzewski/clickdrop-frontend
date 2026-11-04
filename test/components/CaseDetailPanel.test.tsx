@@ -383,6 +383,33 @@ describe('CaseDetailPanel', () => {
     expect(screen.queryByRole('dialog', { name: /lvl/i })).not.toBeInTheDocument()
   })
 
+  it('locks ×5 for low level and does not suggest multi-open', async () => {
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getBalanceMock.mockResolvedValue({ balance: 300 })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 1,
+      experience: 0,
+      clickDollars: 300,
+    })
+
+    renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
+
+    expect(
+      await screen.findByRole('button', { name: /×5, from lvl 10/i }),
+    ).toBeDisabled()
+    expect(screen.getByRole('button', { name: /×3, from lvl 5/i })).toBeDisabled()
+    expect(screen.getByRole('button', { name: /open ×1/i })).toBeEnabled()
+    expect(openCaseMock).not.toHaveBeenCalled()
+  })
+
   it('blocks ×5 when balance is too low', async () => {
     const user = userEvent.setup()
     authService.setSession({
@@ -391,6 +418,13 @@ describe('CaseDetailPanel', () => {
       id: 1,
       email: 'player@clickdrop.test',
       role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 10,
+      experience: 0,
+      clickDollars: 100,
     })
     getBalanceMock.mockResolvedValue({ balance: 100 })
 
@@ -412,6 +446,13 @@ describe('CaseDetailPanel', () => {
       email: 'player@clickdrop.test',
       role: 'USER',
     })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 10,
+      experience: 0,
+      clickDollars: 300,
+    })
     getBalanceMock.mockResolvedValue({ balance: 300 })
     const multiDrops = Array.from({ length: 5 }, (_, index) => ({
       ...slateDrop,
@@ -425,7 +466,7 @@ describe('CaseDetailPanel', () => {
       balance: 50,
       drops: multiDrops,
       experienceGained: 50,
-      level: 2,
+      level: 10,
       experience: 50,
     })
     getInventoryMock
@@ -455,6 +496,40 @@ describe('CaseDetailPanel', () => {
     expect(results).toHaveTextContent('Drop 1')
     expect(results).toHaveTextContent('+50 XP')
     expect(getInventoryMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('shows open-count 403 message when multi-open is rejected', async () => {
+    const user = userEvent.setup()
+    authService.setSession({
+      token: 'jwt',
+      refreshToken: 'refresh',
+      id: 1,
+      email: 'player@clickdrop.test',
+      role: 'USER',
+    })
+    getCurrentUserMock.mockResolvedValue({
+      username: 'player',
+      email: 'player@clickdrop.test',
+      level: 10,
+      experience: 0,
+      clickDollars: 300,
+    })
+    getBalanceMock.mockResolvedValue({ balance: 300 })
+    const { ApiError } = await import('../../src/api/client')
+    openCaseMock.mockRejectedValue(
+      new ApiError(403, 'Case open ×5 requires level 10, user has 4', {
+        requestedCount: '5',
+        requiredLevel: '10',
+        userLevel: '4',
+      }),
+    )
+
+    renderWithProviders(<CaseDetailPanel gameCase={anvil} />)
+
+    await user.click(await screen.findByRole('button', { name: /^×5$/i }))
+    await user.click(screen.getByRole('button', { name: /open ×5/i }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/×5 requires lvl 10\+/i)
   })
 
   it('does not change header XP when open is rate-limited', async () => {

@@ -3,11 +3,13 @@ import { apiClient } from './axiosClient'
 
 export class ApiError extends Error {
   readonly status: number
+  readonly details?: Record<string, string>
 
-  constructor(status: number, message: string) {
+  constructor(status: number, message: string, details?: Record<string, string>) {
     super(message)
     this.name = 'ApiError'
     this.status = status
+    this.details = details
   }
 }
 
@@ -28,6 +30,16 @@ function resolveErrorMessage(status: number, data: unknown): string {
   return `Request failed (${status})`
 }
 
+function resolveErrorDetails(data: unknown): Record<string, string> | undefined {
+  if (!data || typeof data !== 'object') return undefined
+  const details: Record<string, string> = {}
+  for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
+    if (key === 'message' || key === 'error') continue
+    if (typeof value === 'string') details[key] = value
+  }
+  return Object.keys(details).length > 0 ? details : undefined
+}
+
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { body, headers, auth = true, method = 'GET' } = options
 
@@ -44,7 +56,12 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   } catch (error) {
     if (isAxiosError(error)) {
       const status = error.response?.status ?? 500
-      throw new ApiError(status, resolveErrorMessage(status, error.response?.data))
+      const data = error.response?.data
+      throw new ApiError(
+        status,
+        resolveErrorMessage(status, data),
+        resolveErrorDetails(data),
+      )
     }
 
     throw error

@@ -222,7 +222,9 @@
     "openCount": {
       "label": "How many to open",
       "one": "×1",
+      "three": "×3",
       "five": "×5",
+      "fromLevel": "From Lvl {{level}}",
       "open": "Open ×{{count}}",
       "opening": "Opening ×{{count}}…",
       "spinning": "Opening ×{{count}}…",
@@ -262,6 +264,8 @@
     "error": "Could not process the case request. Please try again.",
     "errorUnauthorized": "Your session has expired. Please sign in again.",
     "errorLevelLocked": "Your level is too low to open this case.",
+    "errorOpenCountLocked": "×{{count}} requires Lvl {{level}}+.",
+    "errorOpenCountLockedGeneric": "Your level is too low for that open count.",
     "errorNotFound": "Case not found.",
     "errorTooFast": "You're opening cases too fast. Slow down a bit.",
     "errorServer": "The economy service is unavailable. Please try again later.",

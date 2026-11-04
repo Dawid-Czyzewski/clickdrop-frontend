@@ -22,6 +22,7 @@ type CaseOpenHeroProps = {
   gameCase: GameCase
   loggedIn: boolean
   openCount: CaseOpenCount
+  userLevel: number | null | undefined
   totalCost: number
   canAfford: boolean
   levelLocked: boolean
@@ -38,6 +39,7 @@ export function CaseOpenHero({
   gameCase,
   loggedIn,
   openCount,
+  userLevel,
   totalCost,
   canAfford,
   levelLocked,
@@ -88,6 +90,8 @@ export function CaseOpenHero({
         <>
           <CaseOpenCountPicker
             value={openCount}
+            gameCase={gameCase}
+            userLevel={userLevel}
             disabled={isOpening || resultOpen || levelLocked}
             onChange={onCountChange}
           />

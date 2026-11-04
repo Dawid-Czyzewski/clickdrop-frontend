@@ -16,6 +16,9 @@ export type GameCase = {
   price: number
   sortOrder: number
   minLevel?: number
+  maxOpenCount?: number
+  openX3MinLevel?: number
+  openX5MinLevel?: number
 }
 
 export type CaseDrop = {

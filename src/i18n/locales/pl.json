@@ -224,7 +224,9 @@
     "openCount": {
       "label": "Ile otworzyć",
       "one": "×1",
+      "three": "×3",
       "five": "×5",
+      "fromLevel": "Od poziomu {{level}}",
       "open": "Otwórz ×{{count}}",
       "opening": "Otwieranie ×{{count}}…",
       "spinning": "Otwieranie ×{{count}}…",
@@ -264,6 +266,8 @@
     "error": "Nie udało się wykonać operacji na skrzynce. Spróbuj ponownie.",
     "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
     "errorLevelLocked": "Twój poziom jest za niski, żeby otworzyć tę skrzynkę.",
+    "errorOpenCountLocked": "×{{count}} wymaga Lvl {{level}}+.",
+    "errorOpenCountLockedGeneric": "Za niski poziom na to wielokrotne otwarcie.",
     "errorNotFound": "Nie znaleziono skrzynki.",
     "errorTooFast": "Za szybko otwierasz skrzynki. Zwolnij trochę.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",

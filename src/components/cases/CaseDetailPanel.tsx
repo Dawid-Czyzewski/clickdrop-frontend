@@ -14,12 +14,15 @@ import { useInventory } from '../../hooks/useInventory'
 import { useSoldToast } from '../../hooks/useSoldToast'
 import { shouldSkipCaseSpin } from '../../lib/caseAnimationPreference'
 import { caseMinLevel, isCaseLevelLocked } from '../../lib/caseLevel'
-import { LevelUpModal } from '../home/LevelUpModal'
-import { InventorySoldToast } from '../inventory/InventorySoldToast'
+import {
+  clampOpenCount,
+  isOpenCountLocked,
+  type CaseOpenCount,
+} from '../../lib/caseOpenCount'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
+import { CaseDetailOverlays } from './CaseDetailOverlays'
 import { CaseDropsGrid } from './CaseDropsGrid'
-import type { CaseOpenCount } from './CaseOpenCountPicker'
 import { CaseOpenHero } from './CaseOpenHero'
 import { CaseOpenResultLayer } from './CaseOpenResultLayer'
 
@@ -59,6 +62,11 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     setLoggedIn(authService.hasActiveSession())
   }, [])
 
+  const userLevel = user?.level
+  useEffect(() => {
+    setOpenCount((current) => clampOpenCount(gameCase, current, userLevel))
+  }, [gameCase, userLevel])
+
   const totalCost = gameCase.price * openCount
   const canAfford = balance !== null && balance >= totalCost
   const levelLocked =
@@ -66,6 +74,8 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     (user != null
       ? isCaseLevelLocked(gameCase, user.level)
       : caseMinLevel(gameCase) > 1)
+  const countLocked =
+    loggedIn && isOpenCountLocked(gameCase, openCount, userLevel)
   const isOpening = openingCaseId === gameCase.id || spinning
   const resultOpen = openResult !== null
   const openDisabled =
@@ -74,7 +84,8 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
     resultOpen ||
     !canAfford ||
     balanceLoading ||
-    levelLocked
+    levelLocked ||
+    countLocked
   const singleDrop = openResult?.count === 1 ? openResult.drops[0] : null
   const multiDrops = openResult && openResult.count > 1 ? openResult.drops : null
 
@@ -132,6 +143,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
           gameCase={gameCase}
           loggedIn={loggedIn}
           openCount={openCount}
+          userLevel={userLevel}
           totalCost={totalCost}
           canAfford={canAfford}
           levelLocked={levelLocked}
@@ -173,20 +185,12 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
         onSellAll={() => void handleSellAll()}
       />
 
-      {levelUpLevel != null ? (
-        <LevelUpModal
-          level={levelUpLevel}
-          onClose={() => closeLevelUp(() => router.push('/inventory'))}
-        />
-      ) : null}
-
-      {soldToast ? (
-        <InventorySoldToast
-          amount={soldToast.amount}
-          toastKey={soldToast.id}
-          onDismiss={dismissSoldToast}
-        />
-      ) : null}
+      <CaseDetailOverlays
+        levelUpLevel={levelUpLevel}
+        soldToast={soldToast}
+        onCloseLevelUp={() => closeLevelUp(() => router.push('/inventory'))}
+        onDismissSoldToast={dismissSoldToast}
+      />
     </div>
   )
 }
