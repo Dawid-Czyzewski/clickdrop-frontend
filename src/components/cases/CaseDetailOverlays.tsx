@@ -1,5 +1,6 @@
 'use client'
 
+import type { DeferredLevelUp } from '../../hooks/useDeferredLevelUpModal'
 import { LevelUpModal } from '../home/LevelUpModal'
 import { InventorySoldToast } from '../inventory/InventorySoldToast'
 
@@ -9,22 +10,26 @@ type SoldToastState = {
 } | null
 
 type CaseDetailOverlaysProps = {
-  levelUpLevel: number | null
+  levelUp: DeferredLevelUp | null
   soldToast: SoldToastState
   onCloseLevelUp: () => void
   onDismissSoldToast: () => void
 }
 
 export function CaseDetailOverlays({
-  levelUpLevel,
+  levelUp,
   soldToast,
   onCloseLevelUp,
   onDismissSoldToast,
 }: CaseDetailOverlaysProps) {
   return (
     <>
-      {levelUpLevel != null ? (
-        <LevelUpModal level={levelUpLevel} onClose={onCloseLevelUp} />
+      {levelUp != null ? (
+        <LevelUpModal
+          level={levelUp.level}
+          reward={levelUp.reward}
+          onClose={onCloseLevelUp}
+        />
       ) : null}
       {soldToast ? (
         <InventorySoldToast

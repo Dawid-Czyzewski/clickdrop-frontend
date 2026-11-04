@@ -19,6 +19,7 @@ import {
   isOpenCountLocked,
   type CaseOpenCount,
 } from '../../lib/caseOpenCount'
+import { levelUpCashReward } from '../../lib/levelUpCashReward'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import { cdBodyMuted, cdSectionLabel } from '../ui/uiStyles'
 import { CaseDetailOverlays } from './CaseDetailOverlays'
@@ -37,7 +38,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
   const [openCount, setOpenCount] = useState<CaseOpenCount>(1)
   const [openResult, setOpenResult] = useState<OpenCasesResponse | null>(null)
   const [spinning, setSpinning] = useState(false)
-  const { levelUpLevel, queueLevelUp, revealLevelUpAfterDrop, closeLevelUp } =
+  const { levelUp, queueLevelUp, revealLevelUpAfterDrop, closeLevelUp } =
     useDeferredLevelUpModal()
   const { drops, isLoading: dropsLoading, error: dropsError } = useCaseDrops({
     caseId: gameCase.id,
@@ -105,7 +106,9 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       { emitLevelUp: false },
     )
     if (result.level != null && previousLevel != null && result.level > previousLevel) {
-      queueLevelUp(result.level)
+      const reward =
+        result.levelUpReward ?? levelUpCashReward(previousLevel, result.level)
+      queueLevelUp(result.level, reward)
     }
     setOpenResult(result)
     setSpinning(!shouldSkipCaseSpin())
@@ -186,7 +189,7 @@ export function CaseDetailPanel({ gameCase }: CaseDetailPanelProps) {
       />
 
       <CaseDetailOverlays
-        levelUpLevel={levelUpLevel}
+        levelUp={levelUp}
         soldToast={soldToast}
         onCloseLevelUp={() => closeLevelUp(() => router.push('/inventory'))}
         onDismissSoldToast={dismissSoldToast}

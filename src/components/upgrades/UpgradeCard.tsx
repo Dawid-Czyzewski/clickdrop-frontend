@@ -4,12 +4,15 @@ import { useTranslation } from 'react-i18next'
 import type { MyUpgrade } from '../../api/economyApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { formatIncomeRate } from '../../lib/idleIncome'
+import { isUpgradeLevelLocked, upgradeMinLevel } from '../../lib/upgradeLevel'
 import { upgradeDescriptionKey, upgradeNameKey } from '../../lib/upgradeI18n'
+import { CaseLevelBadge } from '../cases/CaseLevelBadge'
 import { cdBtnPrimary, cdTile } from '../ui/uiStyles'
 
 type UpgradeCardProps = {
   upgrade: MyUpgrade
   balance: number | null
+  userLevel: number | null | undefined
   isBuying: boolean
   disabled: boolean
   onBuy: (upgradeId: number) => void
@@ -18,6 +21,7 @@ type UpgradeCardProps = {
 export function UpgradeCard({
   upgrade,
   balance,
+  userLevel,
   isBuying,
   disabled,
   onBuy,
@@ -25,13 +29,22 @@ export function UpgradeCard({
   const { t, i18n } = useTranslation()
   const cost = upgrade.nextCost
   const canAfford = balance !== null && balance >= cost
-  const buyDisabled = disabled || isBuying || !canAfford
+  const minLevel = upgradeMinLevel(upgrade)
+  const levelLocked = isUpgradeLevelLocked(upgrade, userLevel)
+  const buyDisabled = disabled || isBuying || !canAfford || levelLocked
   const showClickPower = upgrade.clickPower > 0
   const showIdleIncome = upgrade.incomePerSecond > 0
 
   return (
-    <article className={`flex flex-col gap-3 p-4 text-left ${cdTile}`}>
-      <div className="flex flex-col gap-1">
+    <article className={`relative flex flex-col gap-3 p-4 text-left ${cdTile}`}>
+      <CaseLevelBadge
+        minLevel={minLevel}
+        locked={levelLocked}
+        labelKey="upgrades.minLevelBadge"
+        className="absolute top-3 right-3"
+      />
+
+      <div className="flex flex-col gap-1 pr-14">
         <h2 className="font-display text-base font-semibold tracking-wide text-cd-text">
           {t(upgradeNameKey(upgrade.code))}
         </h2>
@@ -81,7 +94,11 @@ export function UpgradeCard({
         {isBuying ? t('upgrades.buying') : t('upgrades.buy')}
       </button>
 
-      {!canAfford && balance !== null ? (
+      {levelLocked ? (
+        <p className="text-xs text-cd-danger">
+          {t('upgrades.levelLocked', { level: minLevel })}
+        </p>
+      ) : !canAfford && balance !== null ? (
         <p className="text-xs text-cd-danger">{t('upgrades.insufficientFunds')}</p>
       ) : null}
     </article>

@@ -52,6 +52,7 @@ describe('LevelUpToast', () => {
 
     const toast = await screen.findByRole('status')
     expect(toast).toHaveTextContent('Level up! Lvl 4')
+    expect(toast).toHaveTextContent(/\+50\.00 CD/i)
     expect(toast).toHaveTextContent(/new cases may be unlocked/i)
   })
 

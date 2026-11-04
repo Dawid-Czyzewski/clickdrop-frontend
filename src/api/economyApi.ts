@@ -18,6 +18,7 @@ export type MyUpgrade = {
   level: number
   nextCost: number
   incomePerSecond: number
+  minLevel?: number
 }
 
 export type BuyUpgradeResponse = {

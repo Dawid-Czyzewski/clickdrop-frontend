@@ -152,7 +152,7 @@ describe('useCurrentUser', () => {
     act(() => {
       result.current.applyLevelExperience({ level: 4, experience: 500 })
     })
-    expect(onLevelUp).toHaveBeenCalledExactlyOnceWith(4)
+    expect(onLevelUp).toHaveBeenCalledExactlyOnceWith({ level: 4, reward: 50 })
 
     unsubscribe()
   })

@@ -1,15 +1,17 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
+import { formatClickDollars } from '../../lib/formatClickDollars'
 import { cdBtnPrimary } from '../ui/uiStyles'
 
 type LevelUpModalProps = {
   level: number
+  reward?: number
   onClose: () => void
 }
 
-export function LevelUpModal({ level, onClose }: LevelUpModalProps) {
-  const { t } = useTranslation()
+export function LevelUpModal({ level, reward = 0, onClose }: LevelUpModalProps) {
+  const { t, i18n } = useTranslation()
 
   return (
     <div
@@ -26,7 +28,8 @@ export function LevelUpModal({ level, onClose }: LevelUpModalProps) {
         <div
           className="pointer-events-none absolute top-1/2 left-1/2 h-[min(70vw,22rem)] w-[min(70vw,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50"
           style={{
-            background: 'radial-gradient(circle, color-mix(in srgb, var(--cd-accent) 45%, transparent) 0%, transparent 68%)',
+            background:
+              'radial-gradient(circle, color-mix(in srgb, var(--cd-accent) 45%, transparent) 0%, transparent 68%)',
           }}
           aria-hidden="true"
         />
@@ -40,6 +43,13 @@ export function LevelUpModal({ level, onClose }: LevelUpModalProps) {
         >
           {t('home.header.levelUpTitle', { level })}
         </h2>
+        {reward > 0 ? (
+          <p className="relative z-10 mt-3 font-display text-2xl font-bold tabular-nums text-cd-accent sm:text-3xl">
+            {t('home.header.levelUpReward', {
+              amount: formatClickDollars(reward, i18n.language),
+            })}
+          </p>
+        ) : null}
         <p className="relative z-10 mt-3 max-w-sm text-center text-sm text-cd-muted sm:text-base">
           {t('home.header.levelUpMessage', { level })}
         </p>

@@ -2,21 +2,26 @@
 
 import { useRef, useState } from 'react'
 
+export type DeferredLevelUp = {
+  level: number
+  reward: number
+}
+
 export function useDeferredLevelUpModal() {
-  const pendingRef = useRef<number | null>(null)
-  const [levelUpLevel, setLevelUpLevel] = useState<number | null>(null)
+  const pendingRef = useRef<DeferredLevelUp | null>(null)
+  const [levelUp, setLevelUp] = useState<DeferredLevelUp | null>(null)
   const [goInventoryAfterLevelUp, setGoInventoryAfterLevelUp] = useState(false)
 
-  function queueLevelUp(level: number) {
-    pendingRef.current = level
+  function queueLevelUp(level: number, reward = 0) {
+    pendingRef.current = { level, reward }
   }
-  
+
   function revealLevelUpAfterDrop(options?: { thenInventory?: boolean }): boolean {
     const pending = pendingRef.current
     pendingRef.current = null
 
     if (pending != null) {
-      setLevelUpLevel(pending)
+      setLevelUp(pending)
       setGoInventoryAfterLevelUp(Boolean(options?.thenInventory))
       return false
     }
@@ -25,7 +30,7 @@ export function useDeferredLevelUpModal() {
   }
 
   function closeLevelUp(onInventory?: () => void) {
-    setLevelUpLevel(null)
+    setLevelUp(null)
     if (goInventoryAfterLevelUp) {
       setGoInventoryAfterLevelUp(false)
       onInventory?.()
@@ -33,7 +38,7 @@ export function useDeferredLevelUpModal() {
   }
 
   return {
-    levelUpLevel,
+    levelUp,
     queueLevelUp,
     revealLevelUpAfterDrop,
     closeLevelUp,

@@ -48,6 +48,7 @@ export type OpenCasesResponse = {
   experienceGained?: number
   level?: number
   experience?: number
+  levelUpReward?: number
 }
 
 export type InventoryItem = {

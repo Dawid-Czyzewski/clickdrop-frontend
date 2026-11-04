@@ -78,11 +78,12 @@ const slateDrop = {
 const slateOpen = {
   count: 1,
   totalCost: 50,
-  balance: 50,
+  balance: 100,
   drops: [slateDrop],
   experienceGained: 10,
   level: 4,
   experience: 460,
+  levelUpReward: 50,
 }
 
 describe('CaseDetailPanel', () => {
@@ -306,8 +307,10 @@ describe('CaseDetailPanel', () => {
 
     await user.click(screen.getByRole('button', { name: /^close$/i }))
 
-    expect(await screen.findByRole('dialog', { name: /lvl 4/i })).toBeInTheDocument()
+    const modal = await screen.findByRole('dialog', { name: /lvl 4/i })
+    expect(modal).toHaveTextContent(/\+50\.00 CD/i)
     expect(screen.getByRole('button', { name: /^continue$/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/^CD 100\.00$/i)).toBeInTheDocument()
   })
 
   it('does not show level-up toast while drop modal is open', async () => {

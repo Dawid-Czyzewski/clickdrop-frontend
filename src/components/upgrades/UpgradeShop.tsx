@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { authService } from '../../auth/authService'
 import { useBalance } from '../../hooks/useBalance'
 import { useClickPower } from '../../hooks/useClickPower'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { useUpgrades } from '../../hooks/useUpgrades'
 import { CatalogSkeleton } from '../ui/Skeleton'
 import {
@@ -25,6 +26,7 @@ export function UpgradeShop() {
   const { rewardPerClick, refresh: refreshClickPower } = useClickPower({
     enabled: loggedIn,
   })
+  const { user } = useCurrentUser({ enabled: loggedIn })
   const { upgrades, isLoading, buyingId, error, buyUpgrade } = useUpgrades({
     enabled: loggedIn,
   })
@@ -101,6 +103,7 @@ export function UpgradeShop() {
               key={upgrade.id}
               upgrade={upgrade}
               balance={balance}
+              userLevel={user?.level}
               isBuying={buyingId === upgrade.id}
               disabled={buyingId !== null}
               onBuy={(id) => {

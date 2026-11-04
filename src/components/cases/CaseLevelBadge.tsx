@@ -6,12 +6,14 @@ type CaseLevelBadgeProps = {
   minLevel: number
   locked?: boolean
   className?: string
+  labelKey?: string
 }
 
 export function CaseLevelBadge({
   minLevel,
   locked = false,
   className = '',
+  labelKey = 'cases.minLevelBadge',
 }: CaseLevelBadgeProps) {
   const { t } = useTranslation()
 
@@ -27,7 +29,7 @@ export function CaseLevelBadge({
         .filter(Boolean)
         .join(' ')}
     >
-      {t('cases.minLevelBadge', { level: minLevel })}
+      {t(labelKey, { level: minLevel })}
     </span>
   )
 }

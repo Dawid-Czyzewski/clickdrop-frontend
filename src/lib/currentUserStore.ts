@@ -1,4 +1,5 @@
 import type { CurrentUser } from '../api/usersApi'
+import { levelUpCashReward } from './levelUpCashReward'
 import { emitLevelUp } from './levelUpStore'
 
 type CurrentUserListener = (user: CurrentUser | null) => void
@@ -25,7 +26,7 @@ export function setSharedCurrentUser(next: CurrentUser | null): void {
   listeners.forEach((listener) => listener(next))
 
   if (previousLevel !== null && next.level > previousLevel) {
-    emitLevelUp(next.level)
+    emitLevelUp(next.level, levelUpCashReward(previousLevel, next.level))
   }
 }
 
@@ -51,7 +52,7 @@ export function patchSharedCurrentUserStats(
   listeners.forEach((listener) => listener(next))
 
   if (emit && previousLevel !== null && next.level > previousLevel) {
-    emitLevelUp(next.level)
+    emitLevelUp(next.level, levelUpCashReward(previousLevel, next.level))
   }
 }
 
