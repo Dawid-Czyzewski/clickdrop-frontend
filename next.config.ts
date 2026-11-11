@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // API traffic is handled by src/app/api/[...path]/route.ts (server proxy).
+  allowedDevOrigins: ['127.0.0.1', '192.168.1.11', 'localhost'],
 }
 
 export default nextConfig

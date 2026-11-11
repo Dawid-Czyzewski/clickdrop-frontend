@@ -20,9 +20,9 @@ export function LeaderboardMyRankBar({
 
   if (!loggedIn) {
     return (
-      <div className="sticky top-14 z-20 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-cd-border bg-cd-surface/95 px-3 py-2.5 shadow-sm backdrop-blur-sm sm:top-16 sm:px-4">
-        <p className="text-sm text-cd-muted">{t('leaderboard.guestHint')}</p>
-        <Link href="/login" className={`${cdBtnPrimaryLink} h-11 px-4 text-xs`}>
+      <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-20 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-cd-border bg-cd-surface/95 px-3 py-2.5 shadow-sm backdrop-blur-sm sm:top-[calc(4rem+env(safe-area-inset-top,0px))] sm:px-4">
+        <p className="min-w-0 flex-1 text-sm text-cd-muted">{t('leaderboard.guestHint')}</p>
+        <Link href="/login" className={`${cdBtnPrimaryLink} min-h-11 shrink-0 px-4 text-xs`}>
           {t('leaderboard.loginCta')}
         </Link>
       </div>
@@ -31,7 +31,7 @@ export function LeaderboardMyRankBar({
 
   if (isLoading && !myRank) {
     return (
-      <div className="sticky top-14 z-20 rounded-lg border border-cd-border bg-cd-surface/95 px-3 py-2.5 text-sm text-cd-muted backdrop-blur-sm sm:top-16 sm:px-4">
+      <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-20 rounded-lg border border-cd-border bg-cd-surface/95 px-3 py-2.5 text-sm text-cd-muted backdrop-blur-sm sm:top-[calc(4rem+env(safe-area-inset-top,0px))] sm:px-4">
         {t('leaderboard.myRankLoading')}
       </div>
     )
@@ -41,7 +41,7 @@ export function LeaderboardMyRankBar({
 
   return (
     <div
-      className="sticky top-14 z-20 rounded-lg border border-cd-accent/50 bg-cd-accent/10 px-3 py-2.5 shadow-sm backdrop-blur-sm sm:top-16 sm:px-4"
+      className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-20 rounded-lg border border-cd-accent/50 bg-cd-accent/10 px-3 py-2.5 shadow-sm backdrop-blur-sm sm:top-[calc(4rem+env(safe-area-inset-top,0px))] sm:px-4"
       aria-label={t('leaderboard.myRankLabel')}
     >
       <p className="font-display text-sm font-semibold tracking-wide text-cd-text sm:text-base">

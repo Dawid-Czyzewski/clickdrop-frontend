@@ -97,7 +97,7 @@ export function UpgradeShop() {
       {upgrades.length === 0 ? (
         <p className={cdBodyMuted}>{t('upgrades.empty')}</p>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {upgrades.map((upgrade) => (
             <UpgradeCard
               key={upgrade.id}

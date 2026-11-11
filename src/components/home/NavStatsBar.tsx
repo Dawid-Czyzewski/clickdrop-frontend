@@ -21,9 +21,9 @@ export function NavStatsBar() {
 
   return (
     <div className="overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/50">
-      <div className="w-full px-1.5 sm:px-5 lg:px-8">
+      <div className="w-full min-w-0 px-1.5 sm:px-5 lg:px-8">
         <nav
-          className="relative z-10 flex flex-wrap items-center gap-x-0 gap-y-0.5 py-1"
+          className="relative z-10 flex flex-wrap items-center gap-x-0.5 gap-y-0.5 py-1"
           aria-label={t('home.nav.label')}
         >
           {NAV_LINKS.map((link) => {
@@ -34,7 +34,7 @@ export function NavStatsBar() {
                 key={link.key}
                 href={link.href}
                 className={[
-                  'inline-flex min-h-10 cursor-pointer items-center px-2 text-[0.7rem] font-medium uppercase no-underline transition sm:min-h-11 sm:px-3.5 sm:text-sm sm:tracking-wide',
+                  'inline-flex min-h-11 cursor-pointer items-center px-2 text-[0.7rem] font-medium uppercase no-underline transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent sm:px-3.5 sm:text-sm sm:tracking-wide',
                   isCases
                     ? active
                       ? 'rounded-md bg-cd-accent font-semibold text-cd-bg'

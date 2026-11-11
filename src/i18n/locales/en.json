@@ -497,6 +497,7 @@
     "errorServer": "The economy service is unavailable. Please try again later."
   },
   "items": {
+    "statTrack": "StatTrack",
     "AK_47_ASIIMOV": {
       "name": "AK-47 | Asiimov"
     },

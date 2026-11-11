@@ -1,7 +1,9 @@
 'use client'
 
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { useModalA11y } from '../../hooks/useModalA11y'
 import { cdBtnPrimary } from '../ui/uiStyles'
 
 type LevelUpModalProps = {
@@ -12,17 +14,21 @@ type LevelUpModalProps = {
 
 export function LevelUpModal({ level, reward = 0, onClose }: LevelUpModalProps) {
   const { t, i18n } = useTranslation()
+  const handleClose = useCallback(() => onClose(), [onClose])
+  const dialogRef = useModalA11y({ onClose: handleClose })
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 z-[70] flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95 outline-none"
       role="dialog"
       aria-modal="true"
       aria-labelledby="level-up-title"
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
-        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16 pb-[max(4rem,env(safe-area-inset-bottom))]"
+        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 pt-[max(4rem,env(safe-area-inset-top))] pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+4rem))]"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -56,11 +62,13 @@ export function LevelUpModal({ level, reward = 0, onClose }: LevelUpModalProps) 
         <p className="relative z-10 mt-2 max-w-sm text-center text-sm text-cd-accent sm:text-base">
           {t('home.header.levelUpCasesUnlocked')}
         </p>
+      </div>
 
+      <div className="sticky bottom-0 z-20 border-t border-cd-border/60 bg-[#06070a]/95 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-sm">
         <button
           type="button"
-          onClick={onClose}
-          className={`${cdBtnPrimary} relative z-10 mt-8 h-12 min-w-[10rem] px-8 text-base`}
+          onClick={handleClose}
+          className={`${cdBtnPrimary} mx-auto flex h-12 w-full max-w-md min-w-[10rem] px-8 text-base`}
         >
           {t('home.header.levelUpContinue')}
         </button>

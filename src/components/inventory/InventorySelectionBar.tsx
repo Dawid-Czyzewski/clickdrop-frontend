@@ -51,7 +51,7 @@ export function InventorySelectionBar({
           disabled={sellDisabled}
           aria-busy={isSelling || undefined}
           onClick={onSellSelected}
-          className={`${cdBtnPrimary} col-span-2 h-11 px-3 text-xs sm:col-span-1`}
+          className={`${cdBtnPrimary} col-span-2 min-h-11 px-3 py-2 text-center text-xs leading-snug whitespace-normal sm:col-span-1`}
         >
           {isSelling
             ? t('inventory.sellingBatch')

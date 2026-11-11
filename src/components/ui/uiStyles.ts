@@ -10,14 +10,14 @@ export const cdSectionLabel =
 export const cdBodyMuted = 'text-sm leading-relaxed text-cd-muted'
 
 export const cdBtnPrimary =
-  'inline-flex h-11 cursor-pointer items-center justify-center rounded-md bg-cd-accent px-5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex min-h-11 cursor-pointer items-center justify-center rounded-md bg-cd-accent px-5 font-display text-sm font-semibold tracking-wider text-cd-bg uppercase transition hover:bg-cd-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:cursor-not-allowed disabled:opacity-50'
 
 export const cdBtnPrimaryBlock = `${cdBtnPrimary} w-full`
 
 export const cdBtnPrimaryLink = `${cdBtnPrimary} no-underline`
 
 export const cdBtnGhost =
-  'inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-bg px-5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex min-h-11 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-bg px-5 text-sm font-medium text-cd-text no-underline transition hover:bg-cd-surface-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:cursor-not-allowed disabled:opacity-50'
 
 export const cdPagePad =
   'w-full max-w-[100vw] overflow-x-clip px-3 py-5 sm:px-5 sm:py-7 lg:px-8'

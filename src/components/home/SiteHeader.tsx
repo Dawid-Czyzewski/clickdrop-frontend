@@ -27,13 +27,16 @@ export function SiteHeader() {
 
   const langBtn = (active: boolean) =>
     [
-      'inline-flex h-10 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-xs font-medium transition sm:h-11 sm:w-11',
+      'inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md text-xs font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent',
       active ? 'bg-cd-accent text-cd-bg' : 'text-cd-muted hover:text-cd-text',
     ].join(' ')
 
+  const iconBtn =
+    'inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-surface text-cd-text no-underline transition hover:bg-cd-surface-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent sm:w-auto sm:gap-2 sm:px-3'
+
   return (
-    <header className="overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/90 backdrop-blur-md">
-      <div className="flex h-14 w-full min-w-0 items-center gap-2 px-2 sm:h-16 sm:gap-3 sm:px-5 lg:px-8">
+    <header className="sticky top-0 z-40 overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
+      <div className="flex h-14 w-full min-w-0 items-center gap-1.5 px-2 sm:h-16 sm:gap-3 sm:px-5 lg:px-8">
         <Link
           href="/"
           aria-label="ClickDrop"
@@ -85,7 +88,7 @@ export function SiteHeader() {
               <Link
                 href="/settings"
                 aria-label={t('home.header.settings')}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-surface text-cd-text no-underline transition hover:bg-cd-surface-hover sm:h-11 sm:w-auto sm:gap-2 sm:px-3"
+                className={iconBtn}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -106,7 +109,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={handleLogout}
                 aria-label={t('home.header.logout')}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-cd-border bg-cd-surface text-cd-text transition hover:bg-cd-surface-hover sm:h-11 sm:w-auto sm:px-3"
+                className={iconBtn}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -127,7 +130,7 @@ export function SiteHeader() {
           ) : (
             <Link
               href="/login"
-              className="inline-flex h-10 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-md bg-cd-accent px-3 font-display text-xs font-semibold text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover sm:h-11 sm:px-5 sm:text-sm"
+              className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-md bg-cd-accent px-3.5 font-display text-xs font-semibold text-cd-bg uppercase no-underline transition hover:bg-cd-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent sm:px-5 sm:text-sm"
             >
               {t('home.header.login')}
             </Link>

@@ -36,7 +36,7 @@ export function CaseOpenCountPicker({
 
   return (
     <div
-      className="flex w-full items-center justify-center gap-2"
+      className="flex w-full min-w-0 items-stretch justify-center gap-2"
       role="group"
       aria-label={t('cases.openCount.label')}
     >
@@ -59,7 +59,7 @@ export function CaseOpenCountPicker({
             title={lockHint ?? undefined}
             onClick={() => onChange(count)}
             className={[
-              'flex h-11 min-w-[3.5rem] flex-1 cursor-pointer flex-col items-center justify-center rounded-md border px-2 font-display text-sm font-semibold tracking-wide uppercase transition disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none sm:min-w-[4.25rem]',
+              'flex min-h-11 min-w-0 flex-1 cursor-pointer flex-col items-center justify-center rounded-md border px-1.5 py-1.5 font-display text-sm font-semibold tracking-wide uppercase transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:cursor-not-allowed disabled:opacity-50 sm:min-w-[4.25rem] sm:flex-none sm:px-3',
               selected && !locked
                 ? 'border-cd-accent bg-cd-accent text-cd-bg'
                 : 'border-cd-border bg-cd-bg text-cd-muted hover:border-cd-accent/50 hover:text-cd-text',
@@ -68,7 +68,7 @@ export function CaseOpenCountPicker({
           >
             <span>{label}</span>
             {lockHint ? (
-              <span className="mt-0.5 text-[0.6rem] font-medium normal-case tracking-normal text-cd-danger">
+              <span className="mt-0.5 max-w-full truncate text-[0.6rem] leading-tight font-medium normal-case tracking-normal text-cd-danger">
                 {lockHint}
               </span>
             ) : null}

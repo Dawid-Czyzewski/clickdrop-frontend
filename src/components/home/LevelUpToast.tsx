@@ -31,7 +31,7 @@ export function LevelUpToast() {
       role="status"
       aria-live="polite"
       onAnimationEnd={() => setToast(null)}
-      className="cd-level-up-toast cd-toast-fixed pointer-events-none fixed top-20 left-1/2 z-[60] -translate-x-1/2 rounded-lg border border-cd-accent/50 bg-cd-surface/95 px-4 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:top-24 sm:px-5"
+      className="cd-level-up-toast cd-toast-fixed pointer-events-none fixed left-1/2 z-[60] -translate-x-1/2 rounded-lg border border-cd-accent/50 bg-cd-surface/95 px-4 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:px-5"
     >
       <p className="font-display text-sm font-bold tracking-wide text-cd-accent sm:text-base">
         {t('home.header.levelUp', { level: toast.level })}

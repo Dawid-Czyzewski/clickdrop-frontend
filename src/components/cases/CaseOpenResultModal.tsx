@@ -1,8 +1,10 @@
 'use client'
 
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { OpenedCaseDrop } from '../../api/casesApi'
 import { formatClickDollars } from '../../lib/formatClickDollars'
+import { useModalA11y } from '../../hooks/useModalA11y'
 import {
   exteriorLabelKey,
   RARITY_COLOR,
@@ -40,14 +42,18 @@ export function CaseOpenResultModal({
   const name = resolveItemLabel(t, drop.itemCode, drop.itemDisplayName)
   const strip = (backdropCodes.length > 0 ? backdropCodes : [drop.itemCode]).slice(0, 8)
 
-  function handleDismiss() {
+  const handleDismiss = useCallback(() => {
     if (isSelling) return
     onClose()
-  }
+  }, [isSelling, onClose])
+
+  const dialogRef = useModalA11y({ onClose: handleDismiss })
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 z-50 flex flex-col overflow-y-auto overflow-x-clip bg-[#06070a]/95 outline-none"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-drop-title"
@@ -58,7 +64,7 @@ export function CaseOpenResultModal({
         onClick={handleDismiss}
         disabled={isSelling}
         aria-label={t('cases.close')}
-        className="absolute top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-cd-border bg-cd-surface text-cd-text transition hover:border-cd-accent/60 hover:text-cd-accent disabled:opacity-50 sm:top-6 sm:right-6"
+        className="absolute top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-20 flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-cd-border bg-cd-surface text-cd-text transition hover:border-cd-accent/60 hover:text-cd-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:opacity-50 sm:top-6 sm:right-6"
       >
         <span aria-hidden="true" className="font-display text-2xl leading-none font-semibold">
           ×
@@ -66,7 +72,7 @@ export function CaseOpenResultModal({
       </button>
 
       <div
-        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-16 pb-[max(4rem,env(safe-area-inset-bottom))]"
+        className="cd-fade-in relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 pt-[max(4rem,env(safe-area-inset-top))] pb-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -99,7 +105,7 @@ export function CaseOpenResultModal({
         </p>
         <h2
           id="case-drop-title"
-          className="relative z-10 mt-2 text-center font-display text-3xl font-bold text-cd-text sm:text-4xl"
+          className="relative z-10 mt-2 max-w-full px-2 text-center font-display text-2xl font-bold break-words text-cd-text sm:text-4xl"
         >
           {name}
         </h2>
@@ -121,7 +127,7 @@ export function CaseOpenResultModal({
               kind="item"
               code={drop.itemCode}
               alt={name}
-              className="h-auto max-h-[42vh] w-full object-contain drop-shadow-2xl"
+              className="h-auto max-h-[36vh] w-full object-contain drop-shadow-2xl sm:max-h-[42vh]"
             />
             {drop.statTrack ? (
               <div className="pointer-events-none absolute top-2 left-2 z-20 sm:top-3 sm:left-3">
@@ -137,13 +143,18 @@ export function CaseOpenResultModal({
             amount: formatClickDollars(drop.suggestedSellPrice, i18n.language),
           })}
         </p>
+      </div>
 
-        <div className="relative z-10 mt-6 flex w-full max-w-md flex-col gap-2.5 sm:mt-8 sm:flex-row">
+      <div
+        className="sticky bottom-0 z-20 border-t border-cd-border/60 bg-[#06070a]/95 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mx-auto flex w-full max-w-md flex-col gap-2.5 sm:flex-row">
           <button
             type="button"
             onClick={onKeep}
             disabled={isSelling}
-            className={`${cdBtnGhost} h-12 flex-1 text-base`}
+            className={`${cdBtnGhost} min-h-12 flex-1 text-base`}
           >
             {t('cases.keep')}
           </button>
@@ -152,7 +163,7 @@ export function CaseOpenResultModal({
             onClick={onSell}
             disabled={isSelling}
             aria-busy={isSelling || undefined}
-            className={`${cdBtnPrimary} h-12 flex-1 gap-2 text-base`}
+            className={`${cdBtnPrimary} min-h-12 flex-1 gap-2 whitespace-normal text-base`}
           >
             <CurrencyBadge />
             {isSelling

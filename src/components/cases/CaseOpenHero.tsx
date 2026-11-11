@@ -57,7 +57,7 @@ export function CaseOpenHero({
   const minLevel = caseMinLevel(gameCase)
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-4">
+    <div className="flex w-full min-w-0 max-w-md flex-col items-center gap-4">
       <div
         className={`relative ${cdHeroFrame}`}
         style={{

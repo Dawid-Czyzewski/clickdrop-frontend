@@ -1,6 +1,8 @@
 'use client'
 
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useModalA11y } from '../../hooks/useModalA11y'
 import { cdBtnGhost } from '../ui/uiStyles'
 
 type LogoutAllConfirmModalProps = {
@@ -15,16 +17,20 @@ export function LogoutAllConfirmModal({
   onCancel,
 }: LogoutAllConfirmModalProps) {
   const { t } = useTranslation()
+  const handleCancel = useCallback(() => {
+    if (!isSubmitting) onCancel()
+  }, [isSubmitting, onCancel])
+  const dialogRef = useModalA11y({ onClose: handleCancel })
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-black/70 px-3 py-4 sm:items-center sm:px-4"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-black/70 px-3 py-4 outline-none sm:items-center sm:px-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="logout-all-confirm-title"
-      onClick={() => {
-        if (!isSubmitting) onCancel()
-      }}
+      onClick={handleCancel}
     >
       <div
         className="mb-[env(safe-area-inset-bottom,0px)] w-full max-w-md rounded-xl border border-cd-border bg-cd-surface p-5 shadow-xl"
@@ -41,8 +47,8 @@ export function LogoutAllConfirmModal({
           <button
             type="button"
             disabled={isSubmitting}
-            onClick={onCancel}
-            className={`${cdBtnGhost} h-11 px-4`}
+            onClick={handleCancel}
+            className={`${cdBtnGhost} min-h-11 px-4`}
           >
             {t('settings.logoutAll.confirmCancel')}
           </button>
@@ -51,7 +57,7 @@ export function LogoutAllConfirmModal({
             disabled={isSubmitting}
             aria-busy={isSubmitting || undefined}
             onClick={onConfirm}
-            className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-cd-danger bg-cd-danger/15 px-4 font-display text-sm font-semibold tracking-wider text-cd-danger uppercase transition hover:bg-cd-danger/25 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-md border border-cd-danger bg-cd-danger/15 px-4 font-display text-sm font-semibold tracking-wider text-cd-danger uppercase transition hover:bg-cd-danger/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting
               ? t('settings.logoutAll.submitting')

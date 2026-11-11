@@ -46,10 +46,18 @@ body {
     radial-gradient(ellipse 90% 45% at 50% 110%, rgb(18 20 28 / 0.95), transparent 55%);
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .cd-toast-fixed {
+  top: max(5rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
   max-width: min(22rem, calc(100vw - 1.5rem));
+}
+
+@media (min-width: 640px) {
+  .cd-toast-fixed {
+    top: max(6rem, calc(env(safe-area-inset-top, 0px) + 5.5rem));
+  }
 }
 
 .cd-skeleton {
