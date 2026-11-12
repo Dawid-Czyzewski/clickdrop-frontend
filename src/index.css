@@ -245,9 +245,32 @@ body {
   animation: cd-upgrade-needle 1.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
+@keyframes cd-trade-up-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cd-trade-up-reveal {
+  animation: cd-trade-up-reveal 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cd-upgrade-needle {
     animation: none;
     left: var(--land-pct, 50%);
+  }
+
+  .cd-trade-up-reveal {
+    animation: none;
   }
 }

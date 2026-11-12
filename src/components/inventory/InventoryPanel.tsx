@@ -8,7 +8,6 @@ import { useInventory } from '../../hooks/useInventory'
 import { useInventoryFilters } from '../../hooks/useInventoryFilters'
 import { useSoldToast } from '../../hooks/useSoldToast'
 import { applyInventoryFilters } from '../../lib/inventoryFilters'
-import { canTradeUp } from '../../lib/tradeUpEligibility'
 import { cdBodyMuted, cdEyebrow, cdPageTitle } from '../ui/uiStyles'
 import { InventoryBrowseSection } from './InventoryBrowseSection'
 import { InventoryLoadingGate, InventoryLoginGate } from './InventoryPanelGate'
@@ -20,20 +19,10 @@ export function InventoryPanel() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const [tradeUpMsg, setTradeUpMsg] = useState('')
   const { soldToast, showSoldToast, dismissSoldToast } = useSoldToast()
   const { applyBalance } = useBalance({ enabled: loggedIn })
-  const {
-    items,
-    isLoading,
-    sellingId,
-    isSellingBatch,
-    isTradingUp,
-    error,
-    sellItem,
-    sellBatch,
-    tradeUp,
-  } = useInventory({ enabled: loggedIn })
+  const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } =
+    useInventory({ enabled: loggedIn })
   const { filters, setFilters, clearFilters, hasActiveFilters } = useInventoryFilters()
 
   useEffect(() => {
@@ -57,8 +46,7 @@ export function InventoryPanel() {
     (sum, item) => sum + item.suggestedSellPrice,
     0,
   )
-  const tradeUpReady = canTradeUp(selectedItems)
-  const busy = sellingId !== null || isSellingBatch || isTradingUp
+  const busy = sellingId !== null || isSellingBatch
 
   async function handleSell(inventoryItemId: number) {
     const result = await sellItem(inventoryItemId)
@@ -74,15 +62,6 @@ export function InventoryPanel() {
     applyBalance(result.balance)
     setSelectedIds([])
     showSoldToast(result.totalEarned)
-  }
-
-  async function handleTradeUp() {
-    if (!tradeUpReady) return
-    setTradeUpMsg('')
-    const result = await tradeUp(selectedIds)
-    if (!result) return
-    setSelectedIds([])
-    setTradeUpMsg(t('inventory.tradeUpSuccess', { name: result.displayName }))
   }
 
   function handleSellSelected() {
@@ -110,11 +89,6 @@ export function InventoryPanel() {
           {error}
         </p>
       ) : null}
-      {tradeUpMsg ? (
-        <p role="status" className="text-sm text-cd-accent">
-          {tradeUpMsg}
-        </p>
-      ) : null}
 
       <InventoryBrowseSection
         items={items}
@@ -125,8 +99,6 @@ export function InventoryPanel() {
         estimatedTotal={estimatedTotal}
         sellingId={sellingId}
         isSellingBatch={isSellingBatch}
-        canTradeUp={tradeUpReady}
-        isTradingUp={isTradingUp}
         busy={busy}
         onFiltersChange={setFilters}
         onClearFilters={clearFilters}
@@ -135,9 +107,6 @@ export function InventoryPanel() {
         }
         onClearSelection={() => setSelectedIds([])}
         onSellSelected={handleSellSelected}
-        onTradeUp={() => {
-          void handleTradeUp()
-        }}
         onToggleSelect={(id) => {
           setSelectedIds((prev) =>
             prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],

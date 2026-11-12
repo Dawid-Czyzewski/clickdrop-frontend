@@ -38,6 +38,10 @@ describe('seo site metadata', () => {
       '/upgrades',
       '/inventory',
       '/skin-upgrade',
+      '/trade-up',
+      '/cases/opens',
+      '/leaderboard',
     ])
+    expect(buildPageMetadata('tradeUp').title).toBe('Trade-up | ClickDrop')
   })
 })

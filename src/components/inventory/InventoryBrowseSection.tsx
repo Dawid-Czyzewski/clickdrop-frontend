@@ -18,15 +18,12 @@ type InventoryBrowseSectionProps = {
   estimatedTotal: number
   sellingId: number | null
   isSellingBatch: boolean
-  canTradeUp: boolean
-  isTradingUp: boolean
   busy: boolean
   onFiltersChange: (patch: Partial<InventoryFilterState>) => void
   onClearFilters: () => void
   onSelectAll: () => void
   onClearSelection: () => void
   onSellSelected: () => void
-  onTradeUp: () => void
   onToggleSelect: (inventoryItemId: number) => void
   onSell: (inventoryItemId: number) => void
 }
@@ -40,15 +37,12 @@ export function InventoryBrowseSection({
   estimatedTotal,
   sellingId,
   isSellingBatch,
-  canTradeUp: tradeUpReady,
-  isTradingUp,
   busy,
   onFiltersChange,
   onClearFilters,
   onSelectAll,
   onClearSelection,
   onSellSelected,
-  onTradeUp,
   onToggleSelect,
   onSell,
 }: InventoryBrowseSectionProps) {
@@ -78,12 +72,9 @@ export function InventoryBrowseSection({
           selectedCount={selectedIds.length}
           estimatedTotal={estimatedTotal}
           isSelling={isSellingBatch}
-          canTradeUp={tradeUpReady}
-          isTradingUp={isTradingUp}
           onSelectAll={onSelectAll}
           onClear={onClearSelection}
           onSellSelected={onSellSelected}
-          onTradeUp={onTradeUp}
         />
       ) : null}
 

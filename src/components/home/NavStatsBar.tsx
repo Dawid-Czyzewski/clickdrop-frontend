@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { href: '/cases/opens', key: 'caseOpens' as const, match: '/cases/opens' },
   { href: '/upgrades', key: 'upgrades' as const, match: '/upgrades' },
   { href: '/skin-upgrade', key: 'skinUpgrade' as const, match: '/skin-upgrade' },
+  { href: '/trade-up', key: 'tradeUp' as const, match: '/trade-up' },
   { href: '/inventory', key: 'inventory' as const, match: '/inventory' },
   { href: '/daily', key: 'daily' as const, match: '/daily' },
   { href: '/leaderboard', key: 'leaderboard' as const, match: '/leaderboard' },
