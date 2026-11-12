@@ -11,6 +11,8 @@ import {
   type SellInventoryItemResponse,
 } from '../api/casesApi'
 import { resolveCaseError } from '../api/resolveCaseError'
+import { resolveTradeUpError } from '../api/resolveTradeUpError'
+import { tradeUp as postTradeUp, type TradeUpResponse } from '../api/tradeUpApi'
 
 type UseInventoryOptions = {
   enabled?: boolean
@@ -24,6 +26,7 @@ export function useInventory(options: UseInventoryOptions = {}) {
   const [openingCaseId, setOpeningCaseId] = useState<number | null>(null)
   const [sellingId, setSellingId] = useState<number | null>(null)
   const [isSellingBatch, setIsSellingBatch] = useState(false)
+  const [isTradingUp, setIsTradingUp] = useState(false)
   const [error, setError] = useState('')
   const busyRef = useRef(false)
 
@@ -33,6 +36,7 @@ export function useInventory(options: UseInventoryOptions = {}) {
       setError('')
       setIsLoading(false)
       setIsSellingBatch(false)
+      setIsTradingUp(false)
       busyRef.current = false
       return
     }
@@ -127,16 +131,39 @@ export function useInventory(options: UseInventoryOptions = {}) {
     }
   }
 
+  async function tradeUp(inventoryItemIds: number[]): Promise<TradeUpResponse | null> {
+    if (!enabled || busyRef.current || inventoryItemIds.length === 0) return null
+
+    busyRef.current = true
+    setIsTradingUp(true)
+    setError('')
+
+    try {
+      const result = await postTradeUp(inventoryItemIds)
+      const refreshed = await getInventory()
+      setItems(refreshed)
+      return result
+    } catch (err) {
+      setError(resolveTradeUpError(err, t))
+      return null
+    } finally {
+      busyRef.current = false
+      setIsTradingUp(false)
+    }
+  }
+
   return {
     items,
     isLoading,
     openingCaseId,
     sellingId,
     isSellingBatch,
+    isTradingUp,
     error,
     openCase,
     sellItem,
     sellBatch,
+    tradeUp,
     refresh: async () => {
       if (!enabled) return
       try {

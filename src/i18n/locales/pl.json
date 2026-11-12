@@ -460,6 +460,17 @@
     "error": "Nie udało się wczytać ekwipunku. Spróbuj ponownie.",
     "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
     "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
+    "tradeUp": "Trade-up (10 → 1)",
+    "tradingUp": "Trade-up…",
+    "tradeUpHint": "Wybierz 10 skinów tej samej rarity (poniżej Covert).",
+    "tradeUpSuccess": "Trade-up: {{name}}"
+  },
+  "tradeUp": {
+    "error": "Nie udało się zrobić trade-upu. Spróbuj ponownie.",
+    "errorInvalid": "Trade-up wymaga dokładnie 10 własnych skinów tej samej rarity.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Jeden z wybranych przedmiotów nie został znaleziony.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
   },
   "skinUpgrade": {

@@ -458,6 +458,17 @@
     "error": "Could not load inventory. Please try again.",
     "errorUnauthorized": "Your session has expired. Please sign in again.",
     "errorNotFound": "Inventory item not found.",
+    "errorServer": "The economy service is unavailable. Please try again later.",
+    "tradeUp": "Trade up (10 → 1)",
+    "tradingUp": "Trading up…",
+    "tradeUpHint": "Select 10 skins of the same rarity (below Covert).",
+    "tradeUpSuccess": "Trade-up: {{name}}"
+  },
+  "tradeUp": {
+    "error": "Could not trade up. Please try again.",
+    "errorInvalid": "Trade-up needs exactly 10 of your own skins of the same rarity.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "One of the selected inventory items was not found.",
     "errorServer": "The economy service is unavailable. Please try again later."
   },
   "skinUpgrade": {
