@@ -49,6 +49,10 @@
       "title": "Trade-up | ClickDrop",
       "description": "Contract 10 skins of the same rarity into one higher-tier drop."
     },
+    "collections": {
+      "title": "Collections | ClickDrop",
+      "description": "Complete case skin sets and claim a one-time ClickDollar bonus."
+    },
     "caseOpens": {
       "title": "Case history | ClickDrop",
       "description": "See your recent case opens — item, rarity, exterior, and date."
@@ -89,6 +93,7 @@
       "upgrades": "Upgrades",
       "skinUpgrade": "Skins",
       "tradeUp": "Trade-up",
+      "collections": "Sets",
       "cases": "Cases",
       "caseOpens": "History",
       "inventory": "Inventory",
@@ -465,6 +470,33 @@
     "errorNotFound": "Inventory item not found.",
     "errorServer": "The economy service is unavailable. Please try again later.",
     "tradeUpLink": "Go to trade-up"
+  },
+  "collections": {
+    "eyebrow": "Skin sets",
+    "title": "Collections",
+    "subtitle": "Collect every skin from a case set, then claim a one-time CD bonus. Skins stay in your inventory.",
+    "detailSubtitle": "Owned skins count once per item — exterior and StatTrack do not matter.",
+    "progress": "{{owned}} / {{total}} owned",
+    "progressBar": "Progress for {{name}}",
+    "statusInProgress": "In progress",
+    "statusReady": "Ready to claim",
+    "statusClaimed": "Bonus claimed",
+    "claimCta": "Claim bonus",
+    "claiming": "Claiming…",
+    "claimed": "Claimed",
+    "claimSuccess": "+{{amount}} CD claimed",
+    "itemOwned": "Owned",
+    "itemMissing": "Missing",
+    "back": "All collections",
+    "empty": "No collections available yet.",
+    "loginHint": "Sign in to track collection progress.",
+    "loginCta": "Sign in",
+    "error": "Could not load collections. Please try again.",
+    "errorIncomplete": "Finish the set before claiming the bonus.",
+    "errorAlreadyClaimed": "This collection bonus was already claimed.",
+    "errorNotFound": "Collection not found.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorServer": "The economy service is unavailable. Please try again later."
   },
   "tradeUp": {
     "eyebrow": "Trade-up contract",

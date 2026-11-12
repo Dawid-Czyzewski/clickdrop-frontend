@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: '/upgrades', key: 'upgrades' as const, match: '/upgrades' },
   { href: '/skin-upgrade', key: 'skinUpgrade' as const, match: '/skin-upgrade' },
   { href: '/trade-up', key: 'tradeUp' as const, match: '/trade-up' },
+  { href: '/collections', key: 'collections' as const, match: '/collections' },
   { href: '/inventory', key: 'inventory' as const, match: '/inventory' },
   { href: '/daily', key: 'daily' as const, match: '/daily' },
   { href: '/leaderboard', key: 'leaderboard' as const, match: '/leaderboard' },
@@ -28,7 +29,10 @@ export function NavStatsBar() {
           aria-label={t('home.nav.label')}
         >
           {NAV_LINKS.map((link) => {
-            const active = pathname === link.match
+            const active =
+              link.match === '/collections'
+                ? pathname === link.match || pathname.startsWith(`${link.match}/`)
+                : pathname === link.match
             const isCases = link.key === 'cases'
             return (
               <Link

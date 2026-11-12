@@ -49,6 +49,10 @@
       "title": "Trade-up | ClickDrop",
       "description": "Skontraktuj 10 skinów tej samej rarity w jeden drop z wyższej rarity."
     },
+    "collections": {
+      "title": "Kolekcje | ClickDrop",
+      "description": "Uzupełnij zestawy skinów ze skrzynek i odbierz jednorazowy bonus CD."
+    },
     "caseOpens": {
       "title": "Historia skrzynek | ClickDrop",
       "description": "Twoja historia openów skrzynek — item, rarity, exterior i data."
@@ -89,6 +93,7 @@
       "upgrades": "Ulepszenia",
       "skinUpgrade": "Skiny",
       "tradeUp": "Trade-up",
+      "collections": "Zestawy",
       "cases": "Skrzynki",
       "caseOpens": "Historia",
       "inventory": "Ekwipunek",
@@ -467,6 +472,33 @@
     "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
     "tradeUpLink": "Przejdź do trade-up"
+  },
+  "collections": {
+    "eyebrow": "Zestawy skinów",
+    "title": "Kolekcje",
+    "subtitle": "Zbierz wszystkie skiny z zestawu skrzynki i odbierz jednorazowy bonus CD. Skiny zostają w ekwipunku.",
+    "detailSubtitle": "Liczy się jeden egzemplarz itemu — exterior i StatTrack nie mają znaczenia.",
+    "progress": "{{owned}} / {{total}} zebrane",
+    "progressBar": "Postęp: {{name}}",
+    "statusInProgress": "W trakcie",
+    "statusReady": "Gotowe do odbioru",
+    "statusClaimed": "Bonus odebrany",
+    "claimCta": "Odbierz bonus",
+    "claiming": "Odbieranie…",
+    "claimed": "Odebrane",
+    "claimSuccess": "+{{amount}} CD odebrane",
+    "itemOwned": "Masz",
+    "itemMissing": "Brak",
+    "back": "Wszystkie kolekcje",
+    "empty": "Brak dostępnych kolekcji.",
+    "loginHint": "Zaloguj się, aby śledzić postęp kolekcji.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się wczytać kolekcji. Spróbuj ponownie.",
+    "errorIncomplete": "Uzupełnij zestaw przed odebraniem bonusu.",
+    "errorAlreadyClaimed": "Bonus z tej kolekcji został już odebrany.",
+    "errorNotFound": "Nie znaleziono kolekcji.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
   },
   "tradeUp": {
     "eyebrow": "Kontrakt trade-up",
