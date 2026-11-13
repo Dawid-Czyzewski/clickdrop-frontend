@@ -53,6 +53,10 @@
       "title": "Collections | ClickDrop",
       "description": "Complete case skin sets and claim a one-time ClickDollar bonus."
     },
+    "battles": {
+      "title": "Battles | ClickDrop",
+      "description": "Open the same case against a bot. Highest drop value wins all the loot."
+    },
     "caseOpens": {
       "title": "Case history | ClickDrop",
       "description": "See your recent case opens — item, rarity, exterior, and date."
@@ -94,6 +98,7 @@
       "skinUpgrade": "Skins",
       "tradeUp": "Trade-up",
       "collections": "Sets",
+      "battles": "Battles",
       "cases": "Cases",
       "caseOpens": "History",
       "inventory": "Inventory",
@@ -470,6 +475,44 @@
     "errorNotFound": "Inventory item not found.",
     "errorServer": "The economy service is unavailable. Please try again later.",
     "tradeUpLink": "Go to trade-up"
+  },
+  "battles": {
+    "eyebrow": "Case battles",
+    "title": "Battle a bot",
+    "subtitle": "Pick a case and rounds. Highest total drop value wins every skin from the battle.",
+    "caseLabel": "Case",
+    "casePlaceholder": "Select a case",
+    "roundsLabel": "Rounds",
+    "roundsOption": "×{{count}}",
+    "stakeHint": "Entry cost (charged when the battle starts)",
+    "stakeValue": "{{amount}} CD",
+    "stakeBreakdown": "{{price}} CD × {{rounds}} rounds",
+    "startVsBot": "Start vs bot",
+    "starting": "Starting battle…",
+    "rolling": "Rolling drops…",
+    "roundProgress": "Round {{current}} / {{total}}",
+    "roundLabel": "Round {{n}}",
+    "you": "You",
+    "bot": "Bot",
+    "yourDrop": "Your drop",
+    "botDrop": "Bot drop",
+    "resultEyebrow": "Battle over",
+    "youWon": "You win",
+    "youLost": "You lose",
+    "botWon": "Bot wins",
+    "youWonBody": "All battle skins were added to your inventory.",
+    "lostBody": "The bot took the loot. Try another battle.",
+    "toInventory": "Open inventory",
+    "playAgain": "Play again",
+    "loginHint": "Sign in to play battles.",
+    "loginCta": "Sign in",
+    "error": "Could not start the battle. Please try again.",
+    "errorFunds": "Not enough ClickDollars for this stake.",
+    "errorRounds": "Choose 1, 3, or 5 rounds.",
+    "errorInProgress": "This battle cannot be joined right now.",
+    "errorUnauthorized": "Your session has expired. Please sign in again.",
+    "errorNotFound": "Battle not found.",
+    "errorServer": "The economy service is unavailable. Please try again later."
   },
   "collections": {
     "eyebrow": "Skin sets",

@@ -264,13 +264,49 @@ body {
   animation: cd-trade-up-reveal 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
+@keyframes cd-battle-round {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cd-battle-round {
+  animation: cd-battle-round 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes cd-battle-result {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cd-battle-result {
+  animation: cd-battle-result 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cd-upgrade-needle {
     animation: none;
     left: var(--land-pct, 50%);
   }
 
-  .cd-trade-up-reveal {
+  .cd-trade-up-reveal,
+  .cd-battle-round,
+  .cd-battle-result {
     animation: none;
   }
 }

@@ -53,6 +53,10 @@
       "title": "Kolekcje | ClickDrop",
       "description": "Uzupełnij zestawy skinów ze skrzynek i odbierz jednorazowy bonus CD."
     },
+    "battles": {
+      "title": "Battle | ClickDrop",
+      "description": "Otwórz tę samą skrzynkę przeciwko botowi. Wyższa suma dropów wygrywa cały loot."
+    },
     "caseOpens": {
       "title": "Historia skrzynek | ClickDrop",
       "description": "Twoja historia openów skrzynek — item, rarity, exterior i data."
@@ -94,6 +98,7 @@
       "skinUpgrade": "Skiny",
       "tradeUp": "Trade-up",
       "collections": "Zestawy",
+      "battles": "Battle",
       "cases": "Skrzynki",
       "caseOpens": "Historia",
       "inventory": "Ekwipunek",
@@ -472,6 +477,44 @@
     "errorNotFound": "Nie znaleziono przedmiotu w ekwipunku.",
     "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później.",
     "tradeUpLink": "Przejdź do trade-up"
+  },
+  "battles": {
+    "eyebrow": "Battle skrzynek",
+    "title": "Battle z botem",
+    "subtitle": "Wybierz skrzynkę i liczbę rund. Wyższa suma wartości dropów bierze wszystkie skiny z battle.",
+    "caseLabel": "Skrzynka",
+    "casePlaceholder": "Wybierz skrzynkę",
+    "roundsLabel": "Rundy",
+    "roundsOption": "×{{count}}",
+    "stakeHint": "Koszt wejścia (pobierany przy starcie)",
+    "stakeValue": "{{amount}} CD",
+    "stakeBreakdown": "{{price}} CD × {{rounds}} rund",
+    "startVsBot": "Start vs bot",
+    "starting": "Start battle…",
+    "rolling": "Losowanie dropów…",
+    "roundProgress": "Runda {{current}} / {{total}}",
+    "roundLabel": "Runda {{n}}",
+    "you": "Ty",
+    "bot": "Bot",
+    "yourDrop": "Twój drop",
+    "botDrop": "Drop bota",
+    "resultEyebrow": "Koniec battle",
+    "youWon": "Wygrywasz",
+    "youLost": "Przegrywasz",
+    "botWon": "Bot wygrywa",
+    "youWonBody": "Wszystkie skiny z battle trafiły do ekwipunku.",
+    "lostBody": "Bot zabrał loot. Spróbuj kolejny battle.",
+    "toInventory": "Ekwipunek",
+    "playAgain": "Zagraj ponownie",
+    "loginHint": "Zaloguj się, aby grać battle.",
+    "loginCta": "Zaloguj się",
+    "error": "Nie udało się rozpocząć battle. Spróbuj ponownie.",
+    "errorFunds": "Za mało ClickDolarów na tę stawkę.",
+    "errorRounds": "Wybierz 1, 3 lub 5 rund.",
+    "errorInProgress": "Tej walki nie da się teraz dołączyć.",
+    "errorUnauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+    "errorNotFound": "Nie znaleziono battle.",
+    "errorServer": "Usługa ekonomii jest niedostępna. Spróbuj ponownie później."
   },
   "collections": {
     "eyebrow": "Zestawy skinów",

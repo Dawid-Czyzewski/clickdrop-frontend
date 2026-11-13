@@ -40,10 +40,13 @@ describe('seo site metadata', () => {
       '/skin-upgrade',
       '/trade-up',
       '/collections',
+      '/battles',
       '/cases/opens',
       '/leaderboard',
     ])
     expect(buildPageMetadata('tradeUp').title).toBe('Trade-up | ClickDrop')
     expect(buildPageMetadata('collections').title).toBe('Collections | ClickDrop')
+    expect(buildPageMetadata('battles').title).toBe('Battles | ClickDrop')
+
   })
 })
