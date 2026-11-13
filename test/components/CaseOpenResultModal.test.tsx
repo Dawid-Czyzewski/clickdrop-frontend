@@ -9,8 +9,8 @@ const baseDrop = {
   itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
-  floatValue: 0.25,
-  paintSeed: 123,
+  floatValue: 0.250137,
+  paintSeed: 421,
   suggestedSellPrice: 40,
 }
 
@@ -21,7 +21,16 @@ const modalProps = {
   onClose: () => {},
 }
 
-describe('CaseOpenResultModal StatTrack', () => {
+describe('CaseOpenResultModal', () => {
+  it('renders Float and Pattern from mock drop', () => {
+    renderWithProviders(<CaseOpenResultModal drop={baseDrop} {...modalProps} />)
+
+    expect(screen.getByText('Float')).toBeInTheDocument()
+    expect(screen.getByText('0.250137')).toBeInTheDocument()
+    expect(screen.getByText('Pattern')).toBeInTheDocument()
+    expect(screen.getByText('421')).toBeInTheDocument()
+  })
+
   it('shows StatTrack badge on the item when statTrack is true', () => {
     renderWithProviders(
       <CaseOpenResultModal drop={{ ...baseDrop, statTrack: true }} {...modalProps} />,

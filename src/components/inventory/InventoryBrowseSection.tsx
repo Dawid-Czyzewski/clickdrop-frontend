@@ -25,6 +25,7 @@ type InventoryBrowseSectionProps = {
   onClearSelection: () => void
   onSellSelected: () => void
   onToggleSelect: (inventoryItemId: number) => void
+  onInspect: (inventoryItemId: number) => void
   onSell: (inventoryItemId: number) => void
 }
 
@@ -44,6 +45,7 @@ export function InventoryBrowseSection({
   onClearSelection,
   onSellSelected,
   onToggleSelect,
+  onInspect,
   onSell,
 }: InventoryBrowseSectionProps) {
   const { t } = useTranslation()
@@ -95,6 +97,7 @@ export function InventoryBrowseSection({
               isSelling={sellingId === item.inventoryItemId}
               disabled={busy}
               onToggleSelect={onToggleSelect}
+              onInspect={onInspect}
               onSell={onSell}
             />
           ))}

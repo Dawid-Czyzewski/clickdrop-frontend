@@ -116,7 +116,8 @@ export function CaseOpenResultModal({
         <ItemWearLine
           floatValue={drop.floatValue}
           paintSeed={drop.paintSeed}
-          className="relative z-10 mt-1 text-sm sm:text-base"
+          layout="stack"
+          className="relative z-10 mt-3 w-full max-w-xs rounded-lg border border-cd-border/50 bg-black/25 px-3 py-2"
         />
         {drop.experienceGained != null && drop.experienceGained > 0 ? (
           <p

@@ -12,7 +12,7 @@ import {
 import { AssetImage } from '../media/AssetImage'
 import { ItemWearLine } from '../media/ItemWearLine'
 import { StatTrackBadge } from '../media/StatTrackBadge'
-import { cdBtnPrimary } from '../ui/uiStyles'
+import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
 
 type InventoryItemCardProps = {
   item: InventoryItem
@@ -20,6 +20,7 @@ type InventoryItemCardProps = {
   isSelling: boolean
   disabled: boolean
   onToggleSelect: (inventoryItemId: number) => void
+  onInspect: (inventoryItemId: number) => void
   onSell: (inventoryItemId: number) => void
 }
 
@@ -29,6 +30,7 @@ export function InventoryItemCard({
   isSelling,
   disabled,
   onToggleSelect,
+  onInspect,
   onSell,
 }: InventoryItemCardProps) {
   const { t, i18n } = useTranslation()
@@ -94,19 +96,29 @@ export function InventoryItemCard({
           />
         </div>
 
-        <button
-          type="button"
-          disabled={disabled || isSelling}
-          aria-busy={isSelling || undefined}
-          onClick={() => onSell(item.inventoryItemId)}
-          className={`${cdBtnPrimary} h-11 w-full cursor-pointer px-2 text-xs`}
-        >
-          {isSelling
-            ? t('inventory.selling')
-            : t('inventory.sell', {
-                amount: formatClickDollars(item.suggestedSellPrice, i18n.language),
-              })}
-        </button>
+        <div className="flex flex-col gap-1.5">
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => onInspect(item.inventoryItemId)}
+            className={`${cdBtnGhost} h-10 w-full cursor-pointer px-2 text-xs`}
+          >
+            {t('inventory.inspect')}
+          </button>
+          <button
+            type="button"
+            disabled={disabled || isSelling}
+            aria-busy={isSelling || undefined}
+            onClick={() => onSell(item.inventoryItemId)}
+            className={`${cdBtnPrimary} h-11 w-full cursor-pointer px-2 text-xs`}
+          >
+            {isSelling
+              ? t('inventory.selling')
+              : t('inventory.sell', {
+                  amount: formatClickDollars(item.suggestedSellPrice, i18n.language),
+                })}
+          </button>
+        </div>
       </div>
     </article>
   )

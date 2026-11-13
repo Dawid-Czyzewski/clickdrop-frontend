@@ -10,6 +10,7 @@ import { useSoldToast } from '../../hooks/useSoldToast'
 import { applyInventoryFilters } from '../../lib/inventoryFilters'
 import { cdBodyMuted, cdEyebrow, cdPageTitle } from '../ui/uiStyles'
 import { InventoryBrowseSection } from './InventoryBrowseSection'
+import { InventoryInspectModal } from './InventoryInspectModal'
 import { InventoryLoadingGate, InventoryLoginGate } from './InventoryPanelGate'
 import { InventorySellConfirmModal } from './InventorySellConfirmModal'
 import { InventorySoldToast } from './InventorySoldToast'
@@ -19,6 +20,7 @@ export function InventoryPanel() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [inspectId, setInspectId] = useState<number | null>(null)
   const { soldToast, showSoldToast, dismissSoldToast } = useSoldToast()
   const { applyBalance } = useBalance({ enabled: loggedIn })
   const { items, isLoading, sellingId, isSellingBatch, error, sellItem, sellBatch } =
@@ -47,10 +49,12 @@ export function InventoryPanel() {
     0,
   )
   const busy = sellingId !== null || isSellingBatch
+  const inspectItem = items.find((item) => item.inventoryItemId === inspectId) ?? null
 
   async function handleSell(inventoryItemId: number) {
     const result = await sellItem(inventoryItemId)
     if (!result) return
+    setInspectId(null)
     applyBalance(result.balance)
     showSoldToast(result.soldFor)
   }
@@ -112,10 +116,22 @@ export function InventoryPanel() {
             prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
           )
         }}
+        onInspect={setInspectId}
         onSell={(id) => {
           void handleSell(id)
         }}
       />
+
+      {inspectItem ? (
+        <InventoryInspectModal
+          item={inspectItem}
+          isSelling={sellingId === inspectItem.inventoryItemId}
+          onClose={() => setInspectId(null)}
+          onSell={(id) => {
+            void handleSell(id)
+          }}
+        />
+      ) : null}
 
       {confirmOpen ? (
         <InventorySellConfirmModal
