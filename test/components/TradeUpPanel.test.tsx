@@ -42,6 +42,8 @@ function milSpec(id: number) {
     displayName: `USP ${id}`,
     rarity: 'MIL_SPEC' as const,
     exterior: 'FIELD_TESTED' as const,
+    floatValue: 0.25,
+    paintSeed: 123,
     suggestedSellPrice: 15,
     createdAt: '2026-01-01T00:00:00Z',
   }
@@ -99,6 +101,8 @@ describe('TradeUpPanel', () => {
           displayName: 'AK Redline',
           rarity: 'RESTRICTED' as const,
           exterior: 'FIELD_TESTED' as const,
+          floatValue: 0.25,
+          paintSeed: 123,
           suggestedSellPrice: 40,
           createdAt: '2026-01-01T00:00:00Z',
         },
@@ -111,6 +115,8 @@ describe('TradeUpPanel', () => {
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
       statTrack: false,
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 40,
     })
 

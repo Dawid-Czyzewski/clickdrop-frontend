@@ -10,6 +10,7 @@ import {
 } from '../../lib/caseI18n'
 import { formatClickDollars } from '../../lib/formatClickDollars'
 import { AssetImage } from '../media/AssetImage'
+import { ItemWearLine } from '../media/ItemWearLine'
 import { StatTrackBadge } from '../media/StatTrackBadge'
 
 type CaseOpenResultTileProps = {
@@ -52,6 +53,11 @@ export function CaseOpenResultTile({ drop }: CaseOpenResultTileProps) {
         <p className="truncate text-[0.7rem] text-cd-muted">
           {t(exteriorLabelKey(drop.exterior))}
         </p>
+        <ItemWearLine
+          floatValue={drop.floatValue}
+          paintSeed={drop.paintSeed}
+          className="text-[0.65rem]"
+        />
         <p className="font-display text-xs font-semibold tabular-nums text-cd-accent">
           {formatClickDollars(drop.suggestedSellPrice, i18n.language)} CD
         </p>

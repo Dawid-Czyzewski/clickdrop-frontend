@@ -17,6 +17,8 @@ const slate: InventoryItem = {
   displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED',
   exterior: 'FIELD_TESTED',
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
   createdAt: '2026-01-01T00:00:00Z',
 }
@@ -28,6 +30,8 @@ const glock: InventoryItem = {
   displayName: 'Glock-18 | Umbral Rabbit',
   rarity: 'MIL_SPEC',
   exterior: 'MINIMAL_WEAR',
+  floatValue: 0.1,
+  paintSeed: 45,
   suggestedSellPrice: 20,
   createdAt: '2026-01-01T00:00:00Z',
 }
@@ -40,6 +44,8 @@ const stAsiimov: InventoryItem = {
   rarity: 'COVERT',
   exterior: 'FIELD_TESTED',
   statTrack: true,
+  floatValue: 0.22,
+  paintSeed: 777,
   suggestedSellPrice: 120,
   createdAt: '2026-01-01T00:00:00Z',
 }

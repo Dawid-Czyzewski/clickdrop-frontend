@@ -31,6 +31,8 @@ export type DailySkinClaim = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack?: boolean
+  floatValue: number
+  paintSeed: number
   suggestedSellPrice: number
   nextClaimAt: string
 }

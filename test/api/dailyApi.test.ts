@@ -72,6 +72,8 @@ describe('dailyApi', () => {
         itemDisplayName: 'AK-47 | Slate',
         rarity: 'RESTRICTED',
         exterior: 'FIELD_TESTED',
+        floatValue: 0.25,
+        paintSeed: 123,
         suggestedSellPrice: 40,
         nextClaimAt: '2026-09-26T15:00:00Z',
       },

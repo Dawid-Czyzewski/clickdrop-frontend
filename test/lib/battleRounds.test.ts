@@ -16,6 +16,8 @@ function drop(
     rarity: 'MIL_SPEC',
     exterior: 'FIELD_TESTED',
     statTrack: false,
+    floatValue: 0.25,
+    paintSeed: 123,
     value,
     inventoryItemId: 10,
   }

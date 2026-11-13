@@ -10,6 +10,7 @@ import {
   resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { ItemWearLine } from '../media/ItemWearLine'
 import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBtnPrimary } from '../ui/uiStyles'
 
@@ -86,6 +87,11 @@ export function InventoryItemCard({
           </p>
           <h2 className="mt-0.5 truncate font-display text-sm font-semibold text-cd-text">{name}</h2>
           <p className="truncate text-xs text-cd-muted">{t(exteriorLabelKey(item.exterior))}</p>
+          <ItemWearLine
+            floatValue={item.floatValue}
+            paintSeed={item.paintSeed}
+            className="text-[0.65rem]"
+          />
         </div>
 
         <button

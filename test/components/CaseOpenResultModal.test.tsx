@@ -9,6 +9,8 @@ const baseDrop = {
   itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
 }
 

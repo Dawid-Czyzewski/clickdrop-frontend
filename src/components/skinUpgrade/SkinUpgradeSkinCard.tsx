@@ -10,6 +10,7 @@ import {
   resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { ItemWearLine } from '../media/ItemWearLine'
 import { StatTrackBadge } from '../media/StatTrackBadge'
 
 type SkinUpgradeSkinCardProps = {
@@ -18,6 +19,8 @@ type SkinUpgradeSkinCardProps = {
   rarity: ItemRarity
   exterior?: ItemExterior
   statTrack?: boolean
+  floatValue?: number | null
+  paintSeed?: number | null
   suggestedSellPrice: number
   label?: string
   accent?: boolean
@@ -31,6 +34,8 @@ export function SkinUpgradeSkinCard({
   rarity,
   exterior,
   statTrack = false,
+  floatValue,
+  paintSeed,
   suggestedSellPrice,
   label,
   accent = false,
@@ -101,6 +106,11 @@ export function SkinUpgradeSkinCard({
                 {t(exteriorLabelKey(exterior))}
               </p>
             ) : null}
+            <ItemWearLine
+              floatValue={floatValue}
+              paintSeed={paintSeed}
+              className={large ? 'text-xs' : 'text-[0.65rem]'}
+            />
             {statTrack ? (
               <div className="mt-1 flex justify-center">
                 <StatTrackBadge />

@@ -22,6 +22,8 @@ function item(
     rarity,
     exterior,
     statTrack,
+    floatValue: 0.25,
+    paintSeed: 123,
     suggestedSellPrice: 10,
     createdAt: '2026-01-01T00:00:00Z',
   }

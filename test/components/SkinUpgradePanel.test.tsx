@@ -46,6 +46,8 @@ const inventoryItem = {
   displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
   createdAt: '2026-01-01T00:00:00Z',
 }
@@ -57,6 +59,8 @@ const preview = {
     itemDisplayName: 'AK-47 | Slate',
     rarity: 'RESTRICTED' as const,
     exterior: 'FIELD_TESTED' as const,
+    floatValue: 0.25,
+    paintSeed: 123,
     suggestedSellPrice: 40,
   },
   successChance: 0.5,
@@ -67,6 +71,8 @@ const preview = {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED' as const,
       exterior: 'MINIMAL_WEAR' as const,
+      floatValue: 0.1,
+      paintSeed: 45,
       suggestedSellPrice: 48,
     },
   ],
@@ -131,6 +137,8 @@ describe('SkinUpgradePanel', () => {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'MINIMAL_WEAR',
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 48,
     })
 
@@ -186,6 +194,8 @@ describe('SkinUpgradePanel', () => {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'MINIMAL_WEAR',
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 48,
       statTrack: true,
     })

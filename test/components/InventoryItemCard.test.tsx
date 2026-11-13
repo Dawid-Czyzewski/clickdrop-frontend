@@ -10,6 +10,8 @@ const baseItem = {
   displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
   createdAt: '2026-01-01T00:00:00Z',
 }

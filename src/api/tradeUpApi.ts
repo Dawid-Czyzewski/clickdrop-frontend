@@ -9,6 +9,8 @@ export type TradeUpResponse = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack: boolean
+  floatValue: number
+  paintSeed: number
   suggestedSellPrice: number
 }
 

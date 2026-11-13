@@ -112,6 +112,8 @@ describe('DailyFreePanel', () => {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 40,
       nextClaimAt: '2027-09-26T15:00:00.000Z',
     })
@@ -197,6 +199,8 @@ describe('DailyFreePanel', () => {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 40,
       nextClaimAt: '2027-09-26T15:00:00.000Z',
     })
@@ -236,6 +240,8 @@ describe('DailyFreePanel', () => {
       itemDisplayName: 'AK-47 | Slate',
       rarity: 'RESTRICTED',
       exterior: 'FIELD_TESTED',
+      floatValue: 0.25,
+      paintSeed: 123,
       suggestedSellPrice: 40,
       nextClaimAt: '2027-09-26T15:00:00.000Z',
     })

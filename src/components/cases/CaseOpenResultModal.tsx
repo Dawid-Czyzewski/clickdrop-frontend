@@ -12,6 +12,7 @@ import {
   resolveItemLabel,
 } from '../../lib/caseI18n'
 import { AssetImage } from '../media/AssetImage'
+import { ItemWearLine } from '../media/ItemWearLine'
 import { CurrencyBadge } from '../ui/CurrencyBadge'
 import { StatTrackBadge } from '../media/StatTrackBadge'
 import { cdBtnGhost, cdBtnPrimary } from '../ui/uiStyles'
@@ -112,6 +113,11 @@ export function CaseOpenResultModal({
         <p className="relative z-10 mt-1 text-sm text-cd-muted sm:text-base">
           {t(exteriorLabelKey(drop.exterior))}
         </p>
+        <ItemWearLine
+          floatValue={drop.floatValue}
+          paintSeed={drop.paintSeed}
+          className="relative z-10 mt-1 text-sm sm:text-base"
+        />
         {drop.experienceGained != null && drop.experienceGained > 0 ? (
           <p
             className="relative z-10 mt-2 font-display text-sm font-semibold text-cd-accent sm:text-base"

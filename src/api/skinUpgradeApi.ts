@@ -34,6 +34,8 @@ export type SkinUpgradeSuccess = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack?: boolean
+  floatValue: number
+  paintSeed: number
   suggestedSellPrice: number
 }
 

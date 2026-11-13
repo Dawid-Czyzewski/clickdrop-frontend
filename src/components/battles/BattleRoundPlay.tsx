@@ -24,6 +24,8 @@ function MiniDrop({ drop, label }: { drop: BattleDrop; label: string }) {
       rarity={drop.rarity}
       exterior={drop.exterior}
       statTrack={drop.statTrack}
+      floatValue={drop.floatValue}
+      paintSeed={drop.paintSeed}
       suggestedSellPrice={drop.value}
       label={label}
       size="md"

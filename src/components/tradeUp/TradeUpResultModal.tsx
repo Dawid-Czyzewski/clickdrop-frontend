@@ -50,6 +50,8 @@ export function TradeUpResultModal({ result, onClose }: TradeUpResultModalProps)
           rarity={result.rarity}
           exterior={result.exterior}
           statTrack={result.statTrack}
+          floatValue={result.floatValue}
+          paintSeed={result.paintSeed}
           suggestedSellPrice={result.suggestedSellPrice}
           accent
           size="lg"

@@ -440,6 +440,7 @@
     "sell": "Sell for {{amount}} CD",
     "selling": "Selling…",
     "select": "Select",
+    "wearLine": "{{float}} · seed {{seed}}",
     "selectAll": "Select all",
     "clearSelection": "Clear",
     "selectedCount": "{{count}} selected",

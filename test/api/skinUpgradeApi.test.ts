@@ -39,6 +39,8 @@ describe('skinUpgradeApi', () => {
             itemDisplayName: 'AK-47 | Asiimov',
             rarity: 'COVERT',
             exterior: 'MINIMAL_WEAR',
+            floatValue: 0.25,
+            paintSeed: 123,
             suggestedSellPrice: 200,
           },
         ],
@@ -68,6 +70,8 @@ describe('skinUpgradeApi', () => {
         itemDisplayName: 'AK-47 | Asiimov',
         rarity: 'COVERT',
         exterior: 'FACTORY_NEW',
+        floatValue: 0.25,
+        paintSeed: 123,
         suggestedSellPrice: 220,
       },
     })

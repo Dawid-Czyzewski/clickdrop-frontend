@@ -26,6 +26,8 @@ describe('tradeUpApi', () => {
         rarity: 'RESTRICTED',
         exterior: 'FIELD_TESTED',
         statTrack: false,
+        floatValue: 0.25,
+        paintSeed: 123,
         suggestedSellPrice: 40,
       },
     })

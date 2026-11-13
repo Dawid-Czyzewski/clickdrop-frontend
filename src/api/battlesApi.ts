@@ -14,6 +14,8 @@ export type BattleDrop = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack: boolean
+  floatValue: number
+  paintSeed: number
   value: number
   inventoryItemId: number | null
 }

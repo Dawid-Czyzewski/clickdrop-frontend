@@ -37,6 +37,8 @@ export type OpenedCaseDrop = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack?: boolean
+  floatValue: number
+  paintSeed: number
   suggestedSellPrice: number
 }
 
@@ -59,6 +61,8 @@ export type InventoryItem = {
   rarity: ItemRarity
   exterior: ItemExterior
   statTrack?: boolean
+  floatValue: number
+  paintSeed: number
   suggestedSellPrice: number
   createdAt: string
 }

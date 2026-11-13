@@ -62,6 +62,8 @@ const slateInventory = {
   displayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
   createdAt: '2026-01-01T00:00:00Z',
 }
@@ -72,6 +74,8 @@ const slateDrop = {
   itemDisplayName: 'AK-47 | Slate',
   rarity: 'RESTRICTED' as const,
   exterior: 'FIELD_TESTED' as const,
+  floatValue: 0.25,
+  paintSeed: 123,
   suggestedSellPrice: 40,
 }
 
@@ -482,6 +486,8 @@ describe('CaseDetailPanel', () => {
           displayName: drop.itemDisplayName,
           rarity: drop.rarity,
           exterior: drop.exterior,
+          floatValue: drop.floatValue,
+          paintSeed: drop.paintSeed,
           suggestedSellPrice: drop.suggestedSellPrice,
           createdAt: '2026-01-01T00:00:00Z',
         })),
