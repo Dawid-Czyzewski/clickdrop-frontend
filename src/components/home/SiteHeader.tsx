@@ -13,6 +13,7 @@ export function SiteHeader() {
   const { t, i18n } = useTranslation()
   const router = useRouter()
   const [loggedIn, setLoggedIn] = useState(false)
+  const isPl = i18n.language.startsWith('pl')
 
   useEffect(() => {
     setLoggedIn(authService.hasActiveSession())
@@ -27,7 +28,7 @@ export function SiteHeader() {
 
   const langBtn = (active: boolean) =>
     [
-      'inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-md text-xs font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent',
+      'inline-flex min-h-11 min-w-9 cursor-pointer items-center justify-center rounded-md text-xs font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cd-accent sm:min-w-11',
       active ? 'bg-cd-accent text-cd-bg' : 'text-cd-muted hover:text-cd-text',
     ].join(' ')
 
@@ -36,7 +37,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 overflow-x-clip border-b border-cd-border bg-cd-bg-elevated/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
-      <div className="flex h-14 w-full min-w-0 items-center gap-1.5 px-2 sm:h-16 sm:gap-3 sm:px-5 lg:px-8">
+      <div className="flex h-14 w-full min-w-0 items-center gap-2 px-3 sm:h-16 sm:gap-3 sm:px-5 lg:px-8">
         <Link
           href="/"
           aria-label="ClickDrop"
@@ -62,49 +63,46 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <div className="ml-auto flex min-w-0 shrink items-center gap-1 sm:gap-2">
-          <div className="flex shrink-0" role="group" aria-label={t('language.label')}>
+        <div className="ml-auto flex min-w-0 items-center gap-2">
+          <button
+            type="button"
+            aria-label={t('language.label')}
+            onClick={() => void setAppLanguage(isPl ? 'en' : 'pl')}
+            className={`${langBtn(true)} sm:hidden`}
+          >
+            {isPl ? 'PL' : 'EN'}
+          </button>
+          <div className="hidden shrink-0 sm:flex" role="group" aria-label={t('language.label')}>
             <button
               type="button"
               onClick={() => void setAppLanguage('pl')}
-              className={langBtn(i18n.language.startsWith('pl'))}
+              className={langBtn(isPl)}
             >
               PL
             </button>
             <button
               type="button"
               onClick={() => void setAppLanguage('en')}
-              className={langBtn(i18n.language.startsWith('en'))}
+              className={langBtn(!isPl)}
             >
               EN
             </button>
           </div>
 
           {loggedIn ? (
-            <div className="flex min-w-0 items-center gap-1 sm:gap-2">
+            <div className="flex min-w-0 items-center gap-2">
               <div className="min-w-0 overflow-hidden">
                 <HeaderUserStatsPanel />
               </div>
-              <Link
-                href="/settings"
-                aria-label={t('home.header.settings')}
-                className={iconBtn}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-5 w-5 sm:hidden"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  aria-hidden="true"
+              <div className="hidden sm:contents">
+                <Link
+                  href="/settings"
+                  aria-label={t('home.header.settings')}
+                  className={iconBtn}
                 >
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M12 3.5v2.2M12 18.3v2.2M4.9 6.4l1.6 1.5M17.5 16.1l1.6 1.5M3.5 12h2.2M18.3 12h2.2M4.9 17.6l1.6-1.5M17.5 7.9l1.6-1.5" />
-                </svg>
-                <span className="hidden text-sm font-medium sm:inline">
-                  {t('home.header.settings')}
-                </span>
-              </Link>
+                  <span className="text-sm font-medium">{t('home.header.settings')}</span>
+                </Link>
+              </div>
               <button
                 type="button"
                 onClick={handleLogout}

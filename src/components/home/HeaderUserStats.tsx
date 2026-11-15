@@ -24,9 +24,9 @@ export function HeaderUserStats({
   const percent = Math.round(ratio * 100)
 
   return (
-    <div className="flex min-w-0 items-center gap-1.5" aria-live="polite">
+    <div className="flex min-w-0 items-center gap-2" aria-live="polite">
       <div
-        className="flex items-center gap-1.5 rounded-md border border-cd-border bg-cd-surface px-2 py-1 text-xs sm:gap-2 sm:px-2.5"
+        className="flex items-center gap-1.5 rounded-md border border-cd-border bg-cd-surface px-2 py-1.5 text-xs sm:gap-2 sm:px-2.5"
         aria-label={`${levelLabel} ${level}, ${currentXp} / ${xpForLevel} ${xpLabel}`}
       >
         <span className="font-medium tracking-wider text-cd-muted uppercase">
@@ -53,7 +53,7 @@ export function HeaderUserStats({
       </div>
       {balance !== null ? (
         <div
-          className="flex max-w-[5.5rem] items-center gap-1 overflow-hidden rounded-md border border-cd-accent/35 bg-cd-surface px-1.5 py-1 text-xs sm:max-w-[9rem] sm:gap-1.5 sm:px-2.5 md:max-w-none"
+          className="flex max-w-[4.75rem] items-center gap-1 overflow-hidden rounded-md border border-cd-accent/35 bg-cd-surface px-2 py-1.5 text-xs sm:max-w-[9rem] sm:gap-1.5 sm:px-2.5 md:max-w-none"
           aria-label={`${balanceLabel} ${balance}`}
         >
           <CurrencyBadge />
