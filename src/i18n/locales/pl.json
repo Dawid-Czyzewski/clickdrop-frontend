@@ -6,7 +6,7 @@
   },
   "seo": {
     "home": {
-      "title": "ClickDrop — Otwieraj skrzynki. Łap rzadkie skiny.",
+      "title": "ClickDrop: Otwieraj skrzynki. Łap rzadkie skiny.",
       "description": "ClickDrop to gamingowe otwieranie skrzynek. Zaloguj się, otwieraj case’y i poluj na rzadkie dropy."
     },
     "login": {
@@ -43,7 +43,7 @@
     },
     "skinUpgrade": {
       "title": "Ulepszanie skinów | ClickDrop",
-      "description": "Ryzykuj skinem o szansę na lepszy. Darmowe ulepszenie — bez ClickDolarów."
+      "description": "Ryzykuj skinem o szansę na lepszy. Darmowe ulepszenie, bez ClickDolarów."
     },
     "tradeUp": {
       "title": "Trade-up | ClickDrop",
@@ -59,7 +59,7 @@
     },
     "caseOpens": {
       "title": "Historia skrzynek | ClickDrop",
-      "description": "Twoja historia openów skrzynek — item, rarity, exterior i data."
+      "description": "Twoja historia openów skrzynek: item, rarity, exterior i data."
     },
     "leaderboard": {
       "title": "Ranking | ClickDrop",
@@ -87,7 +87,7 @@
       "levelUpTitle": "Lvl {{level}}",
       "levelUpReward": "+{{amount}} CD",
       "levelUpMessage": "Osiągasz poziom {{level}}. Otwieraj skrzynki, żeby iść wyżej.",
-      "levelUpCasesUnlocked": "Nowe skrzynki mogą być odblokowane — sprawdź sklep.",
+      "levelUpCasesUnlocked": "Nowe skrzynki mogą być odblokowane. Sprawdź sklep.",
       "levelUpContinue": "Dalej",
       "cd": "CD",
       "loadingStats": "Ładowanie statystyk…"
@@ -121,7 +121,7 @@
       "guestTitle": "Klikaj. Zarabiaj. Otwieraj skrzynie.",
       "guestSubtitle": "Zaloguj się, aby klikać o ClickDollary, kupować ulepszenia i otwierać skrzynie ze skinami.",
       "guestPerClick": "+1 / klik",
-      "guestHint": "Dołącz za darmo — saldo i ekwipunek synchronizują się od razu.",
+      "guestHint": "Dołącz za darmo. Saldo i ekwipunek synchronizują się od razu.",
       "guestSteps": {
         "click": {
           "label": "01",
@@ -140,7 +140,7 @@
         }
       },
       "balanceValue": "{{amount}} ClickDollars",
-      "guestBalance": "— ClickDollars",
+      "guestBalance": "- ClickDollars",
       "loadingBalance": "Ładowanie salda…",
       "perClick": "+{{amount}} / klik",
       "clickLabel": "CLICK TO EARN",
@@ -526,7 +526,7 @@
     "eyebrow": "Zestawy skinów",
     "title": "Kolekcje",
     "subtitle": "Zbierz wszystkie skiny z zestawu skrzynki i odbierz jednorazowy bonus CD. Skiny zostają w ekwipunku.",
-    "detailSubtitle": "Liczy się jeden egzemplarz itemu — exterior i StatTrack nie mają znaczenia.",
+    "detailSubtitle": "Liczy się jeden egzemplarz itemu; exterior i StatTrack nie mają znaczenia.",
     "progress": "{{owned}} / {{total}} zebrane",
     "progressBar": "Postęp: {{name}}",
     "statusInProgress": "W trakcie",
@@ -593,7 +593,7 @@
   "skinUpgrade": {
     "eyebrow": "Ulepszanie skinów",
     "title": "Ulepsz swojego skina",
-    "subtitle": "Wybierz skin i ryzykuj o lepszy. Za darmo — bez ClickDolarów. To nie to samo co ulepszenia klików.",
+    "subtitle": "Wybierz skin i ryzykuj o lepszy. Za darmo, bez ClickDolarów. To nie to samo co ulepszenia klików.",
     "selectLabel": "Wybierz skina",
     "changeSkinLabel": "Albo wybierz innego z ekwipunku",
     "emptyInventory": "Brak skinów do ulepszenia. Najpierw otwórz skrzynkę.",
@@ -2878,7 +2878,7 @@
     "eyebrow": "Darmowy drop",
     "title": "Daily Free",
     "subtitle": "Otwórz raz na 24 godziny. Bez ClickDolarów.",
-    "guestSubtitle": "Podgląd nagród — zaloguj się, aby otworzyć za darmo.",
+    "guestSubtitle": "Podgląd nagród. Zaloguj się, aby otworzyć za darmo.",
     "open": "Otwórz",
     "opening": "Otwieranie…",
     "claim": "Odbierz darmowy skin",
@@ -2924,7 +2924,7 @@
   },
   "forgotPassword": {
     "title": "Nie pamiętam hasła",
-    "subtitle": "Podaj email — wyślemy link do resetu, jeśli konto istnieje.",
+    "subtitle": "Podaj email. Wyślemy link do resetu, jeśli konto istnieje.",
     "email": "Email",
     "emailPlaceholder": "ty@przyklad.pl",
     "submit": "Wyślij link",

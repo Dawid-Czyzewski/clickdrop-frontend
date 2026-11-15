@@ -5,7 +5,7 @@ describe('seo site metadata', () => {
   it('builds indexable home metadata with canonical and open graph', () => {
     const metadata = buildPageMetadata('home')
 
-    expect(metadata.title).toBe('ClickDrop — Open cases. Drop rare skins.')
+    expect(metadata.title).toBe('ClickDrop: Open cases. Drop rare skins.')
     expect(metadata.description).toContain('gaming case-opening')
     expect(metadata.alternates).toEqual(
       expect.objectContaining({
@@ -15,7 +15,7 @@ describe('seo site metadata', () => {
     expect(metadata.robots).toEqual(expect.objectContaining({ index: true, follow: true }))
     expect(metadata.openGraph).toEqual(
       expect.objectContaining({
-        title: 'ClickDrop — Open cases. Drop rare skins.',
+        title: 'ClickDrop: Open cases. Drop rare skins.',
         url: absoluteUrl('/'),
         siteName: 'ClickDrop',
       }),

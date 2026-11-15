@@ -55,7 +55,7 @@ export function BattleSetupForm({
           </option>
           {cases.map((gameCase) => (
             <option key={gameCase.id} value={gameCase.id}>
-              {resolveCaseLabel(t, gameCase.code, gameCase.displayName)} —{' '}
+              {resolveCaseLabel(t, gameCase.code, gameCase.displayName)}:{' '}
               {formatClickDollars(gameCase.price, i18n.language)} CD
             </option>
           ))}

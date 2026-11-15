@@ -6,7 +6,7 @@
   },
   "seo": {
     "home": {
-      "title": "ClickDrop — Open cases. Drop rare skins.",
+      "title": "ClickDrop: Open cases. Drop rare skins.",
       "description": "ClickDrop is a gaming case-opening experience. Sign in to open cases and chase rare drops."
     },
     "login": {
@@ -43,7 +43,7 @@
     },
     "skinUpgrade": {
       "title": "Skin upgrade | ClickDrop",
-      "description": "Risk your skin for a chance at a better one. Free upgrade — no ClickDollars."
+      "description": "Risk your skin for a chance at a better one. Free upgrade, no ClickDollars."
     },
     "tradeUp": {
       "title": "Trade-up | ClickDrop",
@@ -59,7 +59,7 @@
     },
     "caseOpens": {
       "title": "Case history | ClickDrop",
-      "description": "See your recent case opens — item, rarity, exterior, and date."
+      "description": "See your recent case opens: item, rarity, exterior, and date."
     },
     "leaderboard": {
       "title": "Leaderboard | ClickDrop",
@@ -87,7 +87,7 @@
       "levelUpTitle": "Lvl {{level}}",
       "levelUpReward": "+{{amount}} CD",
       "levelUpMessage": "You reached level {{level}}. Keep opening cases to climb higher.",
-      "levelUpCasesUnlocked": "New cases may be unlocked — check the shop.",
+      "levelUpCasesUnlocked": "New cases may be unlocked. Check the shop.",
       "levelUpContinue": "Continue",
       "cd": "CD",
       "loadingStats": "Loading stats…"
@@ -121,7 +121,7 @@
       "guestTitle": "Click. Earn. Open cases.",
       "guestSubtitle": "Sign in to click for ClickDollars, buy upgrades, and open cases for skins.",
       "guestPerClick": "+1 / click",
-      "guestHint": "Free to join — your balance and inventory sync instantly.",
+      "guestHint": "Free to join. Your balance and inventory sync instantly.",
       "guestSteps": {
         "click": {
           "label": "01",
@@ -140,7 +140,7 @@
         }
       },
       "balanceValue": "{{amount}} ClickDollars",
-      "guestBalance": "— ClickDollars",
+      "guestBalance": "- ClickDollars",
       "loadingBalance": "Loading balance…",
       "perClick": "+{{amount}} / click",
       "clickLabel": "CLICK TO EARN",
@@ -524,7 +524,7 @@
     "eyebrow": "Skin sets",
     "title": "Collections",
     "subtitle": "Collect every skin from a case set, then claim a one-time CD bonus. Skins stay in your inventory.",
-    "detailSubtitle": "Owned skins count once per item — exterior and StatTrack do not matter.",
+    "detailSubtitle": "Owned skins count once per item; exterior and StatTrack do not matter.",
     "progress": "{{owned}} / {{total}} owned",
     "progressBar": "Progress for {{name}}",
     "statusInProgress": "In progress",
@@ -591,7 +591,7 @@
   "skinUpgrade": {
     "eyebrow": "Skin upgrade",
     "title": "Upgrade your skin",
-    "subtitle": "Pick a skin, risk it for a better one. Free — no ClickDollars. Not the same as click upgrades.",
+    "subtitle": "Pick a skin, risk it for a better one. Free, no ClickDollars. Not the same as click upgrades.",
     "selectLabel": "Choose your skin",
     "changeSkinLabel": "Or pick another from inventory",
     "emptyInventory": "No skins to upgrade. Open a case first.",
@@ -2876,7 +2876,7 @@
     "eyebrow": "Free drop",
     "title": "Daily Free",
     "subtitle": "Open once every 24 hours. No ClickDollars required.",
-    "guestSubtitle": "Preview today’s rewards — sign in to open for free.",
+    "guestSubtitle": "Preview today’s rewards. Sign in to open for free.",
     "open": "Open",
     "opening": "Opening…",
     "claim": "Claim free skin",

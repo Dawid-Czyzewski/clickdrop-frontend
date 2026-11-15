@@ -19,7 +19,7 @@ export function subscribeSharedBalance(listener: BalanceListener): () => void {
   }
 }
 
-/** Test helper — clears shared balance between tests */
+/** Test helper: clears shared balance between tests */
 export function resetSharedBalance(): void {
   sharedBalance = null
   listeners.clear()
