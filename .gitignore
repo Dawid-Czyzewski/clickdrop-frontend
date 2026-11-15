@@ -26,3 +26,7 @@ out
 *.njsproj
 *.sln
 *.sw?
+
+# Local tooling / asset docs (not part of app runtime)
+scripts/
+public/ASSETS.md

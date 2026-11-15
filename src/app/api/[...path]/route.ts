@@ -15,8 +15,15 @@ function economyOrigin(): string {
   return process.env.API_ECONOMY_URL?.replace(/\/$/, '') || 'http://localhost:8082'
 }
 
+function inventoryOrigin(): string {
+  return process.env.API_INVENTORY_URL?.replace(/\/$/, '') || 'http://localhost:8083'
+}
+
 function resolveUpstream(path: string[]): string {
   const joined = path.join('/')
+  if (path[0] === 'economy' && (path[1] === 'inventory' || path[1] === 'trade-up')) {
+    return `${inventoryOrigin()}/api/${joined}`
+  }
   if (path[0] === 'economy') {
     return `${economyOrigin()}/api/${joined}`
   }
